@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd mutaspace/target/web/public/main &&
+python -m SimpleHTTPServer
