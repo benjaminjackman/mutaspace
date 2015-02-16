@@ -1,0 +1,199 @@
+@import "material/buttons";
+@import "material/colors";
+
+body {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  //  font-family: Helvetica, Arial, sans-serif;
+  background: @brown-600;
+  background-image: url("/images/brown-600-45-degree-fabric-light.png");
+}
+
+#item-details {
+  max-width: 900px;
+  position: fixed;
+  z-index: 100;
+  overflow: hidden;
+}
+
+#content {
+  height: 100%;
+}
+
+body div.home {
+  display: inline-block;
+  max-width: 600px;
+}
+
+a {
+  text-decoration: none;
+}
+
+@-webkit-keyframes llama-mode {
+  0% {
+    background-color: Yellow;
+    opacity: 1;
+  }
+  22% {
+    background-color: Yellow;
+  }
+  77% {
+    background-color: Red;
+  }
+  100% {
+    background-color: #777;
+  }
+}
+
+.llama-mode {
+  -webkit-animation-name: llama-mode;
+  -webkit-animation-duration: 100ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+}
+
+.select2-container {
+  margin-right: 2px;
+  margin-bottom: 2px;
+  .select2-choice {
+    height: inherit;
+    line-height: normal;
+
+    border: none;
+    border-radius: 0px;
+    .select2-arrow {
+      display: none;
+    }
+    .MaterialBtn;
+  }
+  .select2-chosen {
+    color: black;
+    margin-right: 0px !important;
+    text-overflow: clip !important;
+  }
+}
+
+.ls-btn {
+  background-color: @blue-400;
+}
+
+.view-btn, .ctrl-btn, .pane-btn, .ls-btn, .col-btn, .col-div,
+.upgrade-btn, .char-btn, .tab-btn, .show-all-btn, .hide-all-btn,
+.reload-all-btn, .reload-visible-btn, .refresh-characters-btn {
+  margin-right: 2px;
+  .MaterialBtn;
+}
+
+.pane-btn.upgrades {
+  background-color: @yellow-500;
+  &:hover {
+    background: #c2c2c2;
+  }
+}
+
+.upgrades-pane {
+  background-color: @yellow-500;
+  background-image: url("/images/yellow-500-linen.png");
+}
+
+.pane-btn.refresh-tabs {
+  background-color: @light-blue-100;
+  &:hover {
+    background: #c2c2c2;
+  }
+}
+
+.refresh-pane {
+  background-color: @light-blue-100;
+  background-image: url("/images/light-blue-100-linen.png");
+  .reload-all-btn {
+    background-color: @red-600;
+  }
+  .reload-visible-btn {
+    background-color: @yellow-300;
+  }
+  .refresh-characters-btn {
+    background-color: @green-300;
+  }
+
+  .tab-btn {
+    color: white;
+  }
+
+  .visible-loot-container {
+    border-color: @light-blue-100;
+    border-width: 2px;
+    border-style: solid;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .invisible-loot-container {
+    border-color: @yellow-300;
+    border-width: 2px;
+    border-style: dotted;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .tab-btn, .char-btn {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: -5px;
+    margin-right: -5px;
+    white-space: nowrap;
+    &.loading {
+      color: red;
+    }
+  }
+
+
+
+  .show-all-btn {
+    background-color: @green-300;
+  }
+  .hide-all-btn {
+    background-color: @red-300;
+  }
+  .show-all-btn, .hide-all-btn, .reload-all-btn, .reload-visible-btn, .refresh-characters-btn {
+    &:hover {
+      background: #c2c2c2;
+    }
+  }
+}
+
+.pane-btn.select-columns {
+  background-color: @light-green-100;
+  &:hover {
+    background: #c2c2c2;
+  }
+}
+
+.columns-controls {
+  background-color: @light-green-100;
+  background-image: url("/images/light-green-100-linen.png");
+  .col-div {
+    cursor: hand;
+    cursor: pointer;
+  }
+  .col-div.on-col {
+    color: black;
+    background-color: @green-300;
+    text-decoration: underline;
+  }
+  .col-div.off-col {
+    color: black;
+    background-color: @red-300;
+  }
+}
+
+.load-save {
+  background-color: @blue-100;
+  background-image: url("/images/blue-100-linen.png");
+  //  .select2-container .select2-choice{
+  //    background-color: @blue-500;
+  //  }
+}
+
+#content {
+  padding: 5px;
+}
