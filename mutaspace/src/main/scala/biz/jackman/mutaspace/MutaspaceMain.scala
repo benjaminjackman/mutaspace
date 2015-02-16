@@ -9,17 +9,14 @@ import biz.jackman.facades.threejs.PointLight
 import biz.jackman.facades.threejs.Scene
 import biz.jackman.facades.threejs.SphereGeometry
 import biz.jackman.facades.threejs.WebGLRenderer
-import biz.jackman.mutaspace.reactive.KeyEvent
-import biz.jackman.mutaspace.reactive.KeyPublisher
 import biz.jackman.mutaspace.reactive.Subscriber
 import biz.jackman.mutaspace.reactive.Subscription
+import biz.jackman.mutaspace.reactive.web.KeyEvent
+import biz.jackman.mutaspace.reactive.web.KeyPublisher
 import biz.jackman.mutaspace.samples.BouncyBall
 import biz.jackman.mutaspace.samples.Pong3d
-import cgta.oscala.util.debugging.PRINT
 import org.scalajs.dom
 
-import scala.annotation.tailrec
-import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 
 
@@ -53,13 +50,12 @@ object MutaspaceMain {
       override def onSubscribe(s: Subscription): Unit = {
         console.log("Subscribed")
         sp = s
-        sp.request(100)
+        sp.request(Long.MaxValue)
       }
       override def onComplete(): Unit = {
         console.log("Completed")
       }
       override def onNext(a: Seq[KeyEvent]): Unit = {
-        sp.request(100)
         console.log("Keys were pressed", a.map(_.event).toJsArr)
       }
     })
