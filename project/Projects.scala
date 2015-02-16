@@ -55,7 +55,9 @@ object Projects extends Build with UniversalKeys {
     .enablePlugins(SbtWeb)
     .settings(requiresDOM := true)
     .settings(libraryDependencies ++= List("org.scala-lang.modules" %% "scala-async" % "0.9.1"))
-    .settings(Libs.JQuery.settings ++ Libs.Scalatags.settings ++ Libs.Cgta.settingsSjs : _*)
+    .settings(Libs.Scalatags.settings : _*)
+    .settings(Libs.Cgta.settingsSjs : _*)
+    .settings(Libs.Dom.settings : _*)
     .settings(
       includeFilter in (Assets, LessKeys.less) := "*.less",
       excludeFilter in (Assets, LessKeys.less) := "_*.less"

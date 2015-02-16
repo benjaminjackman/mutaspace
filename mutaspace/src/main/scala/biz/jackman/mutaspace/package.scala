@@ -13,7 +13,8 @@ import cgta.serland.{SerlandExportsPlat, SerlandExportsShared}
 package object mutaspace extends SerlandExportsShared
 with SerlandExportsPlat
 with OScalaExportsShared
-with OScalaExportsPlat {
+with OScalaExportsPlat
+with MutaspaceExportsSjs {
 
 }
 

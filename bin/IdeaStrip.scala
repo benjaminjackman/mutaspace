@@ -26,23 +26,7 @@ object IdeaStrip {
   val debug = false
 
   val projectNames = List(
-    "oscala",
-    "clones-sjs",
-    "serland",
-    "cenum",
-    "olib",
-    "core",
-    "robo",
-    "viz-sjs",
-    "playweb",
-    "corrimano",
-    "protogen",
-    "pint",
-    "lager",
-    "firehaus",
-    "grainger",
-    "everitt",
-    "beckman"
+    "mutaspace"
   )
 
   val projects = for (p <- projectNames; target <- List("", "sjs", "jvm")) yield {

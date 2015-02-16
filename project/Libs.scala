@@ -44,6 +44,20 @@ object Libs {
     )
   }
 
+  case object Dom extends SjsLib {
+    lazy val domVersion = SettingKey[String]("dom-version")
+    override lazy val settings = S(
+      domVersion := "0.8.0",
+      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % domVersion.value
+    )
+  }
+
+
+
+
+
+  //Other old libraries down here
+
   object Facades {
     case object ThreeJs extends SjsLib {
       override lazy val settings = S(
@@ -54,8 +68,6 @@ object Libs {
   }
 
 
-
-  //Other old libraries down here
 
 
   case object Autowire extends CrossLib {
@@ -134,14 +146,6 @@ object Libs {
     )
   }
 
-
-  case object Dom extends SjsLib {
-    lazy val domVersion = SettingKey[String]("dom-version")
-    override lazy val settings = S(
-      domVersion := "0.8.0",
-      libraryDependencies += "org.scala-js" %%% "scalajs-dom" % domVersion.value
-    )
-  }
 
   case object JQuery extends SjsLib {
 
