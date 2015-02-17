@@ -2,8 +2,10 @@ package biz.jackman.mutaspace
 package reactive.web
 
 import biz.jackman.mutaspace.reactive.Publisher
+import biz.jackman.mutaspace.reactive.ReactiveHelp
 import biz.jackman.mutaspace.reactive.SimplePublisher
 import biz.jackman.mutaspace.reactive.Subscriber
+import biz.jackman.mutaspace.reactive.Subscription
 import cgta.cenum.CEnum
 import org.scalajs.dom
 import org.scalajs.dom.EventTarget
@@ -20,9 +22,16 @@ import org.scalajs.dom.raw.KeyboardEvent
 
 object KeyEventTypes extends CEnum {
   final type EET = KeyEventType
-  sealed trait KeyEventType extends EnumElement
-  case object Keydown extends KeyEventType
-  case object Keyup extends KeyEventType
+  sealed trait KeyEventType extends EnumElement {
+    def isDown : Boolean = false
+    def isUp : Boolean = false
+  }
+  case object Keydown extends KeyEventType {
+    final override def isDown : Boolean = true
+  }
+  case object Keyup extends KeyEventType {
+    final override def isUp : Boolean = true
+  }
   final override val elements = CEnum.getElements(this)
 }
 
@@ -45,6 +54,14 @@ class KeyPublisher(et: EventTarget) extends Publisher[KeyEvent] {
     keyup
     keydown
     publisher.subscribe(s)
+  }
+}
+
+class SimpleKeyPublisher(eventTarget: EventTarget) extends Publisher[Int] {
+  val internal = new KeyPublisher(eventTarget)
+  override def subscribe(s: Subscriber[Int]): Unit = {
+    import ReactiveHelp.Implicits._
+    internal.subscribe(s.map(xs => xs.filter(e => e.tpe.isDown && !e.event.repeat).map(_.event.keyCode)))
   }
 }
 
