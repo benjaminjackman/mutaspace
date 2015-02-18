@@ -52,26 +52,29 @@ object Projects extends Build with UniversalKeys {
 
   //Scala JS visualizations
   lazy val mutaspace = sjsProject("mutaspace", Project("mutaspace", file("mutaspace")))
-    .enablePlugins(SbtWeb)
+//    .enablePlugins(SbtWeb)
     .settings(requiresDOM := true)
     .settings(libraryDependencies ++= List("org.scala-lang.modules" %% "scala-async" % "0.9.1"))
     .settings(Libs.Scalatags.settings : _*)
     .settings(Libs.Cgta.settingsSjs : _*)
     .settings(Libs.Dom.settings : _*)
-    .settings(
-      includeFilter in (Assets, LessKeys.less) := "*.less",
-      excludeFilter in (Assets, LessKeys.less) := "_*.less"
-    )
-    .settings((fastOptJS in Compile) <<= (fastOptJS in Compile).dependsOn(WebKeys.assets in Assets))
-    .settings((fullOptJS in Compile) <<= (fullOptJS in Compile).dependsOn(WebKeys.assets in Assets))
-    .settings(sjsOutDir := WebKeys.webTarget.value / "public" / "main" )
-    .settings(sjsTasks.map(t => crossTarget in(Compile, t) := sjsOutDir.value): _*)
+//    .settings(
+//      includeFilter in (Assets, LessKeys.less) := "*.less",
+//      excludeFilter in (Assets, LessKeys.less) := "_*.less"
+//    )
+//    .settings((fastOptJS in Compile) <<= (fastOptJS in Compile).dependsOn(WebKeys.assets in Assets))
+//    .settings((fullOptJS in Compile) <<= (fullOptJS in Compile).dependsOn(WebKeys.assets in Assets))
+//    .settings(sjsOutDir := WebKeys.webTarget.value / "public" / "main" )
+//    .settings(sjsTasks.map(t => crossTarget in(Compile, t) := sjsOutDir.value): _*)
+
+  lazy val mutaplay = playProject(Seq(mutaspace))
 
 
   //Aggregate project
   lazy val root = Project("root", file("."))
     .aggregate(
-      mutaspace
+      mutaspace,
+      mutaplay
     )
     .settings(BaseBuild.basicSettings: _*)
     .settings(ReleasePlugin.releaseSettings: _*)

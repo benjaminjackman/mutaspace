@@ -1,0 +1,55 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET        /        controllers.MainController.mainPage()
+
+## Map static resources from the /public folder to the /assets URL path
+GET            /assets/*file                                            controllers.Assets.at(path="/public", file)
+
+
+## Home page
+#OPTIONS        /*path                                                   controllers.Application.options(path : String)
+#GET            /                                                        controllers.MainController.mainPage()
+#GET            /test-admin                                              controllers.MainController.testAdmin()
+#
+##rpcs
+##POST           /rpcs/:baseName/:rpcName                                 controllers.RpcsController.callRpc(baseName : String, rpcName: String)
+#POST           /apis/:apiName/:methodName                                controllers.RpcsController.callApi(apiName : String, methodName : String)
+#
+##Login
+#GET            /login                                                   controllers.LoginController.login()
+#POST           /login                                                   controllers.LoginController.process()
+#
+##rest style rpc
+#GET            /settlements/findForDateSymbol/:tradeDate/:symbol        controllers.SettlementsController.findForDateSymbol(tradeDate : Int, symbol : String)
+#GET            /settlements/findForDate/:tradeDate                      controllers.SettlementsController.findForDate(tradeDate : Int)
+#GET            /settlements/:tradeDate                                  controllers.SettlementsController.settlements(tradeDate : Int)
+#
+##build
+#GET            /build/changeBuild                                       controllers.BuildController.changeBuild()
+#POST           /build/changeBuild                                       controllers.BuildController.processChangeBuild()
+#
+##Hands
+#GET            /hands-table                                             controllers.HandsTableController.show()
+#
+##Samples
+#
+#GET            /hello-ojs                                               controllers.SamplesController.helloScalaJs
+#GET            /hello-threejs                                           controllers.SamplesController.helloThreeJs
+#GET            /periodic-table                                          controllers.SamplesController.periodicTable
+#GET            /periodic-table-js                                       controllers.SamplesController.periodicTableJs
+#GET            /waterfall-3d                                            controllers.SamplesController.waterfall3d
+#GET            /react-todo                                              controllers.SamplesController.reactTodo
+#GET            /pepper                                                  controllers.SamplesController.pepper
+#GET            /hacksaw                                                 controllers.SamplesController.hacksaw
+#GET            /ecardtable                                              controllers.SamplesController.ecardtable
+#
+##Experimental
+#GET            /brewmaster                                              controllers.BrewmasterController.display()
+#
+##Sample Datasets
+#GET            /sample-datasets/:sampleName                             controllers.SampleDatasetsController.get(sampleName)
+#
+
+

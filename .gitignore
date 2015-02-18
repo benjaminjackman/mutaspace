@@ -7,3 +7,4 @@ target/site/styles/less/*
 .idea
 .idea_modules
 target
+mutaplay/logs

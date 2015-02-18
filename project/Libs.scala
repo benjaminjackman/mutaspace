@@ -209,9 +209,7 @@ object Libs {
 
     lazy val exclusiveDeps = Seq(
       play.Play.autoImport.filters,
-      play.Play.autoImport.jdbc,
-      "ch.qos.logback" % "logback-classic" % "1.0.13" exclude("org.slf4j", "slf4j-nop"),
-      "org.forgerock.opendj" % "opendj-ldap-sdk" % "2.6.7"
+      "ch.qos.logback" % "logback-classic" % "1.0.13" exclude("org.slf4j", "slf4j-nop")
     )
   }
 

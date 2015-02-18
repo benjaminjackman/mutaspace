@@ -1,0 +1,16 @@
+@(message: String)
+
+<html>
+<head>
+    <script src="@routes.Assets.at("javascripts/threejs/r70/three.js")"></script>
+    @libs.scalaJs()
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mutaspace.css")">
+</head>
+<body>
+<div>Hello World! Message: @message</div>
+<div id="content"></div>
+<script>
+    biz.jackman.mutaspace.MutaspaceMain().main()
+</script>
+</body>
+</html>

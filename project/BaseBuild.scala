@@ -14,7 +14,7 @@ import com.typesafe.sbt.web.Import.Assets
 
 
 object BaseBuild extends Build with UniversalKeys {
-//  sys.props("scalac.patmat.analysisBudget") = "512"
+  //  sys.props("scalac.patmat.analysisBudget") = "512"
   //org.slf4j.LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf[ch.qos.logback.classic.Logger].setLevel(ch.qos.logback.classic.Level.INFO)
 
   lazy val basicSettings = scalacSettings ++
@@ -37,7 +37,7 @@ object BaseBuild extends Build with UniversalKeys {
     scalacOptions += "-language:existentials",
     scalacOptions += "-language:postfixOps",
     scalacOptions += "-Xfatal-warnings"
-    )
+  )
 
   def getBasePackageName(projectName: String, suffix: String = null) = {
     val root = "biz.jackman"
@@ -46,7 +46,7 @@ object BaseBuild extends Build with UniversalKeys {
   }
 
   def sjsProject(name: String, p: Project) = {
-    p.settings(basicSettings : _*)
+    p.settings(basicSettings: _*)
       .enablePlugins(ScalaJSPlugin)
       .settings(scalacOptions += "-language:reflectiveCalls")
       .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName(name, "-sjs")))
@@ -83,19 +83,37 @@ object BaseBuild extends Build with UniversalKeys {
     .settingsSjsTest(basicSettings: _*)
 
 
+  def playProject(sjsProjects: Seq[sbt.ProjectReference]) = {
+    lazy val sjsForPlayOutDir = Def.settingKey[File]("directory for javascript files output by scalajs")
+    lazy val lastSjsProject = sjsProjects.last
 
-  // def playProject(name: String) = {
+    lazy val sjsTasks = List(fastOptJS, fullOptJS)
 
-  //   Project("playweb", file("playweb"))
-  //     .enablePlugins(play.PlayScala, SbtWeb)
-  //     .settings(libraryDependencies ++= Libs.Play.exclusiveDeps)
-  //     .settings(publish := {})
-  //     .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName(name)))
-  //     //      .settings(play.Project.playScalaSettings: _*)
-  //     //      .settings(com.jamesward.play.BrowserNotifierPlugin.livereload: _*)
-  //     .settings(basicSettings: _*)
-  // }
+    Project("mutaplay", file("mutaplay"))
+      .enablePlugins(play.PlayScala, SbtWeb)
+      .settings(libraryDependencies ++= Libs.Play.exclusiveDeps)
+      .aggregate(sjsProjects: _*)
+      .settings(publish := {})
+      .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName("mutaplay")))
+      .settings(basicSettings: _*)
+      .settings(sjsForPlayOutDir := (crossTarget in Compile).value / "classes" / "public" / "javascripts",
+        compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(lastSjsProject, Compile)),
+        includeFilter in(Assets, LessKeys.less) := "*.less",
+        dist <<= dist dependsOn (fullOptJS in(lastSjsProject, Compile))
+      )
+      .settings(sjsTasks.map(t => crossTarget in(lastSjsProject, Compile, t) := sjsForPlayOutDir.value): _*)
+  }
 
+  //  def playProject() = {
+  //     Project("mutaplay", file("mutaplay"))
+  //       .enablePlugins(play.PlayScala, SbtWeb)
+  //       .settings(libraryDependencies ++= Libs.Play.exclusiveDeps)
+  //       .settings(publish := {})
+  //       .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName("mutaplay")))
+  //       //      .settings(play.Project.playScalaSettings: _*)
+  //       //      .settings(com.jamesward.play.BrowserNotifierPlugin.livereload: _*)
+  //       .settings(basicSettings: _*)
+  //  }
 
 
 }
