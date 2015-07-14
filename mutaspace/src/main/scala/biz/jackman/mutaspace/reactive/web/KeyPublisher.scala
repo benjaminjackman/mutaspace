@@ -2,10 +2,8 @@ package biz.jackman.mutaspace
 package reactive.web
 
 import biz.jackman.mutaspace.reactive.Publisher
-import biz.jackman.mutaspace.reactive.ReactiveHelp
 import biz.jackman.mutaspace.reactive.SimplePublisher
 import biz.jackman.mutaspace.reactive.Subscriber
-import biz.jackman.mutaspace.reactive.Subscription
 import cgta.cenum.CEnum
 import org.scalajs.dom
 import org.scalajs.dom.EventTarget
@@ -60,7 +58,7 @@ class KeyPublisher(et: EventTarget) extends Publisher[KeyEvent] {
 class SimpleKeyPublisher(eventTarget: EventTarget) extends Publisher[Int] {
   val internal = new KeyPublisher(eventTarget)
   override def subscribe(s: Subscriber[Int]): Unit = {
-    import ReactiveHelp.Implicits._
+    import biz.jackman.mutaspace.reactive.ReactiveHelp.Implicits._
     internal.subscribe(s.map(xs => xs.filter(e => e.tpe.isDown && !e.event.repeat).map(_.event.keyCode)))
   }
 }

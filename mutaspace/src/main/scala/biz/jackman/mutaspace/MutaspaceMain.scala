@@ -1,6 +1,7 @@
 package biz.jackman.mutaspace
 
 
+import biz.jackman.facades.phaser
 import biz.jackman.facades.threejs.Mesh
 import biz.jackman.facades.threejs.MeshLambertMaterial
 import biz.jackman.facades.threejs.MeshLambertMaterialParameters
@@ -14,9 +15,11 @@ import biz.jackman.mutaspace.reactive.Subscription
 import biz.jackman.mutaspace.reactive.web.KeyEvent
 import biz.jackman.mutaspace.reactive.web.KeyPublisher
 import biz.jackman.mutaspace.samples.BouncyBall
+import biz.jackman.mutaspace.samples.PhaserStarGameSample
 import biz.jackman.mutaspace.samples.Pong3d
 import org.scalajs.dom
 
+import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 
 
@@ -38,7 +41,18 @@ object MutaspaceMain {
     //    three()
     //pong3d()
     //    bouncyBall()
-    keyJib()
+    //    keyJib()
+    //incremental()
+    PhaserStarGameSample.start()
+  }
+
+
+
+
+
+
+  def incremental() {
+    console.log("Hello Mom")
   }
 
 
