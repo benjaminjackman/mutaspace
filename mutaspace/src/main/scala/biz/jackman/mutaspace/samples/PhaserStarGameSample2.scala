@@ -3,7 +3,6 @@ package samples
 
 import biz.jackman.facades.phaser.Phaser
 import biz.jackman.facades.phaser.Phaser.Entity
-import biz.jackman.facades.phaser.Phaser.Physical
 
 import scala.scalajs.js
 
@@ -16,7 +15,7 @@ import scala.scalajs.js
 // Created by bjackman @ 7/13/15 9:14 PM
 //////////////////////////////////////////////////////////////
 
-object PhaserStarGameSample {
+object PhaserStarGameSample2 {
   var game: Phaser.Game = _
   var player: Phaser.Entity = _
   var platforms: Phaser.Group = _
@@ -52,7 +51,7 @@ object PhaserStarGameSample {
     game.physics.arcade.enable(player)
 
     //    player.body.bounce.y = 0.2
-    player.body.gravity.y = 300
+    //player.body.gravity.y = 300
     player.body.collideWorldBounds = true
 
     player.animations.add("left", js.Array(0, 1, 2, 30), 10, loop = true)
@@ -85,6 +84,7 @@ object PhaserStarGameSample {
     game.physics.arcade.collide(stars, platforms)
     game.physics.arcade.overlap(player, stars, collectStar _, null, this)
     player.body.velocity.x = 0
+    player.body.velocity.y = 0
     if (cursors.left.isDown) {
       player.body.velocity.x = -150
       player.animations.play("left")
@@ -96,8 +96,10 @@ object PhaserStarGameSample {
       player.frame = 4
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
-      player.body.velocity.y = -300
+    if (cursors.up.isDown) {
+      player.body.velocity.y = -150
+    } else if (cursors.down.isDown) {
+      player.body.velocity.y = 150
     }
 
 
