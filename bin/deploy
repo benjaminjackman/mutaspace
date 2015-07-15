@@ -1,17 +1,13 @@
 #!/bin/bash
 
-MAIN=`pwd`
-SITE=../space-blast-site/
+SERVER="ubuntu@washington.jackman.biz"
+KEY="$HOME/keys/ben-personal.pem"
 
-if [ ! -d $SITE ] ; then
-  echo "directory [$SITE] does not exist!"
-  exit 1
-fi
+sbt 'project mutaplay' 'dist'
 
-cd $SITE &&
-rm -rf * &&
-cd $MAIN &&
-cp -r target/site/* $SITE &&
-cd $SITE &&
-git gui
+if [ $? ]; then
+  scp -i $KEY mutaplay/target/universal/mutaplay-0.1-SNAPSHOT.zip $SERVER:
+  ssh -i $KEY $SERVER unzip mutaplay-0.1-SNAPSHOT.zip
+fi 
+
 
