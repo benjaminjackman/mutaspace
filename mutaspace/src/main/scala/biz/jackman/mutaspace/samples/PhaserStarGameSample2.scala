@@ -3,6 +3,7 @@ package samples
 
 import biz.jackman.facades.phaser.Phaser
 import biz.jackman.facades.phaser.Phaser.Entity
+import biz.jackman.facades.phaser.Phaser.Pointer
 
 import scala.scalajs.js
 
@@ -27,7 +28,13 @@ object PhaserStarGameSample2 {
   def preload() {
     game.load.image("sky", "assets/images/sky.png")
     game.load.image("ground", "assets/images/platform.png")
-    game.load.image("star", "assets/images/star.png")
+    game.load.image("star", "assets/images/doge.png")
+
+    game.load.audio("bite", "assets/sounds/bite.mp3")
+    game.load.audio("growl", "assets/sounds/growl.mp3")
+    game.load.audio("woah", "assets/sounds/woah.mp3")
+
+
     game.load.spritesheet("dude", "assets/images/dude.png", 32, 48)
   }
   def create() {
@@ -63,20 +70,51 @@ object PhaserStarGameSample2 {
 
     stars.enableBody = true
 
-    (0 until 12) foreach { i =>
-      val star = stars.create(i * 70, 0, "star")
+    (0 until 15) foreach { i =>
+      val star = stars.create(i * 50, 0, "star")
       star.body.gravity.y = 6
-      star.scale.setTo(5,5)
+      star.scale.setTo(.2,.2)
       star.body.bounce.y = 0.7 * js.Math.random() * 0.2
     }
 
-    scoreText = game.add.text(16, 16, "Score: 0", js.Dynamic.literal(fontSize = "32px", fill = "#000"))
+    scoreText = game.add.text(16, 16, "Score: 0", js.Dynamic.literal(font = "sans", fontSize = "32px", fill = "#000"))
   }
 
+  val phrases = Array("such wow!", "so amaze", "much good", "very wow!", "many cool", "lol", "gabe is ok")
+  def randomPhrase() = phrases((js.Math.random() * phrases.length).toInt)
+
   def collectStar(player: Entity, star: Entity) {
+    val size = 16 + 20 * js.Math.random()
+    val r = (js.Math.random() * 10).toInt
+    val g = (js.Math.random() * 10).toInt
+    val b = (js.Math.random() * 10).toInt
+    val color = s"#$r$g$b"
+    console.log(color)
+
+    (js.Math.random() * 3).toInt match {
+      case 0 => game.sound.play("bite")
+      case 1 => game.sound.play("growl")
+      case _ => game.sound.play("woah")
+    }
+
+
+    game.add.text(star.x, star.y, randomPhrase(), js.Dynamic.literal(fontSize = s"${size}px", fill = color))
     star.kill()
     score += 1
+
+    if (score >= 15) {
+      import org.scalajs.dom
+      dom.location.assign("http://fanaru.com/doge/image/18361-doge-follow-your-dreams.jpg")
+    }
+
     scoreText.text = s"Score: $score"
+  }
+
+  def moveSprite(pointer : Pointer) {
+    player.rotation = game.physics.arcade.angleToPointer(player, pointer)
+    val duration = (game.physics.arcade.distanceToPointer(this.player, pointer) / 300) * 1000;
+
+    val tween = game.add.tween(player).to(js.Dynamic.literal( x = pointer.x, y = pointer.y ), duration, Phaser.Easing.Linear.None, true)
   }
 
   def update() {
@@ -85,6 +123,9 @@ object PhaserStarGameSample2 {
     game.physics.arcade.overlap(player, stars, collectStar _, null, this)
     player.body.velocity.x = 0
     player.body.velocity.y = 0
+
+    game.input.onDown.add(moveSprite _)
+
     if (cursors.left.isDown) {
       player.body.velocity.x = -150
       player.animations.play("left")

@@ -14,6 +14,6 @@ import play.api.mvc.{Action, Controller}
 
 object MainController extends Controller {
 
-  def mainPage() = Action {Ok(views.html.mainPage("Insert some random gibberish here :)"))}
+  def mainPage() = Action {Ok(views.html.mainPage("DOGE EDITION!"))}
 
 }
