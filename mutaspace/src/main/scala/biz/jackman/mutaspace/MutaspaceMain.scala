@@ -15,7 +15,7 @@ import biz.jackman.mutaspace.reactive.Subscription
 import biz.jackman.mutaspace.reactive.web.KeyEvent
 import biz.jackman.mutaspace.reactive.web.KeyPublisher
 import biz.jackman.mutaspace.samples.BouncyBall
-import biz.jackman.mutaspace.samples.PhaserStarGameSample
+import biz.jackman.mutaspace.samples.TapAndLoot
 import biz.jackman.mutaspace.samples.PhaserStarGameSample2
 import biz.jackman.mutaspace.samples.Pong3d
 import org.scalajs.dom
@@ -45,6 +45,7 @@ object MutaspaceMain {
     //    keyJib()
     //incremental()
     PhaserStarGameSample2.start()
+    //TapAndLoot.start()
   }
 
 

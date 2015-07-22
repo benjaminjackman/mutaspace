@@ -2,6 +2,7 @@ package biz.jackman.facades.phaser
 
 
 import scala.scalajs.js
+import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.annotation.JSName
 
 
@@ -30,14 +31,15 @@ object Phaser {
 
   }
 
-  trait PhaserInit extends js.Object {
-    var preload: js.Function0[Unit] = js.native
-    var create: js.Function0[Unit] = js.native
-    var update: js.Function0[Unit] = js.native
+
+  trait PhaserCallbacks {
+    @JSExport def preload(): Unit
+    @JSExport def create(): Unit
+    @JSExport def update(): Unit
   }
 
   @JSName("Phaser.Game")
-  class Game(width: Int, height: Int, a1: js.Any, a2: String, init: PhaserInit) extends js.Object {
+  class Game(width: Int, height: Int, a1: js.Any, a2: String, init: PhaserCallbacks) extends js.Object {
     val input: Input = js.native
     val load: Loader = js.native
     val add: Adder = js.native
@@ -78,7 +80,7 @@ object Phaser {
   }
 
   trait Loader extends js.Object {
-    def audio(s: String, s1: String) : Unit = js.native
+    def audio(s: String, s1: String): Unit = js.native
     def spritesheet(name: String, url: String, x: Int, y: Int): Unit = js.native
     def image(name: String, url: String): Unit = js.native
   }
@@ -88,11 +90,11 @@ object Phaser {
   }
 
   trait Adder extends js.Object {
-    def tween(entity: Entity) : Tween = js.native
+    def tween(entity: Sprite): Tween = js.native
 
     def text(x: Double, y: Double, value: String, styling: js.Any): Text = js.native
     def group(): Group = js.native
-    def sprite(x: Int, y: Int, name: String): Entity = js.native
+    def sprite(x: Int, y: Int, name: String): Sprite = js.native
   }
 
   trait Text extends js.Object {
@@ -102,11 +104,11 @@ object Phaser {
   trait Physical extends js.Object
 
   trait Group extends js.Object with Physical {
-    def create(x: Int, y: Int, name: String): Entity = js.native
+    def create(x: Int, y: Int, name: String): Sprite = js.native
     var enableBody: Boolean = js.native
   }
 
-  trait Entity extends js.Object with Physical {
+  trait Sprite extends js.Object with Physical {
     var rotation: Double = js.native
 
     var frame: Int = js.native
@@ -154,10 +156,10 @@ object Phaser {
   }
 
   trait ArcadePhysics extends js.Object {
-    def angleToPointer(entity: Entity, pointer: Pointer): Double = js.native
-    def distanceToPointer(entity: Entity, pointer: Pointer): Double = js.native
+    def angleToPointer(entity: Sprite, pointer: Pointer): Double = js.native
+    def distanceToPointer(entity: Sprite, pointer: Pointer): Double = js.native
 
-    def overlap(a: Physical, b: Physical, value: js.Function2[Entity, Entity, Unit], a1: js.Any, a2: Any): Unit = js.native
+    def overlap(a: Physical, b: Physical, value: js.Function2[Sprite, Sprite, Unit], a1: js.Any, a2: Any): Unit = js.native
     def collide(a: Physical, b: Physical): Unit = js.native
     def enable(a: Physical): Unit = js.native
   }
@@ -175,7 +177,7 @@ object Phaser {
   }
 
   trait Sound extends js.Object {
-    def play(s : String) : Unit = js.native
+    def play(s: String): Unit = js.native
   }
 
 
