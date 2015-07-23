@@ -1,17 +1,17 @@
 @(message: String)
 
 <html>
-<head>
+  <head>
     @*<script src="@routes.Assets.at("javascripts/threejs/r70/three.js")"></script>*@
     @libs.phaserJs()
     @libs.scalaJs()
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mutaspace.css")">
-</head>
-<body>
-<div>Welcome to collect star game version 4: @message</div>
-<div id="content"></div>
-<script>
-    biz.jackman.mutaspace.MutaspaceMain().main()
-</script>
-</body>
+    </head>
+  <body>
+    <div id="content"></div>
+    <div>Tap And Loot! @message</div>
+    <script>
+    biz.jackman.mutaspace.MutaspaceMain ( ).main ( )
+    </script>
+  </body>
 </html>

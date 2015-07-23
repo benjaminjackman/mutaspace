@@ -1,6 +1,8 @@
 package biz.jackman.facades.phaser
 
 
+import org.scalajs.dom
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 import scala.scalajs.js.annotation.JSName
@@ -15,11 +17,63 @@ import scala.scalajs.js.annotation.JSName
 //////////////////////////////////////////////////////////////
 
 
+object | {
+  implicit def t1ToU2[T](x: T): T | Nothing = x.asInstanceOf[T | Nothing]
+  implicit def t2ToU2[T](x: T): Nothing | T = x.asInstanceOf[Nothing | T]
+
+  implicit def t1ToU3[T](x: T): T | Nothing | Nothing = x.asInstanceOf[T | Nothing | Nothing]
+  implicit def t2ToU3[T](x: T): Nothing | T | Nothing = x.asInstanceOf[Nothing | T | Nothing]
+
+  implicit def t1ToU4[T](x: T): T | Nothing | Nothing | Nothing = x.asInstanceOf[T | Nothing | Nothing | Nothing]
+  implicit def t2ToU4[T](x: T): Nothing | T | Nothing | Nothing = x.asInstanceOf[Nothing | T | Nothing | Nothing]
+}
+
+trait |[+T1, +T2] extends js.Object
+
+
+class A
+class B
+class C
+class D
+
+trait Foo extends js.Object {
+  def ab(x: A | B): js.Any = js.native
+  def abc(x: A | B | C): js.Any = js.native
+  def abcd(x: A | B | C | D): js.Any = js.native
+}
+
+object Bar {
+
+  val a = new A
+  val b = new B
+  val c = new C
+  val d = new D
+
+  val x: Foo = null
+
+  x.ab(a) //Compiles
+  x.ab(b) //This too
+
+  //  x.stringOrInt(5.0) //Nope
+
+  x.abc(a) //Ok
+  x.abc(b) //Ok
+  x.abc(c) //Ok
+
+  x.abcd(a) //Ok
+  x.abcd(b) //Ok
+  x.abcd(c) //Ok
+  x.abcd(d) //Ok
+}
+
+
 object Phaser {
 
 
+  trait Renderer extends js.Object
+
   @JSName("Phaser.AUTO")
-  object AUTO extends js.Object
+  object AUTO extends Renderer
 
 
   object Easing {
@@ -28,18 +82,18 @@ object Phaser {
       val None: js.Any = js.native
 
     }
-
   }
 
 
-  trait PhaserCallbacks {
+  trait State {
+    @JSExport var game: Game = _
     @JSExport def preload(): Unit
     @JSExport def create(): Unit
     @JSExport def update(): Unit
   }
 
   @JSName("Phaser.Game")
-  class Game(width: Int, height: Int, a1: js.Any, a2: String, init: PhaserCallbacks) extends js.Object {
+  class Game(width: Int, height: Int, renderer: Renderer, parent: dom.Element, state: State) extends js.Object {
     val input: Input = js.native
     val load: Loader = js.native
     val add: Adder = js.native
@@ -52,6 +106,8 @@ object Phaser {
     def x: Double = js.native
     def y: Double = js.native
 
+    def isDown: Boolean = js.native
+
   }
 
   trait Signal extends js.Object {
@@ -60,8 +116,12 @@ object Phaser {
 
   trait Input extends js.Object {
     val onDown: Signal = js.native
-
     val keyboard: KeyboardInput = js.native
+    val activePointer: Pointer = js.native
+  }
+
+  trait InputHandler extends js.Object {
+
   }
 
   trait KeyboardInput extends js.Object {
@@ -94,7 +154,7 @@ object Phaser {
 
     def text(x: Double, y: Double, value: String, styling: js.Any): Text = js.native
     def group(): Group = js.native
-    def sprite(x: Int, y: Int, name: String): Sprite = js.native
+    def sprite(x: Double, y: Double, name: String): Sprite = js.native
   }
 
   trait Text extends js.Object {
@@ -104,14 +164,17 @@ object Phaser {
   trait Physical extends js.Object
 
   trait Group extends js.Object with Physical {
-    def create(x: Int, y: Int, name: String): Sprite = js.native
+    def create(x: Double, y: Double, name: String): Sprite = js.native
     var enableBody: Boolean = js.native
   }
 
   trait Sprite extends js.Object with Physical {
+    val anchor: Point = js.native
+
     var rotation: Double = js.native
 
     var frame: Int = js.native
+    val input: InputHandler = js.native
     val animations: Animations = js.native
     val scale: Scale = js.native
     val body: ArcadePhysicsBody = js.native
@@ -139,12 +202,13 @@ object Phaser {
 
     var immovable: Boolean = js.native
     var collideWorldBounds: Boolean = js.native
-    val bounce: Vec2d = js.native
-    val gravity: Vec2d = js.native
-    val velocity: Vec2d = js.native
+    val bounce: Point = js.native
+    val gravity: Point = js.native
+    val velocity: Point = js.native
   }
 
-  trait Vec2d extends js.Object {
+  trait Point extends js.Object {
+    def set(x: Double, y: Double = js.native): Unit = js.native
     var x: Double = js.native
     var y: Double = js.native
   }
@@ -156,7 +220,7 @@ object Phaser {
   }
 
   trait ArcadePhysics extends js.Object {
-    def angleToPointer(entity: Sprite, pointer: Pointer): Double = js.native
+    def angleToPointer(entity: Sprite, pointer: Pointer = js.native): Double = js.native
     def distanceToPointer(entity: Sprite, pointer: Pointer): Double = js.native
 
     def overlap(a: Physical, b: Physical, value: js.Function2[Sprite, Sprite, Unit], a1: js.Any, a2: Any): Unit = js.native
@@ -173,7 +237,8 @@ object Phaser {
 
 
   trait World extends js.Object {
-    val height: Int = js.native
+    val height: Double = js.native
+    val width: Double = js.native
   }
 
   trait Sound extends js.Object {
