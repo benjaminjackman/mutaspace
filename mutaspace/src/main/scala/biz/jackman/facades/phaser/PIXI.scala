@@ -9,6 +9,7 @@ package importedjs {
 
 package PIXI {
 
+
 sealed trait blendModes extends js.Object {
 }
 
@@ -758,7 +759,7 @@ class Point protected () extends js.Object {
   var x: Double = js.native
   var y: Double = js.native
   override def clone(): Point = js.native
-  def set(x: Double, y: Double): Unit = js.native
+  def set(x: Double, y: Double): Point = js.native
 }
 
 @JSName("PIXI.Polygon")
@@ -1221,7 +1222,7 @@ class RenderTexture protected () extends Texture {
   def getCanvas(): HTMLCanvasElement = js.native
   def getImage(): HTMLImageElement = js.native
   def resize(width: Double, height: Double, updateBase: Boolean): Unit = js.native
-  def render(displayObject: DisplayObject, position: Point = ???, clear: Boolean = ???): Unit = js.native
+  def render(displayObject: DisplayObject, position: Point, clear: Boolean = ???): Unit = js.native
 }
 
 @JSName("PIXI.BoneData")
