@@ -1,11 +1,11 @@
 package biz.jackman.mutaspace
 package samples
 
-import biz.jackman.facades.phaser.Phaser
-import biz.jackman.facades.phaser.Phaser.Sprite
-import biz.jackman.facades.phaser.Phaser.Physical
-
-import scala.scalajs.js
+//import biz.jackman.facades.phaser.Phaser
+//import biz.jackman.facades.phaser.Phaser.Sprite
+//import biz.jackman.facades.phaser.Phaser.Physical
+//
+//import scala.scalajs.js
 
 
 //////////////////////////////////////////////////////////////
