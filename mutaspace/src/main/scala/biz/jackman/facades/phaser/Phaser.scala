@@ -10,7 +10,8 @@ import biz.jackman.facades.phaser.Physics
 
 
 
-package object phaser extends js.Object {
+
+object Phaser extends js.Object {
   var VERSION: String = js.native
   var DEV_VERSION: String = js.native
   var GAMES: js.Array[phaser.Game] = js.native
@@ -667,7 +668,7 @@ object Device extends js.Object {
   var whenReady: js.Function2[js.Function, js.Any, Unit] = js.native
 }
 
-package Easing {
+package easing {
 
 @JSName("Phaser.Easing.Back")
 class Back extends js.Object {
@@ -3640,7 +3641,7 @@ class Sprite protected () extends PIXI.Sprite {
   var angle: Double = js.native
   var animations: phaser.AnimationManager = js.native
   var autoCull: Boolean = js.native
-  var body: js.Any = js.native
+  var body: phaser.physics.arcade.Body = js.native
   var bottom: Double = js.native
   var cameraOffset: phaser.Point = js.native
   var checkWorldBounds: Boolean = js.native
