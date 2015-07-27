@@ -3,7 +3,6 @@ import com.typesafe.sbt.less.Import.LessKeys
 import com.typesafe.sbt.packager.universal.UniversalKeys
 import com.typesafe.sbt.web.Import._
 import com.typesafe.sbt.web.SbtWeb
-import org.sbtidea.SbtIdeaPlugin
 import sbt.Keys._
 import sbt._
 import sbtassembly.Plugin.{MergeStrategy, AssemblyKeys}

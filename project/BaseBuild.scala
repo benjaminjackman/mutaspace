@@ -1,7 +1,6 @@
 import cgta.sbtxsjs.SbtXSjsPlugin.XSjsProjects
 import com.typesafe.sbt.packager.universal.UniversalKeys
 import com.typesafe.sbt.web.SbtWeb
-import org.sbtidea.SbtIdeaPlugin
 import sbt.Keys._
 import sbt._
 import sbtassembly.Plugin.AssemblyKeys
@@ -49,7 +48,6 @@ object BaseBuild extends Build with UniversalKeys {
     p.settings(basicSettings: _*)
       .enablePlugins(ScalaJSPlugin)
       .settings(scalacOptions += "-language:reflectiveCalls")
-      .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName(name, "-sjs")))
       .settings(Libs.Otest.settingsSjs: _*)
       .settings(Publish.settingsSjs: _*)
       .settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
@@ -57,7 +55,6 @@ object BaseBuild extends Build with UniversalKeys {
 
   def jvmProject(name: String, p: Project) = {
     p.settings(basicSettings: _*)
-      .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName(name, "-jvm")))
       .settings(testFrameworks := Nil)
       .settings(Libs.Otest.settingsJvm: _*)
       .settings(Publish.settingsJvm: _*)
@@ -68,19 +65,19 @@ object BaseBuild extends Build with UniversalKeys {
       )
   }
 
-  def crossProject(name: String) = XSjsProjects(name, file(name))
-    .settingsBase(basicSettings: _*)
-    .settingsBase(Libs.Otest.settingsJvm: _*)
-    .settingsBase(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName(name)))
-    .settingsBase(test := {})
-    .settingsBase(testQuick := {})
-    .settingsBase(testOnly := {})
-    .settingsBase(compile := {sbt.inc.Analysis.Empty})
-    .settingsBase(compile in Test := {sbt.inc.Analysis.Empty})
-    .mapJvm(jvmProject(name, _))
-    .mapSjs(sjsProject(name, _))
-    .settingsJvmTest(basicSettings: _*)
-    .settingsSjsTest(basicSettings: _*)
+//  def crossProject(name: String) = XSjsProjects(name, file(name))
+//    .settingsBase(basicSettings: _*)
+//    .settingsBase(Libs.Otest.settingsJvm: _*)
+//    .settingsBase(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName(name)))
+//    .settingsBase(test := {})
+//    .settingsBase(testQuick := {})
+//    .settingsBase(testOnly := {})
+//    .settingsBase(compile := {sbt.inc.Analysis.Empty})
+//    .settingsBase(compile in Test := {sbt.inc.Analysis.Empty})
+//    .mapJvm(jvmProject(name, _))
+//    .mapSjs(sjsProject(name, _))
+//    .settingsJvmTest(basicSettings: _*)
+//    .settingsSjsTest(basicSettings: _*)
 
 
   def playProject(sjsProjects: Seq[sbt.ProjectReference]) = {
@@ -94,7 +91,6 @@ object BaseBuild extends Build with UniversalKeys {
       .settings(libraryDependencies ++= Libs.Play.exclusiveDeps)
       .aggregate(sjsProjects: _*)
       .settings(publish := {})
-      .settings(SbtIdeaPlugin.ideaBasePackage := Some(getBasePackageName("mutaplay")))
       .settings(basicSettings: _*)
       .settings(sjsForPlayOutDir := (crossTarget in Compile).value / "classes" / "public" / "javascripts",
         compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(lastSjsProject, Compile)),

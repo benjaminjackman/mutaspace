@@ -8,9 +8,6 @@ import scala.scalajs.js.typedarray._
 import biz.jackman.facades.phaser.Physics
 
 
-
-
-
 object Phaser extends js.Object {
   var VERSION: String = js.native
   var DEV_VERSION: String = js.native
@@ -57,7 +54,7 @@ package phaser {
 import importedjs.PIXI
 
 @JSName("Phaser.Animation")
-class Animation protected () extends js.Object {
+class Animation protected() extends js.Object {
   def this(game: phaser.Game, parent: phaser.Sprite, name: String, frameData: phaser.FrameData, frames: js.Any, frameRate: Double = ???, loop: Boolean = ???) = this()
   var currentFrame: phaser.Frame = js.native
   var delay: Double = js.native
@@ -98,7 +95,7 @@ object Animation extends js.Object {
 }
 
 @JSName("Phaser.AnimationManager")
-class AnimationManager protected () extends js.Object {
+class AnimationManager protected() extends js.Object {
   def this(sprite: phaser.Sprite) = this()
   var currentAnim: phaser.Animation = js.native
   var currentFrame: phaser.Frame = js.native
@@ -138,7 +135,7 @@ object AnimationParser extends js.Object {
 }
 
 @JSName("Phaser.AudioSprite")
-class AudioSprite protected () extends js.Object {
+class AudioSprite protected() extends js.Object {
   def this(game: phaser.Game, key: String) = this()
   var game: phaser.Game = js.native
   var key: String = js.native
@@ -152,7 +149,7 @@ class AudioSprite protected () extends js.Object {
 }
 
 @JSName("Phaser.ArraySet")
-class ArraySet protected () extends js.Object {
+class ArraySet protected() extends js.Object {
   def this(list: js.Array[js.Any]) = this()
   var position: Double = js.native
   var list: js.Array[js.Any] = js.native
@@ -188,7 +185,7 @@ object ArrayUtils extends js.Object {
 }
 
 @JSName("Phaser.BitmapData")
-class BitmapData protected () extends js.Object {
+class BitmapData protected() extends js.Object {
   def this(game: phaser.Game, key: String, width: Double = ???, height: Double = ???) = this()
   var baseTexture: PIXI.BaseTexture = js.native
   var buffer: ArrayBuffer = js.native
@@ -277,7 +274,7 @@ object BitmapData extends js.Object {
 }
 
 @JSName("Phaser.BitmapText")
-class BitmapText protected () extends PIXI.BitmapText {
+class BitmapText protected() extends PIXI.BitmapText {
   def this(game: phaser.Game, x: Double, y: Double, font: String, text: String = ???, size: Double = ???) = this()
   var align: String = js.native
   var angle: Double = js.native
@@ -307,7 +304,7 @@ class BitmapText protected () extends PIXI.BitmapText {
 }
 
 @JSName("Phaser.Button")
-class Button protected () extends phaser.Image {
+class Button protected() extends phaser.Image {
   def this(game: phaser.Game, x: Double = ???, y: Double = ???, key: String = ???, callback: js.Function = ???, callbackContext: js.Any = ???, overFrame: js.Any = ???, outFrame: js.Any = ???, downFrame: js.Any = ???, upFrame: js.Any = ???) = this()
   var forceOut: Boolean = js.native
   var freezeFrames: Boolean = js.native
@@ -339,7 +336,7 @@ class Button protected () extends phaser.Image {
 }
 
 @JSName("Phaser.Cache")
-class Cache protected () extends js.Object {
+class Cache protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var autoResolveURL: Boolean = js.native
   var game: phaser.Game = js.native
@@ -440,7 +437,7 @@ object Cache extends js.Object {
 }
 
 @JSName("Phaser.Camera")
-class Camera protected () extends js.Object {
+class Camera protected() extends js.Object {
   def this(game: phaser.Game, id: Double, x: Double, y: Double, width: Double, height: Double) = this()
   var atLimit: js.Any = js.native
   var bounds: phaser.Rectangle = js.native
@@ -503,7 +500,7 @@ object Canvas extends js.Object {
 }
 
 @JSName("Phaser.Circle")
-class Circle protected () extends js.Object {
+class Circle protected() extends js.Object {
   def this(x: Double = ???, y: Double = ???, diameter: Double = ???) = this()
   var area: Double = js.native
   var bottom: Double = js.native
@@ -802,7 +799,7 @@ package object easing extends js.Object {
 }
 
 @JSName("Phaser.Ellipse")
-class Ellipse protected () extends js.Object {
+class Ellipse protected() extends js.Object {
   def this(x: Double = ???, y: Double = ???, width: Double = ???, height: Double = ???) = this()
   var bottom: Double = js.native
   var empty: Boolean = js.native
@@ -829,7 +826,7 @@ object Ellipse extends js.Object {
 }
 
 @JSName("Phaser.Events")
-class Events protected () extends js.Object {
+class Events protected() extends js.Object {
   def this(sprite: phaser.Sprite) = this()
   var parent: phaser.Sprite = js.native
   var onAddedToGroup: phaser.Signal = js.native
@@ -853,7 +850,7 @@ class Events protected () extends js.Object {
 }
 
 @JSName("Phaser.Filter")
-class Filter protected () extends PIXI.AbstractFilter {
+class Filter protected() extends PIXI.AbstractFilter {
   def this(game: phaser.Game, args: js.Any*) = this()
   var game: phaser.Game = js.native
   var height: Double = js.native
@@ -866,10 +863,10 @@ class Filter protected () extends PIXI.AbstractFilter {
   def update(pointer: phaser.Pointer = ???): Unit = js.native
 }
 
-package Filter {
+package filter {
 
 @JSName("Phaser.Filter.BinarySerpents")
-class BinarySerpents protected () extends phaser.Filter {
+class BinarySerpents protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, march: Double = ???, maxDistance: Double = ???) = this()
   var fog: Double = js.native
 }
@@ -885,13 +882,13 @@ class BlurY extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.CausticLight")
-class CausticLight protected () extends phaser.Filter {
+class CausticLight protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, divisor: Double = ???) = this()
   def init(width: Double, height: Double, divisor: Double = ???): Unit = js.native
 }
 
 @JSName("Phaser.Filter.CheckerWave")
-class CheckerWave protected () extends phaser.Filter {
+class CheckerWave protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double) = this()
   var alpha: Double = js.native
   var cameraX: Double = js.native
@@ -903,14 +900,14 @@ class CheckerWave protected () extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.ColorBars")
-class ColorBars protected () extends phaser.Filter {
+class ColorBars protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double) = this()
   var alpha: Double = js.native
   def init(width: Double, height: Double): Unit = js.native
 }
 
 @JSName("Phaser.Filter.Fire")
-class Fire protected () extends phaser.Filter {
+class Fire protected() extends phaser.Filter {
   def this(width: Double, height: Double, alpha: Double = ???, shift: Double = ???) = this()
   var alpha: Double = js.native
   var shift: Double = js.native
@@ -924,7 +921,7 @@ class Gray extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.HueRotate")
-class HueRotate protected () extends phaser.Filter {
+class HueRotate protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, texture: js.Any) = this()
   var alpha: Double = js.native
   def init(width: Double, height: Double, texture: js.Any): Unit = js.native
@@ -936,7 +933,7 @@ class LazerBeam extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.LightBeam")
-class LightBeam protected () extends phaser.Filter {
+class LightBeam protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double) = this()
   var alpha: Double = js.native
   var blue: Double = js.native
@@ -948,7 +945,7 @@ class LightBeam protected () extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.Marble")
-class Marble protected () extends phaser.Filter {
+class Marble protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, speed: Double = ???, intensity: Double = ???) = this()
   var alpha: Double = js.native
   var intensity: Double = js.native
@@ -962,7 +959,7 @@ class Pixelate extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.Plasma")
-class Plasma protected () extends phaser.Filter {
+class Plasma protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, alpha: Double = ???, size: Double = ???) = this()
   var alpha: Double = js.native
   var blueShift: Double = js.native
@@ -973,13 +970,13 @@ class Plasma protected () extends phaser.Filter {
 }
 
 @JSName("Phaser.Filter.SampleFilter")
-class SampleFilter protected () extends phaser.Filter {
+class SampleFilter protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, divisor: Double = ???) = this()
   def init(width: Double, height: Double, divisor: Double = ???): Unit = js.native
 }
 
 @JSName("Phaser.Filter.Tunnel")
-class Tunnel protected () extends phaser.Filter {
+class Tunnel protected() extends phaser.Filter {
   def this(game: phaser.Game, width: Double, height: Double, texture: js.Any) = this()
   var alpha: Double = js.native
   var origin: Double = js.native
@@ -989,7 +986,7 @@ class Tunnel protected () extends phaser.Filter {
 }
 
 @JSName("Phaser.FlexGrid")
-class FlexGrid protected () extends js.Object {
+class FlexGrid protected() extends js.Object {
   def this(manager: phaser.ScaleManager, width: Double, height: Double) = this()
   var game: phaser.Game = js.native
   var manager: phaser.ScaleManager = js.native
@@ -1028,7 +1025,7 @@ class FlexGrid protected () extends js.Object {
 }
 
 @JSName("Phaser.FlexLayer")
-class FlexLayer protected () extends phaser.Group {
+class FlexLayer protected() extends phaser.Group {
   def this(manager: phaser.ScaleManager, position: phaser.Point, bounds: phaser.Rectangle, scale: phaser.Point) = this()
   var grid: phaser.FlexGrid = js.native
   var manager: phaser.ScaleManager = js.native
@@ -1045,7 +1042,7 @@ class FlexLayer protected () extends phaser.Group {
 }
 
 @JSName("Phaser.Frame")
-class Frame protected () extends js.Object {
+class Frame protected() extends js.Object {
   def this(index: Double, x: Double, y: Double, width: Double, height: Double, name: String, uuid: String) = this()
   var bottom: Double = js.native
   var centerX: Double = js.native
@@ -1101,7 +1098,7 @@ trait IGameConfig extends js.Object {
 }
 
 @JSName("Phaser.Game")
-class Game protected () extends js.Object {
+class Game protected() extends js.Object {
   def this(width: js.Any = ???, height: js.Any = ???, renderer: Double = ???, parent: js.Any = ???, state: js.Any = ???, transparent: Boolean = ???, antialias: Boolean = ???, physicsConfig: js.Any = ???) = this()
   def this(config: IGameConfig) = this()
   var add: phaser.GameObjectFactory = js.native
@@ -1176,7 +1173,7 @@ class Game protected () extends js.Object {
 }
 
 @JSName("Phaser.GameObjectCreator")
-class GameObjectCreator protected () extends js.Object {
+class GameObjectCreator protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var game: phaser.Game = js.native
   var world: phaser.World = js.native
@@ -1185,7 +1182,7 @@ class GameObjectCreator protected () extends js.Object {
   def bitmapData(width: Double = ???, height: Double = ???, key: String = ???, addToCache: Boolean = ???): phaser.BitmapData = js.native
   def bitmapText(x: Double, y: Double, font: String, text: String = ???, size: Double = ???): phaser.BitmapText = js.native
   def button(x: Double = ???, y: Double = ???, key: String = ???, callback: js.Function = ???, callbackContext: js.Any = ???, overFrame: js.Any = ???, outFrame: js.Any = ???, downFrame: js.Any = ???, upFrame: js.Any = ???): phaser.Button = js.native
-  def emitter(x: Double = ???, y: Double = ???, maxParticles: Double = ???): phaser.Particles.Arcade.Emitter = js.native
+  def emitter(x: Double = ???, y: Double = ???, maxParticles: Double = ???): phaser.particles.arcade.Emitter = js.native
   def filter(filter: js.Any, args: js.Any*): phaser.Filter = js.native
   def graphics(x: Double, y: Double): phaser.Graphics = js.native
   def group(parent: js.Any = ???, name: String = ???, addToStage: Boolean = ???, enableBody: Boolean = ???, physicsBodyType: Double = ???): phaser.Group = js.native
@@ -1203,7 +1200,7 @@ class GameObjectCreator protected () extends js.Object {
 }
 
 @JSName("Phaser.GameObjectFactory")
-class GameObjectFactory protected () extends js.Object {
+class GameObjectFactory protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var game: phaser.Game = js.native
   var world: phaser.World = js.native
@@ -1212,7 +1209,7 @@ class GameObjectFactory protected () extends js.Object {
   def bitmapData(width: Double = ???, height: Double = ???, key: String = ???, addToCache: Boolean = ???): phaser.BitmapData = js.native
   def bitmapText(x: Double, y: Double, font: String, text: String = ???, size: Double = ???, group: phaser.Group = ???): phaser.BitmapText = js.native
   def button(x: Double = ???, y: Double = ???, key: String = ???, callback: js.Function = ???, callbackContext: js.Any = ???, overFrame: js.Any = ???, outFrame: js.Any = ???, downFrame: js.Any = ???, upFrame: js.Any = ???, group: phaser.Group = ???): phaser.Button = js.native
-  def emitter(x: Double = ???, y: Double = ???, maxParticles: Double = ???): phaser.Particles.Arcade.Emitter = js.native
+  def emitter(x: Double = ???, y: Double = ???, maxParticles: Double = ???): phaser.particles.arcade.Emitter = js.native
   def existing(`object`: js.Any): js.Dynamic = js.native
   def filter(filter: String, args: js.Any*): phaser.Filter = js.native
   def graphics(x: Double, y: Double, group: phaser.Group = ???): phaser.Graphics = js.native
@@ -1233,7 +1230,7 @@ class GameObjectFactory protected () extends js.Object {
 }
 
 @JSName("Phaser.Gamepad")
-class Gamepad protected () extends js.Object {
+class Gamepad protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var active: Boolean = js.native
   var callbackContext: js.Any = js.native
@@ -1334,7 +1331,7 @@ object Gamepad extends js.Object {
 }
 
 @JSName("Phaser.GamepadButton")
-class GamepadButton protected () extends js.Object {
+class GamepadButton protected() extends js.Object {
   def this(pad: phaser.SinglePad, buttonCode: Double) = this()
   var buttonCode: Double = js.native
   var duration: Double = js.native
@@ -1359,7 +1356,7 @@ class GamepadButton protected () extends js.Object {
 }
 
 @JSName("Phaser.Graphics")
-class Graphics protected () extends PIXI.Graphics {
+class Graphics protected() extends PIXI.Graphics {
   def this(game: phaser.Game, x: Double, y: Double) = this()
   var angle: Double = js.native
   var cameraOffset: phaser.Point = js.native
@@ -1383,7 +1380,7 @@ class Graphics protected () extends PIXI.Graphics {
 }
 
 @JSName("Phaser.Group")
-class Group protected () extends PIXI.DisplayObjectContainer {
+class Group protected() extends PIXI.DisplayObjectContainer {
   def this(game: phaser.Game, parent: PIXI.DisplayObjectContainer = ???, name: String = ???, addToStage: Boolean = ???, enableBody: Boolean = ???, physicsBodyType: Double = ???) = this()
   var angle: Double = js.native
   var alive: Boolean = js.native
@@ -1422,7 +1419,7 @@ class Group protected () extends PIXI.DisplayObjectContainer {
   def customSort(sortHandler: js.Function, context: js.Any = ???): Unit = js.native
   def destroy(destroyChildren: Boolean = ???, soft: Boolean = ???): Unit = js.native
   def divideAll(property: String, amount: Double, checkAlive: Boolean = ???, checkVisible: Boolean = ???): Unit = js.native
-//  def forEach(callback: js.Function, callbackContext: js.Any, checkExists: Boolean = ???, args: js.Any*): Unit = js.native
+  //  def forEach(callback: js.Function, callbackContext: js.Any, checkExists: Boolean = ???, args: js.Any*): Unit = js.native
   def forEachAlive(callback: js.Function, callbackContext: js.Any, args: js.Any*): Unit = js.native
   def forEachDead(callback: js.Function, callbackContext: js.Any, args: js.Any*): Unit = js.native
   def forEachExists(callback: js.Function, callbackContext: js.Any): Unit = js.native
@@ -1436,7 +1433,7 @@ class Group protected () extends PIXI.DisplayObjectContainer {
   def getRandom(startIndex: Double = ???, length: Double = ???): js.Dynamic = js.native
   def getTop(): js.Dynamic = js.native
   def hasProperty(child: js.Any, key: js.Array[String]): Boolean = js.native
-//  def iterate(key: String, value: js.Any, returnType: Double, callback: js.Function = ???, callbackContext: js.Any = ???, args: js.Any*): js.Dynamic = js.native
+  //  def iterate(key: String, value: js.Any, returnType: Double, callback: js.Function = ???, callbackContext: js.Any = ???, args: js.Any*): js.Dynamic = js.native
   def moveDown(): PIXI.DisplayObject = js.native
   def moveUp(child: js.Any): js.Dynamic = js.native
   def multiplyAll(property: String, amount: Double, checkAlive: Boolean, checkVisible: Boolean): Unit = js.native
@@ -1473,7 +1470,7 @@ object Group extends js.Object {
 }
 
 @JSName("Phaser.Image")
-class Image protected () extends PIXI.Sprite {
+class Image protected() extends PIXI.Sprite {
   def this(game: phaser.Game, x: Double, y: Double, key: js.Any, frame: js.Any) = this()
   var alive: Boolean = js.native
   var angle: Double = js.native
@@ -1529,7 +1526,7 @@ class Image protected () extends PIXI.Sprite {
 }
 
 @JSName("Phaser.Input")
-class Input protected () extends js.Object {
+class Input protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var activePointer: phaser.Pointer = js.native
   var circle: phaser.Circle = js.native
@@ -1553,7 +1550,7 @@ class Input protected () extends js.Object {
   var moveCallback: js.Function3[phaser.Pointer, Double, Double, Unit] = js.native
   var moveCallbacks: js.Array[js.Function3[phaser.Pointer, Double, Double, Unit]] = js.native
   var moveCallbackContext: js.Any = js.native
-//  var mspointer: phaser.MSPointer = js.native
+  //  var mspointer: phaser.MSPointer = js.native
   var multiInputOverride: Double = js.native
   var onDown: phaser.Signal = js.native
   var onHold: phaser.Signal = js.native
@@ -1615,7 +1612,7 @@ object Input extends js.Object {
 }
 
 @JSName("Phaser.InputHandler")
-class InputHandler protected () extends js.Object {
+class InputHandler protected() extends js.Object {
   def this(sprite: phaser.Sprite) = this()
   var allowHorizontalDrag: Boolean = js.native
   var allowVerticalDrag: Boolean = js.native
@@ -1686,7 +1683,7 @@ class InputHandler protected () extends js.Object {
 }
 
 @JSName("Phaser.Key")
-class Key protected () extends js.Object {
+class Key protected() extends js.Object {
   def this(game: phaser.Game, keycode: Double) = this()
   var altKey: Boolean = js.native
   var ctrlKey: Boolean = js.native
@@ -1718,7 +1715,7 @@ class Key protected () extends js.Object {
 }
 
 @JSName("Phaser.Keyboard")
-class Keyboard protected () extends js.Object {
+class Keyboard protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var callbackContext: js.Any = js.native
   var disabled: Boolean = js.native
@@ -1856,7 +1853,7 @@ object Keyboard extends js.Object {
 }
 
 @JSName("Phaser.Line")
-class Line protected () extends js.Object {
+class Line protected() extends js.Object {
   def this(x1: Double = ???, y1: Double = ???, x2: Double = ???, y2: Double = ???) = this()
   var angle: Double = js.native
   var end: phaser.Point = js.native
@@ -1907,7 +1904,7 @@ class LinkedList extends js.Object {
 }
 
 @JSName("Phaser.Loader")
-class Loader protected () extends js.Object {
+class Loader protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var baseURL: String = js.native
   var crossOrigin: js.Any = js.native
@@ -1953,7 +1950,7 @@ class Loader protected () extends js.Object {
   def loadFile(file: js.Any): Unit = js.native
   def loadImageTag(file: js.Any): Unit = js.native
   def pack(key: String, url: String = ???, data: js.Any = ???, callbackContext: js.Any = ???): phaser.Loader = js.native
-//  def parseXml(data: String): XMLDocument = js.native
+  //  def parseXml(data: String): XMLDocument = js.native
   def physics(key: String, url: String = ???, data: js.Any = ???, format: String = ???): phaser.Loader = js.native
   def processLoadQueue(): Unit = js.native
   def processPack(pack: js.Any): Unit = js.native
@@ -2098,7 +2095,7 @@ trait WheelEventProxy extends js.Object {
 }
 
 @JSName("Phaser.Mouse")
-class Mouse protected () extends js.Object {
+class Mouse protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var button: Double = js.native
   var callbackContext: js.Any = js.native
@@ -2171,7 +2168,7 @@ object Mouse extends js.Object {
 //}
 
 @JSName("Phaser.Net")
-class Net protected () extends js.Object {
+class Net protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var game: phaser.Game = js.native
   def checkDomainName(domain: String): Boolean = js.native
@@ -2182,7 +2179,7 @@ class Net protected () extends js.Object {
 }
 
 @JSName("Phaser.Particle")
-class Particle protected () extends phaser.Sprite {
+class Particle protected() extends phaser.Sprite {
   def this(game: phaser.Game, x: Double, y: Double, key: js.Any = ???, frame: js.Any = ???) = this()
   def onEmit(): Unit = js.native
   def setAlphaData(data: js.Array[js.Any]): Unit = js.native
@@ -2190,22 +2187,22 @@ class Particle protected () extends phaser.Sprite {
 }
 
 @JSName("Phaser.Particles")
-class Particles protected () extends js.Object {
+class Particles protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var emitters: js.Any = js.native
   var game: phaser.Game = js.native
   var ID: Double = js.native
-  def add(emitter: phaser.Particles.Arcade.Emitter): phaser.Particles.Arcade.Emitter = js.native
-  def remove(emitter: phaser.Particles.Arcade.Emitter): Unit = js.native
+  def add(emitter: phaser.particles.arcade.Emitter): phaser.particles.arcade.Emitter = js.native
+  def remove(emitter: phaser.particles.arcade.Emitter): Unit = js.native
   def update(): Unit = js.native
 }
 
-package Particles {
+package particles {
 
-package Arcade {
+package arcade {
 
 @JSName("Phaser.Particles.Arcade.Emitter")
-class Emitter protected () extends phaser.Group {
+class Emitter protected() extends phaser.Group {
   def this(game: phaser.Game, x: Double = ???, y: Double = ???, maxParticles: Double = ???) = this()
   var alphaData: js.Array[js.Any] = js.native
   var autoAlpha: Boolean = js.native
@@ -2240,7 +2237,7 @@ class Emitter protected () extends phaser.Group {
   def explode(lifespan: Double = ???, quantity: Double = ???): Unit = js.native
   def flow(lifespan: Double = ???, frequency: Double = ???, quantity: Double = ???, total: Double = ???, immediate: Boolean = ???): Unit = js.native
   def kill(): Unit = js.native
-  def makeParticles(keys: js.Any, frames: js.Any = ???, quantity: Double = ???, collide: Boolean = ???, collideWorldBounds: Boolean = ???): phaser.Particles.Arcade.Emitter = js.native
+  def makeParticles(keys: js.Any, frames: js.Any = ???, quantity: Double = ???, collide: Boolean = ???, collideWorldBounds: Boolean = ???): phaser.particles.arcade.Emitter = js.native
   def reset(x: Double, y: Double, health: Double = ???): phaser.Particles = js.native
   def setAlpha(min: Double = ???, max: Double = ???, rate: Double = ???, ease: js.Function1[Double, Double] = ???, yoyo: Boolean = ???): Unit = js.native
   def setRotation(min: Double = ???, max: Double = ???): Unit = js.native
@@ -2257,13 +2254,13 @@ class Emitter protected () extends phaser.Group {
 }
 
 @JSName("Phaser.Physics")
-class Physics protected () extends js.Object {
+class Physics protected() extends js.Object {
   def this(game: phaser.Game, config: js.Any = ???) = this()
   var arcade: phaser.physics.Arcade = js.native
   var config: js.Any = js.native
   var game: phaser.Game = js.native
   var ninja: phaser.physics.Ninja = js.native
-//  var p2: phaser.physics.P2 = js.native
+  //  var p2: phaser.physics.P2 = js.native
   def clear(): Unit = js.native
   def destroy(): Unit = js.native
   def enable(`object`: js.Any, system: Double = ???, debug: Boolean = ???): Unit = js.native
@@ -2287,7 +2284,7 @@ object Physics extends js.Object {
 package physics {
 
 @JSName("phaser.physics.arcade")
-class Arcade protected () extends js.Object {
+class Arcade protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var bounds: phaser.Rectangle = js.native
   var checkCollision: js.Any = js.native
@@ -2349,7 +2346,7 @@ object Arcade extends js.Object {
 package arcade {
 
 @JSName("phaser.physics.arcade.Body")
-class Body protected () extends js.Object {
+class Body protected() extends js.Object {
   def this(sprite: phaser.Sprite) = this()
   var acceleration: phaser.Point = js.native
   var allowGravity: Boolean = js.native
@@ -2437,7 +2434,7 @@ class FaceChoices extends js.Object {
 }
 
 @JSName("Phaser.Physics.Ninja")
-class Ninja protected () extends js.Object {
+class Ninja protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var game: phaser.Game = js.native
   var gravity: Double = js.native
@@ -2448,29 +2445,29 @@ class Ninja protected () extends js.Object {
   var time: phaser.Time = js.native
   def clearTilemapLayerBodies(map: phaser.Tilemap, layer: js.Any): Unit = js.native
   def collide(object1: js.Any, object2: js.Any, collideCallback: js.Function = ???, processCallback: js.Function = ???, callbackContext: js.Any = ???): Boolean = js.native
-  def convertTilemap(map: phaser.Tilemap, layer: js.Any = ???, slopeMap: js.Any = ???): js.Array[phaser.physics.Ninja.Tile] = js.native
+  def convertTilemap(map: phaser.Tilemap, layer: js.Any = ???, slopeMap: js.Any = ???): js.Array[phaser.physics.ninja.Tile] = js.native
   def enableAABB(`object`: js.Any, children: Boolean = ???): Unit = js.native
   def enableCircle(`object`: js.Any, radius: Double, children: Boolean = ???): Unit = js.native
   def enableTile(`object`: js.Any, id: Double, children: Boolean = ???): Unit = js.native
   def enable(`object`: js.Any, `type`: Double = ???, id: Double = ???, radius: Double = ???, children: Boolean = ???): Unit = js.native
   def enableBody(`object`: js.Any, `type`: Double = ???, id: Double = ???, radius: Double = ???): Unit = js.native
   def overlap(object1: js.Any, object2: js.Any, overlapCallback: js.Function = ???, processCallback: js.Function = ???, callbackContext: js.Any = ???): Boolean = js.native
-  def separate(body1: phaser.physics.Ninja.Body, body2: phaser.physics.Ninja.Body, processCallback: js.Function = ???, callbackContext: js.Any = ???, overlapOnly: Boolean = ???): Boolean = js.native
+  def separate(body1: phaser.physics.ninja.Body, body2: phaser.physics.ninja.Body, processCallback: js.Function = ???, callbackContext: js.Any = ???, overlapOnly: Boolean = ???): Boolean = js.native
   def setBounds(x: Double, y: Double, width: Double, height: Double): Unit = js.native
   def setBoundsToWorld(): Unit = js.native
 }
 
-package Ninja {
+package ninja {
 
 @JSName("Phaser.Physics.Ninja.Body")
-class Body protected () extends js.Object {
+class Body protected() extends js.Object {
   def this(system: phaser.physics.Ninja, sprite: phaser.Sprite, `type`: Double = ???, id: Double = ???, radius: Double = ???, x: Double = ???, y: Double = ???, width: Double = ???, height: Double = ???) = this()
-  var aabb: phaser.physics.Ninja.AABB = js.native
+  var aabb: phaser.physics.ninja.AABB = js.native
   var angle: Double = js.native
   var bottom: Double = js.native
   var bounce: Double = js.native
   var checkCollision: phaser.physics.arcade.FaceChoices = js.native
-  var circle: phaser.physics.Ninja.Circle = js.native
+  var circle: phaser.physics.ninja.Circle = js.native
   var collideWorldBounds: Boolean = js.native
   var drag: Double = js.native
   var facing: Double = js.native
@@ -2483,7 +2480,7 @@ class Body protected () extends js.Object {
   var right: Double = js.native
   var sprite: phaser.Sprite = js.native
   var system: phaser.physics.Ninja = js.native
-  var tile: phaser.physics.Ninja.Tile = js.native
+  var tile: phaser.physics.ninja.Tile = js.native
   var touching: phaser.physics.arcade.FaceChoices = js.native
   var `type`: Double = js.native
   var shape: js.Any = js.native
@@ -2507,15 +2504,15 @@ class Body protected () extends js.Object {
   def moveDown(speed: Double): Unit = js.native
   def poseUpdate(): Unit = js.native
   def preUpdate(): Unit = js.native
-  def render(context: js.Any, body: phaser.physics.Ninja.Body, color: String = ???, filled: Boolean = ???): Unit = js.native
+  def render(context: js.Any, body: phaser.physics.ninja.Body, color: String = ???, filled: Boolean = ???): Unit = js.native
   def reset(): Unit = js.native
 }
 
 @JSName("Phaser.Physics.Ninja.AABB")
-class AABB protected () extends js.Object {
-  def this(body: phaser.physics.Ninja.Body, x: Double, y: Double, width: Double, height: Double) = this()
+class AABB protected() extends js.Object {
+  def this(body: phaser.physics.ninja.Body, x: Double, y: Double, width: Double, height: Double) = this()
   var aabbTileProjections: js.Any = js.native
-  var body: phaser.physics.Ninja.Body = js.native
+  var body: phaser.physics.ninja.Body = js.native
   var height: Double = js.native
   var oldPos: phaser.Point = js.native
   var pos: phaser.Point = js.native
@@ -2525,14 +2522,14 @@ class AABB protected () extends js.Object {
   var xw: Double = js.native
   var yw: Double = js.native
   def collideWorldBounds(): Unit = js.native
-  def collideAABBVsAABB(aabb: phaser.physics.Ninja.AABB): Boolean = js.native
-  def collideAABBVsTile(tile: phaser.physics.Ninja.Tile): Boolean = js.native
+  def collideAABBVsAABB(aabb: phaser.physics.ninja.AABB): Boolean = js.native
+  def collideAABBVsTile(tile: phaser.physics.ninja.Tile): Boolean = js.native
   def destroy(): Unit = js.native
   def integrate(): Unit = js.native
   def render(context: js.Any, xOffset: Double, yOffset: Double, color: String, filled: Boolean): Unit = js.native
   def reportCollisionVsWorld(px: Double, py: Double, dx: Double, dy: Double, obj: js.Any): Unit = js.native
   def reportCollisionVsBody(px: Double, py: Double, dx: Double, dy: Double, obj: js.Any): Unit = js.native
-  def resolveTile(x: Double, y: Double, body: phaser.physics.Ninja.AABB, tile: phaser.physics.Ninja.Tile): Boolean = js.native
+  def resolveTile(x: Double, y: Double, body: phaser.physics.ninja.AABB, tile: phaser.physics.ninja.Tile): Boolean = js.native
   def reverse(): Unit = js.native
 }
 
@@ -2544,12 +2541,12 @@ object AABB extends js.Object {
 }
 
 @JSName("Phaser.Physics.Ninja.Circle")
-class Circle protected () extends js.Object {
-  def this(body: phaser.physics.Ninja.Body, x: Double, y: Double, radius: Double) = this()
+class Circle protected() extends js.Object {
+  def this(body: phaser.physics.ninja.Body, x: Double, y: Double, radius: Double) = this()
   var COL_NONE: Double = js.native
   var COL_AXIS: Double = js.native
   var COL_OTHER: Double = js.native
-  var body: phaser.physics.Ninja.Body = js.native
+  var body: phaser.physics.ninja.Body = js.native
   var circleTileProjections: js.Any = js.native
   var oldPos: phaser.Point = js.native
   var height: Double = js.native
@@ -2561,7 +2558,7 @@ class Circle protected () extends js.Object {
   var width: Double = js.native
   var xw: Double = js.native
   var yw: Double = js.native
-  def collideCircleVsTile(tile: phaser.physics.Ninja.Tile): Boolean = js.native
+  def collideCircleVsTile(tile: phaser.physics.ninja.Tile): Boolean = js.native
   def collideWorldBounds(): Unit = js.native
   def destroy(): Unit = js.native
   def distance(dest: Double, round: Boolean = ???): Double = js.native
@@ -2569,7 +2566,7 @@ class Circle protected () extends js.Object {
   def render(context: js.Any, xOffset: Double, yOffset: Double, color: String, filled: Boolean): Unit = js.native
   def reportCollisionVsWorld(px: Double, py: Double, dx: Double, dy: Double, obj: js.Any): Unit = js.native
   def reportCollisionVsBody(px: Double, py: Double, dx: Double, dy: Double, obj: js.Any): Unit = js.native
-  def resolveCircleTile(x: Double, y: Double, oH: Double, oV: Double, obj: phaser.physics.Ninja.Circle, t: phaser.physics.Ninja.Tile): Boolean = js.native
+  def resolveCircleTile(x: Double, y: Double, oH: Double, oV: Double, obj: phaser.physics.ninja.Circle, t: phaser.physics.ninja.Tile): Boolean = js.native
 }
 
 sealed trait TileType extends js.Object {
@@ -2592,9 +2589,9 @@ object TileType extends js.Object {
 }
 
 @JSName("Phaser.Physics.Ninja.Tile")
-class Tile protected () extends js.Object {
-  def this(body: phaser.physics.Ninja.Body, x: Double, y: Double, width: Double, height: Double, `type`: Double = ???) = this()
-  var body: phaser.physics.Ninja.Body = js.native
+class Tile protected() extends js.Object {
+  def this(body: phaser.physics.ninja.Body, x: Double, y: Double, width: Double, height: Double, `type`: Double = ???) = this()
+  var body: phaser.physics.ninja.Body = js.native
   var bottom: Double = js.native
   var flipped: Boolean = js.native
   var height: Double = js.native
@@ -2604,7 +2601,7 @@ class Tile protected () extends js.Object {
   var right: Double = js.native
   var rotation: Double = js.native
   var system: phaser.physics.Ninja = js.native
-  var `type`: phaser.physics.Ninja.TileType = js.native
+  var `type`: phaser.physics.ninja.TileType = js.native
   var velocity: phaser.Point = js.native
   var width: Double = js.native
   var xw: Double = js.native
@@ -2921,7 +2918,7 @@ class Tile protected () extends js.Object {
 }
 
 @JSName("Phaser.Plugin")
-class Plugin protected () extends IStateCycle {
+class Plugin protected() extends IStateCycle {
   def this(game: phaser.Game, parent: PIXI.DisplayObject) = this()
   var active: Boolean = js.native
   var game: phaser.Game = js.native
@@ -2934,15 +2931,15 @@ class Plugin protected () extends IStateCycle {
   var visible: Boolean = js.native
 }
 
-package Plugin {
+package plugin {
 
 @JSName("Phaser.Plugin.AStar")
-class AStar protected () extends phaser.Plugin {
+class AStar protected() extends phaser.Plugin {
   def this(parent: PIXI.DisplayObject) = this()
   var version: String = js.native
-  def findPath(startPoint: phaser.Point, goalPoint: phaser.Point): phaser.Plugin.aStar.AStarPath = js.native
+  def findPath(startPoint: phaser.Point, goalPoint: phaser.Point): phaser.plugin.aStar.AStarPath = js.native
   def isWalkable(x: Double, y: Double): Boolean = js.native
-  def setAStarMap(map: phaser.Tilemap, layerName: String, tilesetName: String): phaser.Plugin.AStar = js.native
+  def setAStarMap(map: phaser.Tilemap, layerName: String, tilesetName: String): phaser.plugin.AStar = js.native
 }
 
 @JSName("Phaser.Plugin.AStar")
@@ -2957,25 +2954,25 @@ object _AStar extends js.Object {
 package aStar {
 
 @JSName("Phaser.Plugin.AStar.AStarNode")
-class AStarNode protected () extends js.Object {
+class AStarNode protected() extends js.Object {
   def this(x: Double, y: Double, isWalkable: Boolean) = this()
   var x: Double = js.native
   var y: Double = js.native
   var g: Double = js.native
   var h: Double = js.native
   var f: Double = js.native
-  var parent: phaser.Plugin.aStar.AStarNode = js.native
+  var parent: phaser.plugin.aStar.AStarNode = js.native
   var travelCost: Double = js.native
   var walkable: Boolean = js.native
 }
 
 @JSName("Phaser.Plugin.AStar.AStarPath")
-class AStarPath protected () extends js.Object {
-  def this(nodes: js.Array[phaser.Plugin.aStar.AStarNode], start: phaser.Plugin.aStar.AStarNode, goal: phaser.Plugin.aStar.AStarNode) = this()
-  var nodes: js.Array[phaser.Plugin.aStar.AStarNode] = js.native
-  var start: phaser.Plugin.aStar.AStarNode = js.native
-  var goal: phaser.Plugin.aStar.AStarNode = js.native
-  var visited: js.Array[phaser.Plugin.aStar.AStarNode] = js.native
+class AStarPath protected() extends js.Object {
+  def this(nodes: js.Array[phaser.plugin.aStar.AStarNode], start: phaser.plugin.aStar.AStarNode, goal: phaser.plugin.aStar.AStarNode) = this()
+  var nodes: js.Array[phaser.plugin.aStar.AStarNode] = js.native
+  var start: phaser.plugin.aStar.AStarNode = js.native
+  var goal: phaser.plugin.aStar.AStarNode = js.native
+  var visited: js.Array[phaser.plugin.aStar.AStarNode] = js.native
 }
 
 }
@@ -2989,7 +2986,7 @@ class ColorHarmony extends phaser.Plugin {
 }
 
 @JSName("Phaser.Plugin.CSS3Filters")
-class CSS3Filters protected () extends phaser.Plugin {
+class CSS3Filters protected() extends phaser.Plugin {
   def this(parent: PIXI.DisplayObject) = this()
   var blur: Double = js.native
   var brightness: Double = js.native
@@ -3003,7 +3000,7 @@ class CSS3Filters protected () extends phaser.Plugin {
 }
 
 @JSName("Phaser.Plugin.TilemapWalker")
-class TilemapWalker protected () extends phaser.Plugin {
+class TilemapWalker protected() extends phaser.Plugin {
   def this(game: phaser.Game, map: phaser.Tilemap, layer: js.Any = ???, x: Double = ???, y: Double = ???) = this()
   var collides: Boolean = js.native
   var history: Boolean = js.native
@@ -3034,13 +3031,13 @@ class TilemapWalker protected () extends phaser.Plugin {
 }
 
 @JSName("Phaser.Plugin.SamplePlugin")
-class SamplePlugin protected () extends phaser.Plugin {
+class SamplePlugin protected() extends phaser.Plugin {
   def this(game: phaser.Game, parent: PIXI.DisplayObject) = this()
   def addSprite(sprite: phaser.Sprite): Unit = js.native
 }
 
 @JSName("Phaser.Plugin.VirtualJoystick")
-class VirtualJoystick protected () extends phaser.Plugin {
+class VirtualJoystick protected() extends phaser.Plugin {
   def this(game: phaser.Game, parent: js.Any) = this()
   var angle: Double = js.native
   var base: phaser.Sprite = js.native
@@ -3067,7 +3064,7 @@ class VirtualJoystick protected () extends phaser.Plugin {
 }
 
 @JSName("Phaser.Plugin.Webcam")
-class Webcam protected () extends phaser.Plugin {
+class Webcam protected() extends phaser.Plugin {
   def this(game: phaser.Game, parent: PIXI.DisplayObject) = this()
   var context: js.Any = js.native
   var stream: js.Any = js.native
@@ -3080,20 +3077,20 @@ class Webcam protected () extends phaser.Plugin {
 }
 
 @JSName("Phaser.Plugin.Juicy")
-class Juicy protected () extends phaser.Plugin {
+class Juicy protected() extends phaser.Plugin {
   def this(game: phaser.Game) = this()
-  def createScreenFlash(color: String = ???): phaser.Plugin.Juicy.ScreenFlash = js.native
-  def createTrail(length: Double = ???, color: Double = ???): phaser.Plugin.Juicy.Trail = js.native
+  def createScreenFlash(color: String = ???): phaser.plugin.juicy.ScreenFlash = js.native
+  def createTrail(length: Double = ???, color: Double = ???): phaser.plugin.juicy.Trail = js.native
   def overScale(`object`: phaser.Sprite, scale: Double = ???, initialScale: phaser.Point = ???): Unit = js.native
   def jelly(`object`: phaser.Sprite, strength: Double = ???, delay: Double = ???, initialScale: phaser.Point = ???): Unit = js.native
   def mouseStretch(`object`: phaser.Sprite, strength: Double = ???, initialScale: phaser.Point = ???): Unit = js.native
   def shake(duration: Double = ???, strength: Double = ???): Unit = js.native
 }
 
-package Juicy {
+package juicy {
 
 @JSName("Phaser.Plugin.Juicy.Trail")
-class Trail protected () extends js.Object {
+class Trail protected() extends js.Object {
   def this(game: phaser.Game, trailLength: Double = ???, color: Double = ???) = this()
   var target: phaser.Sprite = js.native
   var trailLength: Double = js.native
@@ -3106,7 +3103,7 @@ class Trail protected () extends js.Object {
 }
 
 @JSName("Phaser.Plugin.Juicy.ScreenFlash")
-class ScreenFlash protected () extends js.Object {
+class ScreenFlash protected() extends js.Object {
   def this(game: phaser.Game, color: String = ???) = this()
   def flash(maxAlpha: Double = ???, duration: Double = ???): Unit = js.native
 }
@@ -3116,7 +3113,7 @@ class ScreenFlash protected () extends js.Object {
 }
 
 @JSName("Phaser.PluginManager")
-class PluginManager protected () extends IStateCycle {
+class PluginManager protected() extends IStateCycle {
   def this(game: phaser.Game) = this()
   var game: phaser.Game = js.native
   var plugins: js.Array[phaser.Plugin] = js.native
@@ -3132,7 +3129,7 @@ class PluginManager protected () extends IStateCycle {
 }
 
 @JSName("Phaser.Point")
-class Point protected () extends PIXI.Point {
+class Point protected() extends PIXI.Point {
   def this(x: Double = ???, y: Double = ???) = this()
   var `type`: Double = js.native
   def add(x: Double, y: Double): phaser.Point = js.native
@@ -3193,7 +3190,7 @@ object Point extends js.Object {
 }
 
 @JSName("Phaser.Pointer")
-class Pointer protected () extends js.Object {
+class Pointer protected() extends js.Object {
   def this(game: phaser.Game, id: Double) = this()
   var active: Boolean = js.native
   var button: js.Any = js.native
@@ -3247,7 +3244,7 @@ class Pointer protected () extends js.Object {
 }
 
 @JSName("Phaser.Polygon")
-class Polygon protected () extends js.Object {
+class Polygon protected() extends js.Object {
   def this(points: js.Any) = this()
   var area: Double = js.native
   var points: js.Any = js.native
@@ -3260,7 +3257,7 @@ class Polygon protected () extends js.Object {
 }
 
 @JSName("Phaser.QuadTree")
-class QuadTree protected () extends js.Object {
+class QuadTree protected() extends js.Object {
   def this(x: Double, y: Double, width: Double, height: Double, maxObject: Double = ???, maxLevels: Double = ???, level: Double = ???) = this()
   var bounds: js.Any = js.native
   var level: Double = js.native
@@ -3279,7 +3276,7 @@ class QuadTree protected () extends js.Object {
 }
 
 @JSName("Phaser.RandomDataGenerator")
-class RandomDataGenerator protected () extends js.Object {
+class RandomDataGenerator protected() extends js.Object {
   def this(seeds: js.Array[Double]) = this()
   def angle(): Double = js.native
   def between(min: Double, max: Double): Double = js.native
@@ -3297,7 +3294,7 @@ class RandomDataGenerator protected () extends js.Object {
 }
 
 @JSName("Phaser.Rectangle")
-class Rectangle protected () extends js.Object {
+class Rectangle protected() extends js.Object {
   def this(x: Double, y: Double, width: Double, height: Double) = this()
   var bottom: Double = js.native
   var bottomRight: phaser.Point = js.native
@@ -3361,18 +3358,18 @@ object Rectangle extends js.Object {
 }
 
 @JSName("Phaser.RenderTexture")
-class RenderTexture protected () extends PIXI.RenderTexture {
+class RenderTexture protected() extends PIXI.RenderTexture {
   def this(game: phaser.Game, width: Double = ???, height: Double = ???, key: String = ???, scaleMode: Double = ???, resolution: Double = ???) = this()
   var game: phaser.Game = js.native
   var key: String = js.native
   var matrix: PIXI.Matrix = js.native
   var `type`: Double = js.native
-//  def render(displayObject: PIXI.DisplayObject, position: phaser.Point, clear: Boolean = ???): Unit = js.native
+  //  def render(displayObject: PIXI.DisplayObject, position: phaser.Point, clear: Boolean = ???): Unit = js.native
   def renderXY(displayObject: PIXI.DisplayObject, x: Double, y: Double, clear: Boolean = ???): Unit = js.native
 }
 
 @JSName("Phaser.RequestAnimationFrame")
-class RequestAnimationFrame protected () extends js.Object {
+class RequestAnimationFrame protected() extends js.Object {
   def this(game: phaser.Game, forceSetTimeOut: Boolean = ???) = this()
   var forceSetTimeOut: Boolean = js.native
   var game: phaser.Game = js.native
@@ -3386,7 +3383,7 @@ class RequestAnimationFrame protected () extends js.Object {
 }
 
 @JSName("Phaser.RetroFont")
-class RetroFont protected () extends phaser.RenderTexture {
+class RetroFont protected() extends phaser.RenderTexture {
   def this(game: phaser.Game, key: String, characterWidth: Double, characterHeight: Double, chars: String, charsPerRow: Double = ???, xSpacing: Double = ???, ySpacing: Double = ???, xOffset: Double = ???, yOffset: Double = ???) = this()
   var align: String = js.native
   var autoUpperCase: Boolean = js.native
@@ -3434,7 +3431,7 @@ object RetroFont extends js.Object {
 }
 
 @JSName("Phaser.Rope")
-class Rope protected () extends PIXI.Rope {
+class Rope protected() extends PIXI.Rope {
   def this(game: phaser.Game, x: Double, y: Double, key: js.Any, frame: js.Any = ???, points: js.Array[phaser.Point] = ???) = this()
   var angle: Double = js.native
   var animations: AnimationManager = js.native
@@ -3495,7 +3492,7 @@ class Signal extends js.Object {
 }
 
 @JSName("Phaser.SignalBinding")
-class SignalBinding protected () extends js.Object {
+class SignalBinding protected() extends js.Object {
   def this(signal: phaser.Signal, listener: js.Function, isOnce: Boolean, listenerContext: js.Any = ???, priority: Double = ???) = this()
   var active: Boolean = js.native
   var callCount: Double = js.native
@@ -3510,7 +3507,7 @@ class SignalBinding protected () extends js.Object {
 }
 
 @JSName("Phaser.SinglePad")
-class SinglePad protected () extends js.Object {
+class SinglePad protected() extends js.Object {
   def this(game: phaser.Game, padParent: js.Any) = this()
   var callbackContext: js.Any = js.native
   var connected: Boolean = js.native
@@ -3543,7 +3540,7 @@ class SinglePad protected () extends js.Object {
 }
 
 @JSName("Phaser.Sound")
-class Sound protected () extends js.Object {
+class Sound protected() extends js.Object {
   def this(game: phaser.Game, key: String, volume: Double = ???, loop: Boolean = ???, connect: Boolean = ???) = this()
   var autoplay: Boolean = js.native
   var allowMultiple: Boolean = js.native
@@ -3605,7 +3602,7 @@ class Sound protected () extends js.Object {
 }
 
 @JSName("Phaser.SoundManager")
-class SoundManager protected () extends js.Object {
+class SoundManager protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var channels: Double = js.native
   var connectToMaster: Boolean = js.native
@@ -3635,7 +3632,7 @@ class SoundManager protected () extends js.Object {
 }
 
 @JSName("Phaser.Sprite")
-class Sprite protected () extends PIXI.Sprite {
+class Sprite protected() extends PIXI.Sprite {
   def this(game: phaser.Game, x: Double, y: Double, key: js.Any = ???, frame: js.Any = ???) = this()
   var alive: Boolean = js.native
   var angle: Double = js.native
@@ -3704,12 +3701,12 @@ class Sprite protected () extends PIXI.Sprite {
 }
 
 @JSName("Phaser.SpriteBatch")
-class SpriteBatch protected () extends phaser.Group {
+class SpriteBatch protected() extends phaser.Group {
   def this(game: phaser.Game, parent: PIXI.DisplayObjectContainer, name: String = ???, addedToStage: Boolean = ???) = this()
 }
 
 @JSName("Phaser.Stage")
-class Stage protected () extends PIXI.Stage {
+class Stage protected() extends PIXI.Stage {
   def this(game: phaser.Game) = this()
   var backgroundColor: js.Any = js.native
   var currentRenderOrderID: Double = js.native
@@ -3734,7 +3731,7 @@ trait ResizeCallback extends js.Object {
 }
 
 @JSName("Phaser.ScaleManager")
-class ScaleManager protected () extends js.Object {
+class ScaleManager protected() extends js.Object {
   def this(game: phaser.Game, width: js.Any, height: js.Any) = this()
   var aspectRatio: Double = js.native
   var bounds: Rectangle = js.native
@@ -3877,7 +3874,7 @@ trait IStateCycle extends js.Object {
 }
 
 @JSName("Phaser.StateManager")
-class StateManager protected () extends js.Object {
+class StateManager protected() extends js.Object {
   def this(game: phaser.Game, pendingState: phaser.State = ???) = this()
   var current: String = js.native
   var game: phaser.Game = js.native
@@ -3909,13 +3906,13 @@ class StateManager protected () extends js.Object {
   def resume(): Unit = js.native
   def restart(clearWorld: Boolean = ???, clearCache: Boolean = ???): Unit = js.native
   def resize(width: Double, height: Double): Unit = js.native
-//  def start(key: String, clearWorld: Boolean = ???, clearCache: Boolean = ???, args: js.Any*): Unit = js.native
+  //  def start(key: String, clearWorld: Boolean = ???, clearCache: Boolean = ???, args: js.Any*): Unit = js.native
   def update(): Unit = js.native
   def unlink(key: String): Unit = js.native
 }
 
 @JSName("Phaser.Text")
-class Text protected () extends PIXI.Text {
+class Text protected() extends PIXI.Text {
   def this(game: phaser.Game, x: Double, y: Double, text: String, style: js.Any) = this()
   var align: String = js.native
   var angle: Double = js.native
@@ -3969,7 +3966,7 @@ class Text protected () extends PIXI.Text {
 }
 
 @JSName("Phaser.Tile")
-class Tile protected () extends js.Object {
+class Tile protected() extends js.Object {
   def this(layer: js.Any, index: Double, x: Double, y: Number, width: Double, height: Double) = this()
   var alpha: Double = js.native
   var bottom: Double = js.native
@@ -4015,7 +4012,7 @@ class Tile protected () extends js.Object {
 }
 
 @JSName("Phaser.Tilemap")
-class Tilemap protected () extends js.Object {
+class Tilemap protected() extends js.Object {
   def this(game: phaser.Game, key: String = ???, tileWidth: Double = ???, tileHeight: Double = ???, width: Double = ???, height: Double = ???) = this()
   var collision: js.Array[js.Any] = js.native
   var collideIndexes: js.Array[js.Any] = js.native
@@ -4097,7 +4094,7 @@ object Tilemap extends js.Object {
 }
 
 @JSName("Phaser.TilemapLayer")
-class TilemapLayer protected () extends phaser.Image {
+class TilemapLayer protected() extends phaser.Image {
   def this(game: phaser.Game, tilemap: phaser.Tilemap, index: Double, width: Double = ???, height: Double = ???) = this()
   var baseTexture: PIXI.BaseTexture = js.native
   var canvas: HTMLCanvasElement = js.native
@@ -4147,7 +4144,7 @@ object TilemapParser extends js.Object {
 }
 
 @JSName("Phaser.Tileset")
-class Tileset protected () extends js.Object {
+class Tileset protected() extends js.Object {
   def this(name: String, firstgid: Double, width: Double = ???, height: Double = ???, margin: Double = ???, spacing: Double = ???, properties: js.Any = ???) = this()
   var columns: Double = js.native
   var firstgid: Double = js.native
@@ -4167,7 +4164,7 @@ class Tileset protected () extends js.Object {
 }
 
 @JSName("Phaser.TileSprite")
-class TileSprite protected () extends PIXI.TilingSprite {
+class TileSprite protected() extends PIXI.TilingSprite {
   def this(game: phaser.Game, x: Double, y: Double, width: Double, height: Double, key: js.Any = ???, frame: js.Any = ???) = this()
   var alive: Boolean = js.native
   var angle: Double = js.native
@@ -4207,7 +4204,7 @@ class TileSprite protected () extends PIXI.TilingSprite {
 }
 
 @JSName("Phaser.Time")
-class Time protected () extends js.Object {
+class Time protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var advancedTiming: Boolean = js.native
   var desiredFps: Double = js.native
@@ -4245,7 +4242,7 @@ class Time protected () extends js.Object {
 }
 
 @JSName("Phaser.Timer")
-class Timer protected () extends js.Object {
+class Timer protected() extends js.Object {
   def this(game: phaser.Game, autoDestroy: Boolean = ???) = this()
   var autoDestroy: Boolean = js.native
   var duration: Double = js.native
@@ -4285,7 +4282,7 @@ object Timer extends js.Object {
 }
 
 @JSName("Phaser.TimerEvent")
-class TimerEvent protected () extends js.Object {
+class TimerEvent protected() extends js.Object {
   def this(timer: phaser.Timer, delay: Double, tick: Double, repeatCount: Double, loop: Boolean, callback: js.Function, callbackContext: js.Any, args: js.Any*) = this()
   var args: js.Array[js.Any] = js.native
   var callback: js.Function = js.native
@@ -4299,7 +4296,7 @@ class TimerEvent protected () extends js.Object {
 }
 
 @JSName("Phaser.Touch")
-class Touch protected () extends js.Object {
+class Touch protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var callbackContext: js.Any = js.native
   var disabled: Boolean = js.native
@@ -4325,7 +4322,7 @@ class Touch protected () extends js.Object {
 }
 
 @JSName("Phaser.Tween")
-class Tween protected () extends js.Object {
+class Tween protected() extends js.Object {
   def this(target: js.Any, game: phaser.Game, manager: phaser.TweenManager) = this()
   var chainedTween: phaser.Tween = js.native
   var current: Double = js.native
@@ -4369,7 +4366,7 @@ class Tween protected () extends js.Object {
 }
 
 @JSName("Phaser.TweenData")
-class TweenData protected () extends js.Object {
+class TweenData protected() extends js.Object {
   def this(parent: phaser.Tween) = this()
   var delay: Double = js.native
   var dt: Double = js.native
@@ -4407,7 +4404,7 @@ object TweenData extends js.Object {
 }
 
 @JSName("Phaser.TweenManager")
-class TweenManager protected () extends js.Object {
+class TweenManager protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var game: phaser.Game = js.native
   def add(tween: phaser.Tween): phaser.Tween = js.native
@@ -4420,10 +4417,6 @@ class TweenManager protected () extends js.Object {
   def resumeAll(): Unit = js.native
   def update(): Boolean = js.native
   def pauseAll(): Unit = js.native
-}
-
-@JSName("Phaser.Utils")
-class Utils extends js.Object {
 }
 
 
@@ -4444,7 +4437,7 @@ package object Utils extends js.Object {
 package Utils {
 
 @JSName("Phaser.Utils.Debug")
-class Debug protected () extends js.Object {
+class Debug protected() extends js.Object {
   def this(game: phaser.Game) = this()
   var bmd: phaser.BitmapData = js.native
   var canvas: HTMLCanvasElement = js.native
@@ -4459,7 +4452,7 @@ class Debug protected () extends js.Object {
   var lineHeight: Double = js.native
   var renderShadow: Boolean = js.native
   var sprite: phaser.Image = js.native
-  def AStar(astar: phaser.Plugin.AStar, x: Double, y: Double, showVisited: Boolean): Unit = js.native
+  def AStar(astar: phaser.plugin.AStar, x: Double, y: Double, showVisited: Boolean): Unit = js.native
   def boot(): Unit = js.native
   def body(sprite: phaser.Sprite, color: String = ???, filled: Boolean = ???): Unit = js.native
   def bodyInfo(sprite: phaser.Sprite, x: Double, y: Number, color: String = ???): Unit = js.native
@@ -4492,7 +4485,7 @@ class Debug protected () extends js.Object {
 }
 
 @JSName("Phaser.World")
-class World protected () extends phaser.Group {
+class World protected() extends phaser.Group {
   def this(game: phaser.Game) = this()
   var bounds: phaser.Rectangle = js.native
   var camera: phaser.Camera = js.native
