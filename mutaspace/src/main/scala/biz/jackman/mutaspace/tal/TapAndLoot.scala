@@ -20,7 +20,7 @@ object TapAndLoot {
 
   def start() {
     var game: phaser.Game = null
-    val s = new PhaserStarGameSample2(() => game)
+    val s = new TapAndLoot(() => game)
     val state = new State()
     state.asJsDyn.preload = () => s.preload()
     state.asJsDyn.create = () => s.create()
@@ -35,7 +35,6 @@ object TapAndLoot {
 class TapAndLoot(gameFn : () => phaser.Game) {
 
   lazy val game = gameFn()
-
 
   lazy val player: phaser.Sprite = game.add.sprite(32, game.world.height - 150, "dude")
   lazy val platforms: phaser.Group = game.add.group()
@@ -91,7 +90,7 @@ class TapAndLoot(gameFn : () => phaser.Game) {
 
     stars.enableBody = true
 
-    (0 until 15) foreach { i =>
+    (0 until 2) foreach { i =>
       val star = stars.create(i * 50, 0, "star")
       star.body.gravity.y = 6
       star.scale.setTo(.2, .2)

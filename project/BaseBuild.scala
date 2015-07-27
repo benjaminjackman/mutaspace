@@ -93,6 +93,7 @@ object BaseBuild extends Build with UniversalKeys {
       .settings(publish := {})
       .settings(basicSettings: _*)
       .settings(sjsForPlayOutDir := (crossTarget in Compile).value / "classes" / "public" / "javascripts",
+        compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(lastSjsProject, Compile)),
         includeFilter in(Assets, LessKeys.less) := "*.less",
         dist <<= dist dependsOn (fullOptJS in(lastSjsProject, Compile))
       )
