@@ -50,15 +50,15 @@ class PhaserStarGameSample2(gameFn : () => phaser.Game) {
 
 
   def preload() {
-    game.load.image("sky", "assets/images/sky.png")
-    game.load.image("ground", "assets/images/platform.png")
-    game.load.image("star", "assets/images/doge.png")
-
-    game.load.audio("bite", "assets/sounds/bite.mp3")
-    game.load.audio("growl", "assets/sounds/growl.mp3")
-    game.load.audio("woah", "assets/sounds/woah.mp3")
-
-    game.load.spritesheet("dude", "assets/images/dude.png", 32, 48)
+//    game.load.image("sky", "assets/images/sky.png")
+//    game.load.image("ground", "assets/images/platform.png")
+//    game.load.image("star", "assets/images/doge.png")
+//
+//    game.load.audio("bite", "assets/sounds/bite.mp3")
+//    game.load.audio("growl", "assets/sounds/growl.mp3")
+//    game.load.audio("woah", "assets/sounds/woah.mp3")
+//
+//    game.load.spritesheet("dude", "assets/images/dude.png", 32, 48)
   }
 
   def create() {
