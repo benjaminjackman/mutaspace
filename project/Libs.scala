@@ -58,14 +58,14 @@ object Libs {
 
   //Other old libraries down here
 
-  object Facades {
-    case object ThreeJs extends SjsLib {
-      override lazy val settings = S(
-        resolvers += bintray.Opts.resolver.repo("denigma", "denigma-releases"),
-        libraryDependencies += "org.scalajs" %%% "threejs" % "0.0.68-0.1.3"
-      )
-    }
-  }
+//  object Facades {
+//    case object ThreeJs extends SjsLib {
+//      override lazy val settings = S(
+//        resolvers += bintray.Opts.resolver.repo("denigma", "denigma-releases"),
+//        libraryDependencies += "org.scalajs" %%% "threejs" % "0.0.68-0.1.3"
+//      )
+//    }
+//  }
 
 
 

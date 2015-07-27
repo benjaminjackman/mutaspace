@@ -58,6 +58,7 @@ object Projects extends Build with UniversalKeys {
     .settings(Libs.Scalatags.settings : _*)
     .settings(Libs.Cgta.settingsSjs : _*)
     .settings(Libs.Dom.settings : _*)
+    .settings(sbtide.Keys.ideBasePackages := List("biz.jackman.mutaspace", "biz.jackman.facades"))
 //    .settings(
 //      includeFilter in (Assets, LessKeys.less) := "*.less",
 //      excludeFilter in (Assets, LessKeys.less) := "_*.less"
@@ -68,6 +69,7 @@ object Projects extends Build with UniversalKeys {
 //    .settings(sjsTasks.map(t => crossTarget in(Compile, t) := sjsOutDir.value): _*)
 
   lazy val mutaplay = playProject(Seq(mutaspace))
+    .settings(sbtide.Keys.ideExcludedDirectories := List(file("target"), file("public")))
 
 
   //Aggregate project
