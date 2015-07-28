@@ -7,7 +7,7 @@ sbt 'project mutaplay' 'dist'
 
 if [ $? ]; then
   scp -i $KEY mutaplay/target/universal/mutaplay-0.1-SNAPSHOT.zip $SERVER:
-  ssh -i $KEY $SERVER unzip mutaplay-0.1-SNAPSHOT.zip
+  ssh -i $KEY $SERVER unzip -o mutaplay-0.1-SNAPSHOT.zip
   ssh -i $KEY $SERVER ./bounce.sh
 fi 
 
