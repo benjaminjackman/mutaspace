@@ -35,7 +35,7 @@ trait GameManager {
       "ZOMBIE DOGS ARE TRYING TO EAT <br>" +
       "YOUR TURKEY. <br>" +
       "JUST GET SOME CHINESE FOOD. <br>" +
-      "ITS ACTUALLY QUITE GOOD. <br>" +
+      "IT'S ACTUALLY QUITE GOOD. <br>" +
       "ESPECIALLY THE DUCK."
 
     dom.setTimeout(() => {

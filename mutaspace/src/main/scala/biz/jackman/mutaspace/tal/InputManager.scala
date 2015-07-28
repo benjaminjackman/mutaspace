@@ -28,7 +28,7 @@ class InputManager(gm: GameManager, mobManager: MobManager) {
         gm.game.sound.play("shot", gm.randy.getDblIE(.2, .5))
         lastShotMs = gm.game.time.now
         mobManager.Mobs.mobs.find(inBBRange).foreach { mob =>
-          mob.takeDamage(gm.randy.getIntMR(8, 4))
+          mob.takeDamage(gm.randy.getIntMR(8, 6))
         }
       }
     }

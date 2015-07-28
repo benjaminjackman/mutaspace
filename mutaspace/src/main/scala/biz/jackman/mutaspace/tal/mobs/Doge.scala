@@ -67,8 +67,10 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
       } else if (runningAway) {
         sprite.tint = 0xffff00
       } else if (life < maxLife) {
-        val red = (255*(life.toDouble / maxLife.toDouble).toInt).min(255).max(0)
-        sprite.tint = 0x009999 | (red << 16)
+        val red = ((1 - (life / maxLife.toDouble)) * 255).toInt.min(255).max(0)
+        val tint = (red << 16) | ((red / 2) << 8) | (red / 2)
+
+        sprite.tint = tint
       } else {
         sprite.tint = 0x00ffaa
       }
