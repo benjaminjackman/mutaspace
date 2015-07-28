@@ -33,12 +33,12 @@ class InputManager(gm: GameManager, mobManager: MobManager) {
       }
     }
 
-    mobManager.Mobs.mobs.foreach { mob =>
-      if (inBBRange(mob)) {
-        mob.sprite.tint = mob.sprite.tint.toInt | 0x0f0000
-      } else {
-        mob.sprite.tint = mob.sprite.tint.toInt & 0x00ffff
-      }
-    }
+//    mobManager.Mobs.mobs.foreach { mob =>
+//      if (inBBRange(mob)) {
+//        mob.sprite.tint = mob.sprite.tint.toInt | 0x0f0000
+//      } else {
+//        mob.sprite.tint = mob.sprite.tint.toInt & 0x00ffff
+//      }
+//    }
   }
 }

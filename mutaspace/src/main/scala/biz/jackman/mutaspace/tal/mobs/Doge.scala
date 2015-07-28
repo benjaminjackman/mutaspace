@@ -5,6 +5,7 @@ package tal.mobs
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.PlayerManager
+import cgta.oscala.util.debugging.PRINT
 
 import scala.scalajs.js
 
@@ -38,13 +39,16 @@ object Doge {
 }
 
 class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
-  var life = 10
+  val maxLife = 12
+  var life = maxLife
   var runningAway = false
+  var damageEndMs = 0.0
   override def attack(player: PlayerManager) {
     gm.game.sound.play("bite", .1)
     player.takeDamage(gm.randy.getIntMR(5, 2).max(0))
   }
   override def takeDamage(amount: Int) {
+    damageEndMs = gm.game.time.now + 100
     life -= amount
     if (life <= 0) {
       life = 0
@@ -52,10 +56,24 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
       gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
       sprite.body.velocity.y = -400
       runningAway = true
+    } else {
+
     }
-    sprite.tint = 0x000000 | (255 - (life / 10.0) * 255).toInt
   }
   override def update() {
+    def setTint() {
+      if (gm.game.time.now < damageEndMs) {
+        sprite.tint = 0xff0000
+      } else if (runningAway) {
+        sprite.tint = 0xffff00
+      } else if (life < maxLife) {
+        val red = (255*(life.toDouble / maxLife.toDouble).toInt).min(255).max(0)
+        sprite.tint = 0x009999 | (red << 16)
+      } else {
+        sprite.tint = 0x00ffaa
+      }
+    }
+    setTint()
     if (runningAway && sprite.y + sprite.height <= 0) {
       sprite.kill()
     }
