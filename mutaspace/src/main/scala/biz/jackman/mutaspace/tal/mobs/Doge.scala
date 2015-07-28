@@ -37,7 +37,7 @@ object Doge {
   }
 }
 
-class Doge(val gm: GameManager, val sprite : Sprite) extends Mob {
+class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
   var life = 10
   var runningAway = false
   override def attack(player: PlayerManager) {
@@ -48,8 +48,8 @@ class Doge(val gm: GameManager, val sprite : Sprite) extends Mob {
     life -= amount
     if (life <= 0) {
       life = 0
-      gm.game.sound.play("whine", .1)
-      gm.scoreManager.dogPower -= gm.randy.getIntII(1,5)
+      gm.game.sound.play("whine", gm.randy.getDblIE(0.05, 0.2))
+      gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
       sprite.body.velocity.y = -400
       runningAway = true
     }

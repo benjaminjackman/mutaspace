@@ -124,7 +124,7 @@ trait GameManager {
   def die() {
     game.destroy()
     val el = document.getElementById("content")
-    el.innerHTML = """<iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/9cFHAJ5asMk?autoplay=1&t=15s" frameborder="0"/>"""
+    el.innerHTML = """<iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/9cFHAJ5asMk?autoplay=1&start=15" frameborder="0"/>"""
   }
 
   def win() {
@@ -138,8 +138,9 @@ trait GameManager {
     dom.setTimeout(() => {
       val tag = dom.document.createElement("iframe").asInstanceOf[HTMLIFrameElement]
       el.innerHTML = """
-      <iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/v=kZUTkgfZqZc?autoplay=1&t=18s" frameborder="0"/>"""
-    }, 1000)
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/mrAwb9ptu9U?autoplay=1&start=14" frameborder="0" allowfullscreen></iframe>
+      """
+    }, 5000)
     //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
   }
 }
