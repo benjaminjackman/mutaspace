@@ -28,8 +28,8 @@ object Doge {
 
   def apply(gm: GameManager): Doge = {
     val sprite = gm.game.add.sprite(100, 50, "doge")
-    sprite.height = 50
-    sprite.width = 50
+    sprite.height = 100
+    sprite.width = 100
     gm.game.physics.arcade.enable(sprite)
     sprite.body.velocity.set(0, 100)
     sprite.body.bounce.y = 0.7 * js.Math.random() * 0.2

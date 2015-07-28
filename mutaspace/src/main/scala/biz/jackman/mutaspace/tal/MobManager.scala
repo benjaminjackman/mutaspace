@@ -1,9 +1,9 @@
 package biz.jackman.mutaspace
-package tal.mobs
+package tal
 
 import biz.jackman.mutaspace.gutil.RandomManager
-import biz.jackman.mutaspace.tal.GameManager
-import biz.jackman.mutaspace.tal.PlayerManager
+import biz.jackman.mutaspace.tal.mobs.Doge
+import biz.jackman.mutaspace.tal.mobs.Mob
 
 
 //////////////////////////////////////////////////////////////
