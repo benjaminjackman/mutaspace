@@ -2,12 +2,14 @@ package biz.jackman.mutaspace
 package tal
 
 import biz.jackman.facades.phaser.Game
-import biz.jackman.facades.phaser.Sprite
+
 import biz.jackman.facades.phaser.State
 import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
-import biz.jackman.mutaspace.tal.mobs.Doge
-import cgta.oscala.util.debugging.PRINT
+import biz.jackman.mutaspace.gutil.RandomManager
+import biz.jackman.mutaspace.tal.mobs.Mob
+import biz.jackman.mutaspace.tal.mobs.MobManager
+import org.scalajs.dom
 
 import scala.scalajs.js
 
@@ -20,6 +22,8 @@ import scala.scalajs.js
 //////////////////////////////////////////////////////////////
 
 
+//TODO READ THIS
+//http://invrse.co/phaser-cheatsheet/
 object TapAndLoot {
 
   def start() {
@@ -29,89 +33,157 @@ object TapAndLoot {
     state.asJsDyn.preload = () => s.preload()
     state.asJsDyn.create = () => s.create()
     state.asJsDyn.update = () => s.update()
-    game = new phaser.Game(600, 800, Phaser.AUTO, document.getElementById("#content"), state)
 
+    document.body.classList.add("cursor-crosshair")
+    val el = document.getElementById("content")
+    game = new phaser.Game(600, 800, Phaser.AUTO, el, state)
+
+    val foot = document.getElementById("footer")
+    el.textContent = "SAVE THE TURKEY!"
   }
 }
 
-class MobManager(game: Game) {
-  lazy val mobs = game.add.group()
-  val mobDelayMs = 1000
-  var lastUpdateMs = 0.0
-  var lastMobMs = 0.0
 
-  def preload() {
-    Doge.preload(game)
+class InputManager(gm: GameManager, mobManager: MobManager) {
+  val cooldownMs = 200.0
+  var lastShotMs = 0.0
+  def inBBRange(mob: Mob): Boolean = {
+    val ap = gm.game.input.activePointer
+    phaser.Math.distance(ap.x, ap.y, mob.sprite.x + mob.sprite.width / 2, mob.sprite.y + mob.sprite.height / 2) <= 25
   }
+  def update() {
+    val ap = gm.game.input.activePointer
+    if (ap.isDown) {
+      val elapsed = gm.game.time.now - lastShotMs
+      if (elapsed > cooldownMs) {
+        gm.game.sound.play("shot", gm.randy.getDblIE(.2,.5))
+        lastShotMs = gm.game.time.now
+        mobManager.Mobs.mobs.find(inBBRange).foreach { mob =>
+          mob.takeDamage(gm.randy.getIntMR(8, 4))
+        }
+      }
+    }
+
+    mobManager.Mobs.mobs.foreach { mob =>
+      if (inBBRange(mob)) {
+        mob.sprite.tint = mob.sprite.tint.toInt | 0x0f0000
+      } else {
+        mob.sprite.tint = mob.sprite.tint.toInt & 0x00ffff
+      }
+    }
+  }
+}
+
+class ScoreManager(gm: GameManager, playerManager: PlayerManager) {
+
+  var dogPower = 100
+  lazy val lifeText: phaser.Text = gm.game.add.text(16, 16, "Turkey Edibility 100%", js.Dynamic.literal(font = "24px sans", fill = "#F00"))
+  //  lazy val manaText: phaser.Text = gm.game.add.text(400, 16, "Mana: 0", js.Dynamic.literal(font = "32px sans", fill = "#00F"))
+  lazy val scoreText: phaser.Text = gm.game.add.text(300, 16, s"Bumpus Dog Power $dogPower%", js.Dynamic.literal(font = "24px sans", fill = "#00F"))
+
 
   def create() {
-    mobs
+    lifeText
+    scoreText
   }
 
   def update() {
-    val curMs = game.time.now
-    if (lastUpdateMs == 0) {
-      lastUpdateMs = curMs
-    }
-    val mobCnt = mobs.countLiving()
-    val msSinceMobFullOrSpawn = curMs - lastMobMs
-    if (mobCnt < 10) {
-      if (msSinceMobFullOrSpawn > mobDelayMs) {
-        //Spawn a random enemy roughly every X frames
-        PRINT | s"spawning $mobCnt"
-        spawnRandomMob()
-        lastMobMs = curMs
-      }
-    } else {
-      lastMobMs = curMs
-    }
-    lastUpdateMs = curMs
-  }
+    val life = playerManager.life
+    val mana = playerManager.mana
 
-  def spawnRandomMob() {
-    mobs.add(Doge(game))
-  }
-}
+    lifeText.text = s"Turkey $life%"
+    scoreText.text = s"Bumpus Dog Power $dogPower%"
 
-class InputManager(game: Game, mobManager: MobManager) {
-  def update() {
+    if (dogPower <= 0) {
+      gm.win()
+    }
 
   }
 }
 
-class TapAndLoot(gameFn: () => Game) {
+class PlayerManager(gm: GameManager) {
+  def takeDamage(x: Int) = {
+    life -= x
+    if (life < 0) {
+      gm.die()
+    }
+  }
+
+  var life = 100
+  var mana = 100
+  var score = 0
+}
+
+trait GameManager {
+  def game: Game
+  def randy: RandomManager
+  def scoreManager: ScoreManager
+
+  def die() {
+    game.destroy()
+    dom.location.assign("https://www.youtube.com/watch?v=9cFHAJ5asMk&feature=youtu.be&t=15s")
+  }
+
+  def win() {
+    game.destroy()
+    dom.location.assign("https://www.youtube.com/watch?v=kZUTkgfZqZc&t=18s")
+    //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
+  }
+}
+
+class TapAndLoot(gameFn: () => Game) {tal =>
 
   lazy val game = gameFn()
 
-  lazy val scoreText: phaser.Text = game.add.text(16, 16, "Score: 0", js.Dynamic.literal(font = "sans", fontSize = "32px", fill = "#000"))
-  var score = 0
-  lazy val mobManager = new MobManager(game)
-  lazy val inputManager = new InputManager(game, mobManager)
+  lazy val randy = new RandomManager
+  lazy val gm : GameManager = new GameManager {
+    override def game: Game = tal.game
+    override def randy: RandomManager = tal.randy
+    override def scoreManager: ScoreManager = tal.scoreManager
+  }
+  lazy val playerManager = new PlayerManager(gm)
+  lazy val mobManager = new MobManager(gm, playerManager, randy)
+  lazy val inputManager = new InputManager(gm, mobManager)
+  lazy val scoreManager = new ScoreManager(gm, playerManager)
 
   def preload() {
     game.load
       .image("sky", "assets/images/sky.png")
       .image("ground", "assets/images/platform.png")
       .image("star", "assets/images/doge.png")
+      .image("turkey", "assets/images/turkey.jpg")
       .audio("bite", "assets/sounds/bite.mp3")
       .audio("growl", "assets/sounds/growl.mp3")
+      .audio("whine", "assets/sounds/whine.mp3")
       .audio("woah", "assets/sounds/woah.mp3")
+      .audio("shot", "assets/sounds/bb-gun-shot.mp3")
       .spritesheet("dude", "assets/images/dude.png", 32, 48)
 
     mobManager.preload()
   }
 
   def create() {
+    game.canvas.classList.add("noselect")
+    game.canvas.classList.add("cursor-crosshair")
     game.add.sprite(0, 0, "sky")
+
     game.physics.startSystem(phaser.Physics.ARCADE)
     mobManager.create()
-    scoreText
+    scoreManager.create()
+
+    val turkey = game.add.sprite(0, 0, "turkey")
+    turkey.width = game.width - 200
+    turkey.height = 200
+    turkey.x = 100
+    turkey.y = game.height - 200
+
   }
 
 
   def update() {
     mobManager.update()
     inputManager.update()
+    scoreManager.update()
   }
 
 }
