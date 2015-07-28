@@ -10,6 +10,8 @@ import biz.jackman.mutaspace.gutil.RandomManager
 import biz.jackman.mutaspace.tal.mobs.Mob
 import biz.jackman.mutaspace.tal.mobs.MobManager
 import org.scalajs.dom
+import org.scalajs.dom.raw.HTMLIFrameElement
+import org.scalajs.dom.raw.HTMLScriptElement
 
 import scala.scalajs.js
 
@@ -39,7 +41,7 @@ object TapAndLoot {
     game = new phaser.Game(600, 800, Phaser.AUTO, el, state)
 
     val foot = document.getElementById("footer")
-    el.textContent = "SAVE THE TURKEY!"
+    el.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
   }
 }
 
@@ -56,7 +58,7 @@ class InputManager(gm: GameManager, mobManager: MobManager) {
     if (ap.isDown) {
       val elapsed = gm.game.time.now - lastShotMs
       if (elapsed > cooldownMs) {
-        gm.game.sound.play("shot", gm.randy.getDblIE(.2,.5))
+        gm.game.sound.play("shot", gm.randy.getDblIE(.2, .5))
         lastShotMs = gm.game.time.now
         mobManager.Mobs.mobs.find(inBBRange).foreach { mob =>
           mob.takeDamage(gm.randy.getIntMR(8, 4))
@@ -79,7 +81,7 @@ class ScoreManager(gm: GameManager, playerManager: PlayerManager) {
   var dogPower = 100
   lazy val lifeText: phaser.Text = gm.game.add.text(16, 16, "Turkey Edibility 100%", js.Dynamic.literal(font = "24px sans", fill = "#F00"))
   //  lazy val manaText: phaser.Text = gm.game.add.text(400, 16, "Mana: 0", js.Dynamic.literal(font = "32px sans", fill = "#00F"))
-  lazy val scoreText: phaser.Text = gm.game.add.text(300, 16, s"Bumpus Dog Power $dogPower%", js.Dynamic.literal(font = "24px sans", fill = "#00F"))
+  lazy val scoreText: phaser.Text = gm.game.add.text(200, 16, s"Zombie Bumpus Dog Power $dogPower%", js.Dynamic.literal(font = "24px sans", fill = "#00F"))
 
 
   def create() {
@@ -92,7 +94,7 @@ class ScoreManager(gm: GameManager, playerManager: PlayerManager) {
     val mana = playerManager.mana
 
     lifeText.text = s"Turkey $life%"
-    scoreText.text = s"Bumpus Dog Power $dogPower%"
+    scoreText.text = s"Zombie Bumpus Dog Power $dogPower%"
 
     if (dogPower <= 0) {
       gm.win()
@@ -121,12 +123,23 @@ trait GameManager {
 
   def die() {
     game.destroy()
-    dom.location.assign("https://www.youtube.com/watch?v=9cFHAJ5asMk&feature=youtu.be&t=15s")
+    val el = document.getElementById("content")
+    el.innerHTML = """<iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/9cFHAJ5asMk?autoplay=1&t=15s" frameborder="0"/>"""
   }
 
   def win() {
     game.destroy()
-    dom.location.assign("https://www.youtube.com/watch?v=kZUTkgfZqZc&t=18s")
+    val el = document.getElementById("content")
+    el.setAttribute("style", "font-size:50px;background-color:red;color:white")
+    el.textContent = "PLAYING WITH GUNS IS ALWAYS A BAD IDEA EVEN WHEN " +
+      "ZOMBIE DOGS ARE TRYING TO EAT YOUR TURKEY JUST GET SOME CHINESE FOOD. ITS ACTUALLY QUITE GOOD. " +
+      "ESPECIALLY THE DUCK."
+
+    dom.setTimeout(() => {
+      val tag = dom.document.createElement("iframe").asInstanceOf[HTMLIFrameElement]
+      el.innerHTML = """
+      <iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/v=kZUTkgfZqZc?autoplay=1&t=18s" frameborder="0"/>"""
+    }, 1000)
     //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
   }
 }
@@ -136,7 +149,7 @@ class TapAndLoot(gameFn: () => Game) {tal =>
   lazy val game = gameFn()
 
   lazy val randy = new RandomManager
-  lazy val gm : GameManager = new GameManager {
+  lazy val gm: GameManager = new GameManager {
     override def game: Game = tal.game
     override def randy: RandomManager = tal.randy
     override def scoreManager: ScoreManager = tal.scoreManager
