@@ -4,6 +4,7 @@ package tal
 import biz.jackman.mutaspace.tal.mobs.Mob
 
 import biz.jackman.facades.phaser
+import cgta.oscala.util.debugging.PRINT
 
 //////////////////////////////////////////////////////////////
 // Copyright (c) 2015 Ben Jackman
@@ -13,28 +14,34 @@ import biz.jackman.facades.phaser
 // Created by bjackman @ 7/28/15 12:35 AM
 //////////////////////////////////////////////////////////////
 
-class SkillManager(gm: GameManager, mobManager: MobManager) {
+class SkillManager(gm: GameManager) {
 
 }
 
-class InputManager(gm: GameManager, mobManager: MobManager) {
+class InputManager(gm: GameManager) {
   val cooldownMs = 200.0
   var lastShotMs = 0.0
   def inBBRange(mob: Mob): Boolean = {
     val ap = gm.game.input.activePointer
     phaser.Math.distance(ap.x, ap.y, mob.sprite.x + mob.sprite.width / 2, mob.sprite.y + mob.sprite.height / 2) <= 50
   }
+  val damages = Array(1,1,1,2,3,4,5,6,12,12)
   def update() {
     val ap = gm.game.input.activePointer
     if (ap.isDown) {
       val elapsed = gm.game.time.now - lastShotMs
       if (elapsed > cooldownMs) {
-        gm.game.sound.play("shot", gm.randy.getDblIE(.2, .5))
+        val dmg = damages(gm.randy.getIntIE(0, damages.size))
+        gm.game.sound.play("shot", dmg/24.0)
         lastShotMs = gm.game.time.now
-        mobManager.Mobs.mobs.find(inBBRange).foreach { mob =>
-          mob.takeDamage(gm.randy.getIntMR(8, 6))
+        gm.mobManager.Mobs.mobs.find(inBBRange).foreach { mob =>
+
+          mob.takeDamage(dmg)
         }
       }
+
+
+
     }
 
 //    mobManager.Mobs.mobs.foreach { mob =>

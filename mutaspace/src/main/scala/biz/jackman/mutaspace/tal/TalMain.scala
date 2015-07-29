@@ -15,8 +15,8 @@ import scala.scalajs.js.annotation.JSExport
 object TalMain {
 
   @JSExport
-  def main() {
-    TapAndLoot.start()
+  def main(showVideos : Boolean) {
+    TapAndLoot.start(showVideos)
   }
 
 }

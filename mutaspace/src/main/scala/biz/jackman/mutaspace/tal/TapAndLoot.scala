@@ -6,6 +6,8 @@ import biz.jackman.facades.phaser.State
 import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.gutil.RandomManager
+import org.scalajs.dom
+import org.scalajs.dom.raw.HTMLIFrameElement
 
 import scalatags.Text
 import scalatags.Text.TypedTag
@@ -20,14 +22,13 @@ import scalatags.text
 //////////////////////////////////////////////////////////////
 
 
-
 //TODO READ THIS
 //http://invrse.co/phaser-cheatsheet/
 object TapAndLoot {
 
-  def start() {
+  def start(showVideos: Boolean) {
     var game: phaser.Game = null
-    val s = new TapAndLoot(() => game)
+    val s = new TapAndLoot(showVideos, () => game)
     val state = new State()
     state.asJsDyn.preload = () => s.preload()
     state.asJsDyn.create = () => s.create()
@@ -38,17 +39,23 @@ object TapAndLoot {
     game = new phaser.Game(600, 800, Phaser.AUTO, el, state)
 
     val foot = document.getElementById("footer")
-    foot.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
+//    foot.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
 
 
     import Scalatags._
-    val ee = <.span(^.color := "red", ^.backgroundColor := "black", "hi mom")
-    foot.appendChild(ee.render)
+    val ee = <.a("[RESTART]", ^.color:= "red")
+    val eee = ee.render
+    eee.onclick = () => {
+      document.location.reload(true)
+    }
+    foot.appendChild(eee)
 
+    //foot.innerHTML = """<iframe width="100" height="100" src="https://www.youtube.com/embed/SaH8WMuP7LM?autoplay=1" frameborder="0" allowfullscreen></iframe>"""
+//    foot.innerHTML = """<iframe width="420" height="315" src="https://www.youtube.com/embed/7_rBidCkJxo?autoplay=1&start=35" frameborder="0" allowfullscreen></iframe>"""
   }
 }
 
-class TapAndLoot(gameFn: () => Game) {tal =>
+class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
 
   lazy val game = gameFn()
 
@@ -57,38 +64,44 @@ class TapAndLoot(gameFn: () => Game) {tal =>
     override def game: Game = tal.game
     override def randy: RandomManager = tal.randy
     override def scoreManager: ScoreManager = tal.scoreManager
+    override def skillManager: SkillManager = tal.skillManager
+    override def mobManager: MobManager = tal.mobManager
     override def die() {
-//      game.destroy()
-//      val el = document.getElementById("content")
-//      el.innerHTML = """<iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/9cFHAJ5asMk?autoplay=1&start=15" frameborder="0"/>"""
+      if (showVidoes) {
+        game.destroy()
+        val el = document.getElementById("content")
+        el.innerHTML = """<iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/9cFHAJ5asMk?autoplay=1&start=15" frameborder="0"/>"""
+
+      }
     }
 
     override def win() {
-//      game.destroy()
-//      val el = document.getElementById("content")
-//      el.setAttribute("style", "font-size:50px;background-color:red;color:white")
-//      el.innerHTML = "PLAYING WITH GUNS IS ALWAYS<br> " +
-//        "A BAD IDEA. EVEN WHEN <br>" +
-//        "ZOMBIE DOGS ARE TRYING TO EAT <br>" +
-//        "YOUR TURKEY. <br>" +
-//        "JUST GET SOME CHINESE FOOD. <br>" +
-//        "IT'S ACTUALLY QUITE GOOD. <br>" +
-//        "ESPECIALLY THE DUCK."
-//
-//      dom.setTimeout(() => {
-//        val tag = dom.document.createElement("iframe").asInstanceOf[HTMLIFrameElement]
-//
-//        el.innerHTML = """
-//          <iframe width="560" height="315" src="https://www.youtube.com/embed/mrAwb9ptu9U?autoplay=1&start=14" frameborder="0" allowfullscreen></iframe>
-//          """
-//      }, 10000)
-//      //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
+      if (showVidoes) {
+        game.destroy()
+        val el = document.getElementById("content")
+        el.setAttribute("style", "font-size:50px;background-color:red;color:white")
+        el.innerHTML = "PLAYING WITH GUNS IS ALWAYS<br> " +
+          "A BAD IDEA. EVEN WHEN <br>" +
+          "ZOMBIE DOGS ARE TRYING TO EAT <br>" +
+          "YOUR TURKEY. <br>" +
+          "JUST GET SOME CHINESE FOOD. <br>" +
+          "IT'S ACTUALLY QUITE GOOD. <br>" +
+          "ESPECIALLY THE DUCK."
+
+        dom.setTimeout(() => {
+          el.innerHTML = """
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/mrAwb9ptu9U?autoplay=1&start=14" frameborder="0" allowfullscreen></iframe>
+          """
+        }, 5000)
+        //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
+      }
     }
   }
   lazy val playerManager = new PlayerManager(gm)
   lazy val mobManager = new MobManager(gm, playerManager, randy)
-  lazy val inputManager = new InputManager(gm, mobManager)
+  lazy val inputManager = new InputManager(gm)
   lazy val scoreManager = new ScoreManager(gm, playerManager)
+  lazy val skillManager = new SkillManager(gm)
 
   def preload() {
     game.load
@@ -96,10 +109,6 @@ class TapAndLoot(gameFn: () => Game) {tal =>
       .image("ground", "assets/images/platform.png")
       .image("star", "assets/images/doge.png")
       .image("turkey", "assets/images/turkey.jpg")
-      .audio("bite", "assets/sounds/bite.mp3")
-      .audio("growl", "assets/sounds/growl.mp3")
-      .audio("whine", "assets/sounds/whine.mp3")
-      .audio("woah", "assets/sounds/woah.mp3")
       .audio("shot", "assets/sounds/bb-gun-shot.mp3")
       .spritesheet("dude", "assets/images/dude.png", 32, 48)
 

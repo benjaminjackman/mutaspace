@@ -19,6 +19,8 @@ trait GameManager {
   def game: Game
   def randy: RandomManager
   def scoreManager: ScoreManager
+  def skillManager: SkillManager
+  def mobManager : MobManager
   def die(): Unit
   def win(): Unit
 

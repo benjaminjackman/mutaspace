@@ -1,4 +1,4 @@
-@()
+@(showVideos: Boolean)
 
 <html>
   <head>
@@ -11,7 +11,7 @@
     <div id="content"></div>
     <div id="footer"></div>
     <script>
-    biz.jackman.mutaspace.tal.TalMain( ).main ( )
+    biz.jackman.mutaspace.tal.TalMain().main (@(showVideos))
     </script>
   </body>
 </html>

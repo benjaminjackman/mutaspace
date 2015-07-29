@@ -3,7 +3,8 @@
 # ~~~~
 
 GET        /          controllers.MainController.mainPage()
-GET        /tal        controllers.MainController.tal()
+GET        /tal        controllers.MainController.tal
+GET        /tal-classic        controllers.MainController.talClassic
 
 ## Map static resources from the /public folder to the /assets URL path
 GET            /assets/*file                                            controllers.Assets.at(path="/public", file)

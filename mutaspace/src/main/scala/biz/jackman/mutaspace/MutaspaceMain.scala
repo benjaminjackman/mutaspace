@@ -47,8 +47,8 @@ object MutaspaceMain {
     //    keyJib()
     //incremental()
 //    TapAndLoot.start()
-    TapAndLoot.start()
-    //PhaserStarGameSample2.start()
+//    TapAndLoot.start()
+    PhaserStarGameSample2.start()
   }
 
 

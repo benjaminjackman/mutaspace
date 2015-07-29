@@ -5,7 +5,6 @@ package tal.mobs
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.PlayerManager
-import cgta.oscala.util.debugging.PRINT
 
 import scala.scalajs.js
 
@@ -22,9 +21,11 @@ import scala.scalajs.js
 object Doge {
   def preload(gm: GameManager) {
     gm.game.load.image("doge", "assets/images/doge.png")
-    gm.game.load.audio("bite", "assets/sounds/bite.mp3")
-    gm.game.load.audio("growl", "assets/sounds/growl.mp3")
-
+    gm.game.load.image("van", "assets/images/van.jpg")
+    gm.game.load.audio("bite", "assets/sounds/dog/bite.mp3")
+    gm.game.load.audio("growl", "assets/sounds/dog/growl.mp3")
+    gm.game.load.audio("whimper", "assets/sounds/dog/whimper.mp3")
+    gm.game.load.audio("whine", "assets/sounds/dog/whine.mp3")
   }
 
   def apply(gm: GameManager): Doge = {
@@ -50,14 +51,15 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
   override def takeDamage(amount: Int) {
     damageEndMs = gm.game.time.now + 100
     life -= amount
+
     if (life <= 0) {
-      life = 0
       gm.game.sound.play("whine", gm.randy.getDblIE(0.05, 0.2))
+      life = 0
       gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
       sprite.body.velocity.y = -400
       runningAway = true
     } else {
-
+      gm.game.sound.play("whimper", gm.randy.getDblIE(0.05, 0.2))
     }
   }
   override def update() {
