@@ -29,7 +29,9 @@ object Doge {
   }
 
   def apply(gm: GameManager): Doge = {
+    val text = gm.game.add.text(1,1,"fluffy", OBJ(font="100px Arial", fill="red"))
     val sprite = gm.game.add.sprite(100, 50, "doge")
+    sprite.addChild(text)
     sprite.height = 100
     sprite.width = 100
     gm.game.physics.arcade.enable(sprite)
