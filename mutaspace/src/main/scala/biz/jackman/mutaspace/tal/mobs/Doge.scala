@@ -2,9 +2,12 @@ package biz.jackman.mutaspace
 package tal.mobs
 
 
+
 import biz.jackman.facades.phaser.Sprite
+import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.PlayerManager
+import cgta.cenum.CEnum
 
 import scala.scalajs.js
 
@@ -19,18 +22,26 @@ import scala.scalajs.js
 
 
 object Doge {
-  def preload(gm: GameManager) {
-    gm.game.load.image("doge", "assets/images/doge.png")
-    gm.game.load.image("van", "assets/images/van.jpg")
-    gm.game.load.audio("bite", "assets/sounds/dog/bite.mp3")
-    gm.game.load.audio("growl", "assets/sounds/dog/growl.mp3")
-    gm.game.load.audio("whimper", "assets/sounds/dog/whimper.mp3")
-    gm.game.load.audio("whine", "assets/sounds/dog/whine.mp3")
+  object Resources extends ResourceSet {
+    override def soundBasePath = super.soundBasePath + "/dog"
+
+    case object doge extends Image()
+    case object van extends Image()
+    case object bite extends Audio()
+    case object growl extends Audio()
+    case object whimper extends Audio()
+    case object whine extends Audio()
+    final override val elements = CEnum.getElements(this)
   }
+  def preload(gm: GameManager) {
+    Resources.preload(gm.game)
+  }
+
+
 
   def apply(gm: GameManager): Doge = {
     val text = gm.game.add.text(1,1,"fluffy", OBJ(font="100px Arial", fill="red"))
-    val sprite = gm.game.add.sprite(100, 50, "doge")
+    val sprite = gm.game.add.sprite(100, 50, Resources.doge)
     sprite.addChild(text)
     sprite.height = 100
     sprite.width = 100
@@ -42,12 +53,18 @@ object Doge {
 }
 
 class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
+  import Doge.Resources
   val maxLife = 12
   var life = maxLife
   var runningAway = false
   var damageEndMs = 0.0
+
+  def init() {
+
+  }
+
   override def attack(player: PlayerManager) {
-    gm.game.sound.play("bite", .1)
+    gm.game.sound.play(Resources.bite, .1)
     player.takeDamage(gm.randy.getIntMR(5, 2).max(0))
   }
   override def takeDamage(amount: Int) {
@@ -55,13 +72,13 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
     life -= amount
 
     if (life <= 0) {
-      gm.game.sound.play("whine", gm.randy.getDblIE(0.05, 0.2))
+      gm.game.sound.play(Resources.whine, gm.randy.getDblIE(0.05, 0.2))
       life = 0
       gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
       sprite.body.velocity.y = -400
       runningAway = true
     } else {
-      gm.game.sound.play("whimper", gm.randy.getDblIE(0.05, 0.2))
+      gm.game.sound.play(Resources.whimper, gm.randy.getDblIE(0.05, 0.2))
     }
   }
   override def update() {
