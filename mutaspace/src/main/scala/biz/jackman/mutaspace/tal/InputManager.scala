@@ -13,6 +13,10 @@ import biz.jackman.facades.phaser
 // Created by bjackman @ 7/28/15 12:35 AM
 //////////////////////////////////////////////////////////////
 
+class SkillManager(gm: GameManager, mobManager: MobManager) {
+
+}
+
 class InputManager(gm: GameManager, mobManager: MobManager) {
   val cooldownMs = 200.0
   var lastShotMs = 0.0

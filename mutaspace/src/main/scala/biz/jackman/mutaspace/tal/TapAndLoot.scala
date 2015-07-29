@@ -7,6 +7,10 @@ import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.gutil.RandomManager
 
+import scalatags.Text
+import scalatags.Text.TypedTag
+import scalatags.text
+
 //////////////////////////////////////////////////////////////
 // Copyright (c) 2015 Ben Jackman, Jeff Gomberg
 // All Rights Reserved
@@ -14,6 +18,7 @@ import biz.jackman.mutaspace.gutil.RandomManager
 // for licensing inquiries
 // Created by bjackman @ 7/21/15 8:47 PM
 //////////////////////////////////////////////////////////////
+
 
 
 //TODO READ THIS
@@ -33,7 +38,13 @@ object TapAndLoot {
     game = new phaser.Game(600, 800, Phaser.AUTO, el, state)
 
     val foot = document.getElementById("footer")
-    el.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
+    foot.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
+
+
+    import Scalatags._
+    val ee = <.span(^.color := "red", ^.backgroundColor := "black", "hi mom")
+    foot.appendChild(ee.render)
+
   }
 }
 
@@ -46,6 +57,33 @@ class TapAndLoot(gameFn: () => Game) {tal =>
     override def game: Game = tal.game
     override def randy: RandomManager = tal.randy
     override def scoreManager: ScoreManager = tal.scoreManager
+    override def die() {
+//      game.destroy()
+//      val el = document.getElementById("content")
+//      el.innerHTML = """<iframe id="ytplayer" type="text/html" width="640" height="390" src="https://www.youtube.com/embed/9cFHAJ5asMk?autoplay=1&start=15" frameborder="0"/>"""
+    }
+
+    override def win() {
+//      game.destroy()
+//      val el = document.getElementById("content")
+//      el.setAttribute("style", "font-size:50px;background-color:red;color:white")
+//      el.innerHTML = "PLAYING WITH GUNS IS ALWAYS<br> " +
+//        "A BAD IDEA. EVEN WHEN <br>" +
+//        "ZOMBIE DOGS ARE TRYING TO EAT <br>" +
+//        "YOUR TURKEY. <br>" +
+//        "JUST GET SOME CHINESE FOOD. <br>" +
+//        "IT'S ACTUALLY QUITE GOOD. <br>" +
+//        "ESPECIALLY THE DUCK."
+//
+//      dom.setTimeout(() => {
+//        val tag = dom.document.createElement("iframe").asInstanceOf[HTMLIFrameElement]
+//
+//        el.innerHTML = """
+//          <iframe width="560" height="315" src="https://www.youtube.com/embed/mrAwb9ptu9U?autoplay=1&start=14" frameborder="0" allowfullscreen></iframe>
+//          """
+//      }, 10000)
+//      //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
+    }
   }
   lazy val playerManager = new PlayerManager(gm)
   lazy val mobManager = new MobManager(gm, playerManager, randy)
@@ -70,8 +108,10 @@ class TapAndLoot(gameFn: () => Game) {tal =>
 
   def create() {
     if (game.device.iOS || game.device.android) {
-      game.scale.setGameSize(window.innerWidth, window.innerHeight)
       game.scale.scaleMode = phaser.ScaleManager.SHOW_ALL
+      game.scale.pageAlignHorizontally = true
+      game.scale.pageAlignVertically = true
+      game.scale.refresh()
     }
 
     game.canvas.classList.add("noselect")
@@ -82,7 +122,8 @@ class TapAndLoot(gameFn: () => Game) {tal =>
     mobManager.create()
     scoreManager.create()
 
-    val turkey = game.add.sprite(0, 0, "turkey")
+    val turkey = game.add.image(0, 0, "turkey")
+    turkey.tint = 0x606060
     turkey.width = game.width - 200
     turkey.height = 200
     turkey.x = 100

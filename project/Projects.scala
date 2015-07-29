@@ -55,6 +55,7 @@ object Projects extends Build with UniversalKeys {
     .settings(requiresDOM := true)
     .settings(libraryDependencies ++= List("org.scala-lang.modules" %% "scala-async" % "0.9.1"))
     .settings(Libs.Scalatags.settings : _*)
+//    .settings(Libs.ScalaJsReact.settings : _*)
     .settings(Libs.Cgta.settingsSjs : _*)
     .settings(Libs.Dom.settings : _*)
     .settings(sbtide.Keys.ideBasePackages := List("biz.jackman.mutaspace", "biz.jackman.facades"))

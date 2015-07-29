@@ -27,7 +27,7 @@ object BaseBuild extends Build with UniversalKeys {
   )
 
   lazy val scalacSettings = Seq[Setting[_]](
-    scalaVersion := "2.11.5",
+    scalaVersion := "2.11.7",
     scalacOptions += "-deprecation",
     scalacOptions += "-unchecked",
     scalacOptions += "-feature",

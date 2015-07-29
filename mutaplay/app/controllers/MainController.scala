@@ -15,5 +15,6 @@ import play.api.mvc.{Action, Controller}
 object MainController extends Controller {
 
   def mainPage() = Action {Ok(views.html.mainPage("DOGE EDITION!"))}
+  def tal() = Action {Ok(views.html.apps.tal())}
 
 }
