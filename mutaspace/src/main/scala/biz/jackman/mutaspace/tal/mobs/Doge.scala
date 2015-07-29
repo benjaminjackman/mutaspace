@@ -2,12 +2,12 @@ package biz.jackman.mutaspace
 package tal.mobs
 
 
-
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.PlayerManager
 import cgta.cenum.CEnum
+import cgta.oscala.util.debugging.PRINT
 
 import scala.scalajs.js
 
@@ -38,9 +38,8 @@ object Doge {
   }
 
 
-
   def apply(gm: GameManager): Doge = {
-    val text = gm.game.add.text(1,1,"fluffy", OBJ(font="100px Arial", fill="red"))
+    val text = gm.game.add.text(1, 1, "fluffy", OBJ(font = "100px Arial", fill = "red"))
     val sprite = gm.game.add.sprite(100, 50, Resources.doge)
     sprite.addChild(text)
     sprite.height = 100
@@ -72,13 +71,26 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
     life -= amount
 
     if (life <= 0) {
-      gm.game.sound.play(Resources.whine, gm.randy.getDblIE(0.05, 0.2))
+      //      gm.game.sound.play(Resources.whine, gm.randy.getDblIE(0.05, 0.2))
       life = 0
       gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
       sprite.body.velocity.y = -400
       runningAway = true
     } else {
-      gm.game.sound.play(Resources.whimper, gm.randy.getDblIE(0.05, 0.2))
+      //gm.game.sound.play(Resources.whimper, gm.randy.getDblIE(0.05, 0.2))
+      //TODO DREAM Make the sounds be harmonic be locking the pitches to semitones corresponing to steps in the major or minor (or whatever scale)
+      //TODO FOR Each mob pack assingn a root note and for each hit to the MOB in that group play upwards on the scale
+      //Skip steps for larger chunks of damage,
+      //Death will always be the last step in the scale
+      val semitone = 1.0/12
+
+      val sound = gm.game.sound.add(Resources.whimper)
+      sound.onPlay.addOnce({ (x: js.Any) =>
+        //Increases the pitch of the sound
+        sound._sound.playbackRate.value = gm.randy.getDblIE(.8,1.2)
+      }: js.Function)
+      //.playbackRate = 5
+      sound.play()
     }
   }
   override def update() {

@@ -3542,6 +3542,7 @@ class SinglePad protected() extends js.Object {
 @JSName("Phaser.Sound")
 class Sound protected() extends js.Object {
   def this(game: phaser.Game, key: String, volume: Double = ???, loop: Boolean = ???, connect: Boolean = ???) = this()
+  var _sound: js.Dynamic with js.Object = js.native
   var autoplay: Boolean = js.native
   var allowMultiple: Boolean = js.native
   var context: js.Any = js.native
