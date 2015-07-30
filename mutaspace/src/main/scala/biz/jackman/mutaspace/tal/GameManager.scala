@@ -3,8 +3,6 @@ package tal
 
 import biz.jackman.facades.phaser.Game
 import biz.jackman.mutaspace.gutil.RandomManager
-import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLIFrameElement
 
 
 //////////////////////////////////////////////////////////////
@@ -21,6 +19,7 @@ trait GameManager {
   def scoreManager: ScoreManager
   def skillManager: SkillManager
   def mobManager : MobManager
+  def playerManager: PlayerManager
   def die(): Unit
   def win(): Unit
 

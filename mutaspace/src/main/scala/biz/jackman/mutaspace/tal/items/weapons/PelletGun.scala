@@ -1,8 +1,8 @@
 package biz.jackman.mutaspace
-package tal.mobs
+package tal.items.weapons
 
-import biz.jackman.facades.phaser.Sprite
-import biz.jackman.mutaspace.tal.PlayerManager
+import biz.jackman.mutaspace.tal.GameManager
+import biz.jackman.mutaspace.tal.skills.Skill
 
 
 //////////////////////////////////////////////////////////////
@@ -10,13 +10,15 @@ import biz.jackman.mutaspace.tal.PlayerManager
 // All Rights Reserved
 // please contact ben@jackman.biz
 // for licensing inquiries
-// Created by bjackman @ 7/27/15 3:38 PM
+// Created by bjackman @ 7/28/15 11:10 PM
 //////////////////////////////////////////////////////////////
 
-trait Mob {
-  def takeDamage(amount: Int): Unit
-  def attack(player: PlayerManager)
-  def sprite : Sprite
+object PelletGun {
+  def apply(gm: GameManager) : PelletGun = {
+    new PelletGun
+  }
+}
 
-  def update(): Unit
+class PelletGun extends Skill {
+
 }

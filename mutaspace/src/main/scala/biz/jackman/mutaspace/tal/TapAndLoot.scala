@@ -7,16 +7,16 @@ import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.gutil.RandomManager
 import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLIFrameElement
+import org.scalajs.dom.MouseEvent
 
-import scalatags.Text
-import scalatags.Text.TypedTag
-import scalatags.text
+import scala.scalajs.js
+import scalatags.JsDom
+
 
 //////////////////////////////////////////////////////////////
-// Copyright (c) 2015 Ben Jackman, Jeff Gomberg
+// Copyright (c) 2015 Ben Jackman
 // All Rights Reserved
-// please contact ben@jackman.biz or jeff@cgtanalytics.com
+// please contact ben@jackman.biz
 // for licensing inquiries
 // Created by bjackman @ 7/21/15 8:47 PM
 //////////////////////////////////////////////////////////////
@@ -28,36 +28,42 @@ object TapAndLoot {
 
   def start(showVideos: Boolean) {
     var game: phaser.Game = null
-    val s = new TapAndLoot(showVideos, () => game)
+    val tal = new TapAndLoot(showVideos, () => game)
     val state = new State()
-    state.asJsDyn.preload = () => s.preload()
-    state.asJsDyn.create = () => s.create()
-    state.asJsDyn.update = () => s.update()
-
-    document.body.classList.add("cursor-crosshair")
-    val el = document.getElementById("content")
-    game = new phaser.Game(600, 800, Phaser.AUTO, el, state)
-
-    val foot = document.getElementById("footer")
-//    foot.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
+    state.asJsDyn.preload = () => tal.preload()
+    state.asJsDyn.create = () => tal.create()
+    state.asJsDyn.update = () => tal.update()
 
 
     import Scalatags._
-    val ee = <.a("[RESTART]", ^.color:= "red")
-    val eee = ee.render
-    eee.onclick = () => {
-      document.location.reload(true)
-    }
-    foot.appendChild(eee)
+    val contentEl = document.getElementById("content")
 
+    val phaserEl = <.div.render
+    val footer = <.div(
+      <.a("[RESTART]", ^.color := "red", ^.onclick := { () => document.location.reload(true) }),
+      <.a("[PAUSE]", ^.color := "blue", ^.onclick := { () => {game.paused = !game.paused} }),
+      <.a("[INVENTORY]", ^.color := "blue", ^.onclick := { () => {tal.displayInventory()} })
+    )
+
+    val gameEl = <.div.render
+    gameEl.appendChild(phaserEl)
+    gameEl.appendChild(footer.render)
+
+    contentEl.appendChild(gameEl)
+
+    game = new phaser.Game(600, 800, Phaser.AUTO, phaserEl, state)
+
+    //    foot.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
+    //document.body.onclick = { (e: MouseEvent) => {game.paused = false; true} }
     //foot.innerHTML = """<iframe width="100" height="100" src="https://www.youtube.com/embed/SaH8WMuP7LM?autoplay=1" frameborder="0" allowfullscreen></iframe>"""
-//    foot.innerHTML = """<iframe width="420" height="315" src="https://www.youtube.com/embed/7_rBidCkJxo?autoplay=1&start=35" frameborder="0" allowfullscreen></iframe>"""
+    //    foot.innerHTML = """<iframe width="420" height="315" src="https://www.youtube.com/embed/7_rBidCkJxo?autoplay=1&start=35" frameborder="0" allowfullscreen></iframe>"""
   }
 }
 
 class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
 
   lazy val game = gameFn()
+
 
   lazy val randy = new RandomManager
   lazy val gm: GameManager = new GameManager {
@@ -145,6 +151,10 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     mobManager.update()
     inputManager.update()
     scoreManager.update()
+  }
+
+  def displayInventory() {
+
   }
 
 }

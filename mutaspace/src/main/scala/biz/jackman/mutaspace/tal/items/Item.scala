@@ -1,5 +1,5 @@
 package biz.jackman.mutaspace
-package tal.skills
+package tal.items
 
 
 //////////////////////////////////////////////////////////////
@@ -7,9 +7,9 @@ package tal.skills
 // All Rights Reserved
 // please contact ben@jackman.biz
 // for licensing inquiries
-// Created by bjackman @ 7/28/15 11:10 PM
+// Created by bjackman @ 7/30/15 12:20 AM
 //////////////////////////////////////////////////////////////
 
-class PelletGun {
+class Item {
 
 }
