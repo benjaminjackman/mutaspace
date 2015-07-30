@@ -1,6 +1,7 @@
 package biz.jackman.mutaspace
 package tal.items.weapons
 
+import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.mechanics.DamageRanges
@@ -35,7 +36,7 @@ class Fist extends Weapon {
   import Fist.Resources
   override def range: Double = 50
   override def damageRanges: DamageRanges = DamageRanges(physical = 4 -> 10)
-  override def attackDurMs: Double = 350
+  override def attackDurMs: Double = 500
   override def sound: ResourceSet#Audio = Resources.punch
   override def image: ResourceSet#Image = Resources.fistl
 }

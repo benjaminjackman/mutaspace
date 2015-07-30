@@ -1,6 +1,7 @@
 package biz.jackman.mutaspace
 package tal.skills
 
+import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.mobs.Mob
 import biz.jackman.facades.phaser
@@ -27,6 +28,7 @@ class BasicAttack(gm: GameManager) extends Skill {
   gm.playerManager
   var cooldownUntilMs = 0.0
   var nextWeaponSlot = 0
+  var sprite: Sprite = null
 
   //  def inBBRange(mob: Mob): Boolean = {
   //    val ap = gm.game.input.activePointer
@@ -38,12 +40,14 @@ class BasicAttack(gm: GameManager) extends Skill {
     if (t >= cooldownUntilMs) {
       //Actually perform the attack
       val weapon = gm.playerManager.getWeapon(nextWeaponSlot)
+
       nextWeaponSlot = (nextWeaponSlot + 1) & 1
       val dmgs = gm.randy.roll(weapon.damageRanges)
       gm.mobManager.getMobNearestCursor(weapon.range).foreach { mob =>
         mob.takeDamage(dmgs)
       }
-      cooldownUntilMs = t + weapon.attackDurMs
+      val attackDurMs = weapon.attackDurMs
+      cooldownUntilMs = t + attackDurMs
       def playWeaponSound() {
         val baseSound = weapon.sound.key
         val sound = gm.game.sound.add(baseSound)
@@ -56,8 +60,24 @@ class BasicAttack(gm: GameManager) extends Skill {
       playWeaponSound()
 
       def playWeaponAnimation() {
+        if (sprite == null || sprite.key.toString != weapon.image.key) {
+          if (sprite != null) {
+            sprite.kill()
+          }
+          console.debug("Need to actually check the weapons image")
+          sprite = gm.game.add.sprite(0, 0, weapon.image.key)
+          sprite.alpha = 1
+        }
+        val mySprite = sprite
+
         val ap = gm.game.input.activePointer
-        val sprite = gm.game.add.sprite(ap.x-80, ap.y, weapon.image.key)
+        sprite.alpha = 1
+        sprite.x = ap.x - 120
+        sprite.y = ap.y + 40
+
+        gm.game.add.tween(sprite).to(OBJ(alpha = .5, x = ap.x - 70, y = ap.y-10), attackDurMs, phaser.easing.Linear.None _, true).onComplete.addOnce(() => {
+          mySprite.alpha = 0
+        })
       }
       playWeaponAnimation()
 
