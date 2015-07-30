@@ -8,8 +8,6 @@ import biz.jackman.mutaspace.tal.mechanics.DamageRanges
 import biz.jackman.facades.phaser
 import cgta.cenum.CEnum
 
-import scala.scalajs.js
-
 
 //////////////////////////////////////////////////////////////
 // Copyright (c) 2015 Ben Jackman
@@ -35,19 +33,35 @@ object Fist {
 
 class Fist extends Weapon {
   import Fist.Resources
-  override def range: Double = 50
-  override def damageRanges: DamageRanges = DamageRanges(physical = 4 -> 10)
-  override def attackDurMs: Double = 500
-  override def sound: ResourceSet#Audio = Resources.punch
-  override def image: ResourceSet#Image = Resources.fistl
-  override def animateSprite(gm: GameManager, sprite: Sprite): Unit = {
+  override val range: Double = 50
+  override val damageRanges: DamageRanges = DamageRanges(physical = 4 -> 10)
+  override val attackDurMs: Double = 500
+  override val sound: ResourceSet#Audio = Resources.punch
+  override val image: ResourceSet#Image = Resources.fistl
+  override def playAttackSpriteAnimation(gm: GameManager, slot: Int): Sprite = {
     val ap = gm.game.input.activePointer
+    val sprite = gm.game.add.sprite(x = ap.x, y = ap.y + 60, image.key)
     sprite.alpha = 1
-    sprite.x = ap.x - 120
-    sprite.y = ap.y + 40
 
-    gm.game.add.tween(sprite).to(OBJ(alpha = .7, x = ap.x - 70, y = ap.y-10), attackDurMs, phaser.easing.Linear.None _, true).onComplete.addOnce(() => {
+    val endX = if (slot =?= 0) {
+      //left
+      val spriteOnCursorX = ap.x - sprite.width
+      sprite.x = spriteOnCursorX - 30
+      spriteOnCursorX
+    } else {
+      //right
+      sprite.scale.x = -1
+      //mirrored sprites have a negative width
+      val spriteOnCursorX = ap.x + sprite.width.abs
+      sprite.x = spriteOnCursorX + 30
+      spriteOnCursorX
+    }
+    val end = OBJ(x = endX, y = ap.y - 10, alpha = .7)
+
+    gm.game.add.tween(sprite).to(end, attackDurMs, phaser.easing.Linear.None _, autoStart = true).onComplete.addOnce(() => {
       sprite.alpha = 0
+      sprite.kill()
     })
+    sprite
   }
 }

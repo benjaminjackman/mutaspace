@@ -118,7 +118,6 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
       .image("ground", "assets/images/platform.png")
       .image("star", "assets/images/doge.png")
       .image("turkey", "assets/images/turkey.jpg")
-      .audio("shot", "assets/sounds/bb-gun-shot.mp3")
       .spritesheet("dude", "assets/images/dude.png", 32, 48)
 
     gm.preload()

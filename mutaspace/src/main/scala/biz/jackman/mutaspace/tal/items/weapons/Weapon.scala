@@ -22,11 +22,12 @@ object Weapon {
 }
 
 trait Weapon {
-  def animateSprite(gm : GameManager, s : Sprite): Unit
+  
 
   def damageRanges : DamageRanges
   def range: Double
   def attackDurMs : Double
   def sound : ResourceSet#Audio
   def image: ResourceSet#Image
+  def playAttackSpriteAnimation(gm : GameManager, slot : Int): Sprite
 }

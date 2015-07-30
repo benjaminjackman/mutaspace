@@ -39,13 +39,19 @@ class BasicAttack(gm: GameManager) extends Skill {
     val t = gm.game.time.now
     if (t >= cooldownUntilMs) {
       //Actually perform the attack
-      val weapon = gm.playerManager.getWeapon(nextWeaponSlot)
+      val weaponSlot = nextWeaponSlot
+      val weapon = gm.playerManager.getWeapon(weaponSlot)
 
       nextWeaponSlot = (nextWeaponSlot + 1) & 1
       val dmgs = gm.randy.roll(weapon.damageRanges)
       gm.mobManager.getMobNearestCursor(weapon.range).foreach { mob =>
         mob.takeDamage(dmgs)
-        mob.sprite.body.velocity.x = mob.sprite.body.velocity.x + 25
+        if (weaponSlot =?= 0) {
+          mob.sprite.body.velocity.x += 25
+        } else {
+          mob.sprite.body.velocity.x -= 25
+        }
+
         mob.sprite.body.velocity.y = mob.sprite.body.velocity.y - 25
       }
       val attackDurMs = weapon.attackDurMs
@@ -62,18 +68,7 @@ class BasicAttack(gm: GameManager) extends Skill {
       playWeaponSound()
 
       def playWeaponAnimation() {
-        if (sprite == null || sprite.key.toString != weapon.image.key) {
-          if (sprite != null) {
-            sprite.kill()
-          }
-          console.debug("Need to actually check the weapons image")
-          sprite = gm.game.add.sprite(0, 0, weapon.image.key)
-          sprite.alpha = 1
-        }
-        val mySprite = sprite
-
-        weapon.animateSprite(gm, mySprite)
-
+        sprite = weapon.playAttackSpriteAnimation(gm, weaponSlot)
       }
       playWeaponAnimation()
 

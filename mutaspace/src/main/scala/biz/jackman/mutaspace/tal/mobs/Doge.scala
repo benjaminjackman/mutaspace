@@ -77,6 +77,8 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
       gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
       sprite.body.velocity.y = -400
       runningAway = true
+      val sound = gm.game.sound.add(Resources.xwhine)
+      sound.play()
     } else {
       //gm.game.sound.play(Resources.whimper, gm.randy.getDblIE(0.05, 0.2))
       //TODO DREAM Make the sounds be harmonic be locking the pitches to semitones corresponing to steps in the major or minor (or whatever scale)
