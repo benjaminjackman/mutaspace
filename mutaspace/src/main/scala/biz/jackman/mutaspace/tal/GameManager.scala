@@ -2,7 +2,7 @@ package biz.jackman.mutaspace
 package tal
 
 import biz.jackman.facades.phaser.Game
-import biz.jackman.mutaspace.gutil.RandomManager
+import biz.jackman.mutaspace.tal.items.ItemManager
 
 
 //////////////////////////////////////////////////////////////
@@ -14,13 +14,22 @@ import biz.jackman.mutaspace.gutil.RandomManager
 //////////////////////////////////////////////////////////////
 
 trait GameManager {
+
+
   def game: Game
   def randy: RandomManager
   def scoreManager: ScoreManager
   def skillManager: SkillManager
   def mobManager : MobManager
   def playerManager: PlayerManager
+  def itemManager: ItemManager
+
   def die(): Unit
   def win(): Unit
 
+
+  def preload() {
+    mobManager.preload()
+    itemManager.preload()
+  }
 }

@@ -5,10 +5,9 @@ import biz.jackman.facades.phaser.Game
 import biz.jackman.facades.phaser.State
 import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
-import biz.jackman.mutaspace.gutil.RandomManager
+import biz.jackman.mutaspace.tal.items.ItemManager
 import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
-
 import scala.scalajs.js
 import scalatags.JsDom
 
@@ -72,6 +71,8 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     override def scoreManager: ScoreManager = tal.scoreManager
     override def skillManager: SkillManager = tal.skillManager
     override def mobManager: MobManager = tal.mobManager
+    override def playerManager: PlayerManager = tal.playerManager
+    override def itemManager: ItemManager = tal.itemManager
     override def die() {
       if (showVidoes) {
         game.destroy()
@@ -102,12 +103,14 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
         //dom.location.assign("http://img.costumecraze.com/images/vendors/forum/65703-Deluxe-Plush-Turkey-Costume-large.jpg")
       }
     }
+
   }
   lazy val playerManager = new PlayerManager(gm)
   lazy val mobManager = new MobManager(gm, playerManager, randy)
   lazy val inputManager = new InputManager(gm)
   lazy val scoreManager = new ScoreManager(gm, playerManager)
   lazy val skillManager = new SkillManager(gm)
+  lazy val itemManager = new ItemManager(gm)
 
   def preload() {
     game.load
@@ -118,7 +121,8 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
       .audio("shot", "assets/sounds/bb-gun-shot.mp3")
       .spritesheet("dude", "assets/images/dude.png", 32, 48)
 
-    mobManager.preload()
+    gm.preload()
+
   }
 
   def create() {
@@ -151,6 +155,7 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     mobManager.update()
     inputManager.update()
     scoreManager.update()
+    skillManager.update()
   }
 
   def displayInventory() {

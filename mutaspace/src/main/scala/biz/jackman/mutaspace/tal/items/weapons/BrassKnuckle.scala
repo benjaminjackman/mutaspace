@@ -13,6 +13,6 @@ object BrassKnuckles {
 
 }
 
-class BrassKnuckles extends Weapon {
+class BrassKnuckles  {
 
 }

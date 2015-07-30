@@ -1,6 +1,9 @@
 package biz.jackman.mutaspace
 package tal
 
+import biz.jackman.mutaspace.tal.items.weapons.Fist
+import biz.jackman.mutaspace.tal.items.weapons.Weapon
+
 
 //////////////////////////////////////////////////////////////
 // Copyright (c) 2015 Ben Jackman
@@ -11,6 +14,12 @@ package tal
 //////////////////////////////////////////////////////////////
 
 class PlayerManager(gm: GameManager) {
+  lazy val weapon = Fist(gm)
+  
+  def getWeapon(slot: Int) : Weapon = {
+    weapon
+  }
+
   def takeDamage(x: Int) = {
     life -= x
     if (life < 0) {

@@ -3,6 +3,7 @@ package tal.mobs
 
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.PlayerManager
+import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 
 
 //////////////////////////////////////////////////////////////
@@ -14,9 +15,8 @@ import biz.jackman.mutaspace.tal.PlayerManager
 //////////////////////////////////////////////////////////////
 
 trait Mob {
-  def takeDamage(amount: Int): Unit
+  def takeDamage(amount: DamageAmounts): Unit
   def attack(player: PlayerManager)
-  def sprite : Sprite
-
+  def sprite: Sprite
   def update(): Unit
 }

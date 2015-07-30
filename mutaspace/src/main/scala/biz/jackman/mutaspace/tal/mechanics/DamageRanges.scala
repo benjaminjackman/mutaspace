@@ -1,5 +1,5 @@
 package biz.jackman.mutaspace
-package tal.skills
+package tal.mechanics
 
 
 //////////////////////////////////////////////////////////////
@@ -7,13 +7,12 @@ package tal.skills
 // All Rights Reserved
 // please contact ben@jackman.biz
 // for licensing inquiries
-// Created by bjackman @ 7/30/15 12:17 AM
+// Created by bjackman @ 7/30/15 1:25 AM
 //////////////////////////////////////////////////////////////
 
-
-
-trait Skill {
-  def currentSkillUpdate(): Unit
-
-  def execute()
+object DamageRange {
+  implicit def fromTuple(t: (Int, Int)) : DamageRange = DamageRange(t._1, t._2)
 }
+case class DamageRange(min : Int, max : Int)
+
+case class DamageRanges(physical : DamageRange)

@@ -1,5 +1,8 @@
 package biz.jackman.mutaspace
-package gutil
+package tal
+
+import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
+import biz.jackman.mutaspace.tal.mechanics.DamageRanges
 
 import scala.scalajs.js
 
@@ -14,6 +17,8 @@ import scala.scalajs.js
 
 class RandomManager {
 
+
+
   //inclusive to exclusive
   def getDblIE(min: Double, max: Double): Double = {
     js.Math.random() * (max - min) + min
@@ -27,6 +32,10 @@ class RandomManager {
 
   def getIntMR(mid: Int, rng: Int): Int = {
     getIntII(mid - rng, mid + rng)
+  }
+
+  def roll(damageRanges: DamageRanges) : DamageAmounts = {
+    DamageAmounts(physical = getIntII(damageRanges.physical.min, damageRanges.physical.max))
   }
 
 }

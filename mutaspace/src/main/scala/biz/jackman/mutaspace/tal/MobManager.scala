@@ -1,9 +1,9 @@
 package biz.jackman.mutaspace
 package tal
 
-import biz.jackman.mutaspace.gutil.RandomManager
 import biz.jackman.mutaspace.tal.mobs.Doge
 import biz.jackman.mutaspace.tal.mobs.Mob
+import biz.jackman.facades.phaser
 
 
 //////////////////////////////////////////////////////////////
@@ -15,6 +15,8 @@ import biz.jackman.mutaspace.tal.mobs.Mob
 //////////////////////////////////////////////////////////////
 
 class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
+
+
   object Mobs {
     lazy val group = gm.game.add.group()
     private var mobLst: List[Mob] = Nil
@@ -32,6 +34,17 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   val mobDelayMs = 1000
   var lastUpdateMs = 0.0
   var lastMobMs = 0.0
+
+  def inBBRange(range : Double, mob: Mob): Boolean = {
+    val ap = gm.game.input.activePointer
+    phaser.Math.distance(ap.x, ap.y, mob.sprite.x + mob.sprite.width / 2, mob.sprite.y + mob.sprite.height / 2) <= range
+  }
+
+
+  def getMobNearestCursor(range: Double) : Option[Mob] = {
+    Mobs.mobs.find(inBBRange(range, _))
+
+  }
 
   def preload() {
     Doge.preload(gm)

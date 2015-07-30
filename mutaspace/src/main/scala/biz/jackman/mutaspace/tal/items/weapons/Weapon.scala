@@ -1,6 +1,9 @@
 package biz.jackman.mutaspace
 package tal.items.weapons
 
+import biz.jackman.mutaspace.gutil.ResourceSet
+import biz.jackman.mutaspace.tal.mechanics.DamageRanges
+
 
 //////////////////////////////////////////////////////////////
 // Copyright (c) 2015 Ben Jackman
@@ -16,8 +19,13 @@ object Weapon {
 
 }
 
-class Weapon {
+trait Weapon {
 
 
 
+  def damageRanges : DamageRanges
+  def range: Double
+  def attackDurMs : Double
+  def sound : ResourceSet#Audio
+  def image: ResourceSet#Image
 }

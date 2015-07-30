@@ -15,9 +15,19 @@ import biz.jackman.mutaspace.tal.skills.Skill
 
 class SkillManager(gm: GameManager) {
   val skills = Array[Skill](BasicAttack(gm))
+  var currentSkillIdx = 0
 
-  def executeSkill(n : Int) {
-    skills(n).execute()
+  def setCurrentSkill(n : Int) {
+
+  }
+  
+  def executeSkill() {
+    skills(currentSkillIdx).execute()
+  }
+
+  def update() {
+    val skill = skills(currentSkillIdx)
+    skill.currentSkillUpdate()
   }
 
 }

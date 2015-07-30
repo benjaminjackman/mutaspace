@@ -1,5 +1,5 @@
 package biz.jackman.mutaspace
-package tal.skills
+package tal.mechanics
 
 
 //////////////////////////////////////////////////////////////
@@ -7,13 +7,11 @@ package tal.skills
 // All Rights Reserved
 // please contact ben@jackman.biz
 // for licensing inquiries
-// Created by bjackman @ 7/30/15 12:17 AM
+// Created by bjackman @ 7/30/15 1:25 AM
 //////////////////////////////////////////////////////////////
 
+case class DamageAmounts(physical : Double = 0) {
 
+  def total = physical
 
-trait Skill {
-  def currentSkillUpdate(): Unit
-
-  def execute()
 }

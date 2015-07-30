@@ -6,6 +6,7 @@ import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.PlayerManager
+import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import cgta.cenum.CEnum
 import cgta.oscala.util.debugging.PRINT
 
@@ -27,10 +28,10 @@ object Doge {
 
     case object doge extends Image()
     case object van extends Image()
-    case object bite extends Audio()
-    case object growl extends Audio()
-    case object whimper extends Audio()
-    case object whine extends Audio()
+    case object xbite extends Audio()
+    case object xgrowl extends Audio()
+    case object xwhimper extends Audio()
+    case object xwhine extends Audio()
     final override val elements = CEnum.getElements(this)
   }
   def preload(gm: GameManager) {
@@ -39,7 +40,7 @@ object Doge {
 
 
   def apply(gm: GameManager): Doge = {
-    val text = gm.game.add.text(1, 1, "fluffy", OBJ(font = "100px Arial", fill = "red"))
+    val text = gm.game.add.text(1, 1, "cujo", OBJ(font = "100px Arial", fill = "red"))
     val sprite = gm.game.add.sprite(100, 50, Resources.doge)
     sprite.addChild(text)
     sprite.height = 100
@@ -63,12 +64,12 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
   }
 
   override def attack(player: PlayerManager) {
-    gm.game.sound.play(Resources.bite, .1)
+    gm.game.sound.play(Resources.xbite, .1)
     player.takeDamage(gm.randy.getIntMR(5, 2).max(0))
   }
-  override def takeDamage(amount: Int) {
+  override def takeDamage(amount: DamageAmounts) {
     damageEndMs = gm.game.time.now + 100
-    life -= amount
+    life -= amount.total.floor.toInt
 
     if (life <= 0) {
       //      gm.game.sound.play(Resources.whine, gm.randy.getDblIE(0.05, 0.2))
@@ -84,7 +85,7 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
       //Death will always be the last step in the scale
       val semitone = 1.0/12
 
-      val sound = gm.game.sound.add(Resources.whimper)
+      val sound = gm.game.sound.add(Resources.xwhimper)
       sound.onPlay.addOnce({ (x: js.Any) =>
         //Increases the pitch of the sound
         sound._sound.playbackRate.value = gm.randy.getDblIE(.8,1.2)

@@ -16,7 +16,7 @@ class InputManager(gm: GameManager) {
   def update() {
     val ap = gm.game.input.activePointer
     if (ap.isDown) {
-      gm.skillManager.executeSkill(0)
+      gm.skillManager.executeSkill()
     }
   }
 }

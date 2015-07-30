@@ -16,6 +16,19 @@ import scala.scalajs.js
 //////////////////////////////////////////////////////////////
 
 trait ResourceSet extends CEnum {
+
+
+
+  //TEMPLATE FOR SUB CLASSES
+  //======================================
+//  object Resources extends ResourceSet {
+//    override def soundBasePath = super.soundBasePath + "/dog"
+//    case object doge extends Image()
+//    case object whine extends Audio()
+//    final override val elements = CEnum.getElements(this)
+//  }
+  //=======================================
+
   final override type EET = Resource
   object Resource {
     implicit def resourceAsKey(r: Resource): String = r.key
