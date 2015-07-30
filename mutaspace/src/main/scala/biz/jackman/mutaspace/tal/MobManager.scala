@@ -78,6 +78,10 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
         //Player takes damage when the mobs wrap
         mob.attack(player)
       }
+      if (mob.sprite.x > gm.game.width) {
+        mob.sprite.x = 0
+      }
+
       mob.update()
     }
 

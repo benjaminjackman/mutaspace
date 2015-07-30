@@ -5,6 +5,7 @@ import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.mechanics.DamageRanges
+import biz.jackman.facades.phaser
 import cgta.cenum.CEnum
 
 import scala.scalajs.js
@@ -39,4 +40,14 @@ class Fist extends Weapon {
   override def attackDurMs: Double = 500
   override def sound: ResourceSet#Audio = Resources.punch
   override def image: ResourceSet#Image = Resources.fistl
+  override def animateSprite(gm: GameManager, sprite: Sprite): Unit = {
+    val ap = gm.game.input.activePointer
+    sprite.alpha = 1
+    sprite.x = ap.x - 120
+    sprite.y = ap.y + 40
+
+    gm.game.add.tween(sprite).to(OBJ(alpha = .7, x = ap.x - 70, y = ap.y-10), attackDurMs, phaser.easing.Linear.None _, true).onComplete.addOnce(() => {
+      sprite.alpha = 0
+    })
+  }
 }

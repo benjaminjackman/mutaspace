@@ -45,6 +45,8 @@ class BasicAttack(gm: GameManager) extends Skill {
       val dmgs = gm.randy.roll(weapon.damageRanges)
       gm.mobManager.getMobNearestCursor(weapon.range).foreach { mob =>
         mob.takeDamage(dmgs)
+        mob.sprite.body.velocity.x = mob.sprite.body.velocity.x + 25
+        mob.sprite.body.velocity.y = mob.sprite.body.velocity.y - 25
       }
       val attackDurMs = weapon.attackDurMs
       cooldownUntilMs = t + attackDurMs
@@ -70,14 +72,8 @@ class BasicAttack(gm: GameManager) extends Skill {
         }
         val mySprite = sprite
 
-        val ap = gm.game.input.activePointer
-        sprite.alpha = 1
-        sprite.x = ap.x - 120
-        sprite.y = ap.y + 40
+        weapon.animateSprite(gm, mySprite)
 
-        gm.game.add.tween(sprite).to(OBJ(alpha = .5, x = ap.x - 70, y = ap.y-10), attackDurMs, phaser.easing.Linear.None _, true).onComplete.addOnce(() => {
-          mySprite.alpha = 0
-        })
       }
       playWeaponAnimation()
 
