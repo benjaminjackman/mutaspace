@@ -73,6 +73,9 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     override def mobManager: MobManager = tal.mobManager
     override def playerManager: PlayerManager = tal.playerManager
     override def itemManager: ItemManager = tal.itemManager
+    override def levelManager: LevelManager = tal.levelManager
+    override def audioManager: AudioManager = tal.audioManager
+
     override def die() {
       if (showVidoes) {
         game.destroy()
@@ -111,6 +114,8 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
   lazy val scoreManager = new ScoreManager(gm, playerManager)
   lazy val skillManager = new SkillManager(gm)
   lazy val itemManager = new ItemManager(gm)
+  lazy val levelManager = new LevelManager(gm)
+  lazy val audioManager = new AudioManager(gm)
 
   def preload() {
     game.load

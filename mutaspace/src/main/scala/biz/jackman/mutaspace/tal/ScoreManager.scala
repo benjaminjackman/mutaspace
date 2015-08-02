@@ -15,27 +15,22 @@ import biz.jackman.facades.phaser
 
 class ScoreManager(gm: GameManager, playerManager: PlayerManager) {
 
-  var dogPower = 100
-  lazy val lifeText: phaser.Text = gm.game.add.text(16, 16, "Turkey Edibility 100%", js.Dynamic.literal(font = "24px sans", fill = "#F00"))
+  lazy val lifeText: phaser.Text = gm.game.add.text(16, 16, "Life", js.Dynamic.literal(font = "24px sans", fill = "#F00"))
   //  lazy val manaText: phaser.Text = gm.game.add.text(400, 16, "Mana: 0", js.Dynamic.literal(font = "32px sans", fill = "#00F"))
-  lazy val scoreText: phaser.Text = gm.game.add.text(200, 16, s"Zombie Bumpus Dog Power $dogPower%", js.Dynamic.literal(font = "24px sans", fill = "#00F"))
+  lazy val enemyText: phaser.Text = gm.game.add.text(200, 16, s"Enemies", js.Dynamic.literal(font = "24px sans", fill = "#00F"))
 
 
   def create() {
     lifeText
-    scoreText
+    enemyText
   }
 
   def update() {
     val life = playerManager.life
     val mana = playerManager.mana
+    val enemies = gm.levelManager.remainingEnemies
 
-    lifeText.text = s"Turkey $life%"
-    scoreText.text = s"Zombie Bumpus Dog Power $dogPower%"
-
-    if (dogPower <= 0) {
-      gm.win()
-    }
-
+    lifeText.text = s"Life: $life%"
+    enemyText.text = s"Enemies: $enemies"
   }
 }

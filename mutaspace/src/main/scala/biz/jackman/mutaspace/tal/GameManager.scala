@@ -23,6 +23,8 @@ trait GameManager {
   def mobManager : MobManager
   def playerManager: PlayerManager
   def itemManager: ItemManager
+  def levelManager: LevelManager
+  def audioManager: AudioManager
 
   def die(): Unit
   def win(): Unit

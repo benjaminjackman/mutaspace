@@ -2,6 +2,7 @@ package biz.jackman.mutaspace
 package tal.mobs
 
 
+import biz.jackman.facades.phaser
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
@@ -46,8 +47,9 @@ object Doge {
     sprite.height = 100
     sprite.width = 100
     gm.game.physics.arcade.enable(sprite)
-    sprite.body.velocity.set(0, 100)
+    sprite.body.velocity.set(0, 20)
     sprite.body.bounce.y = 0.7 * js.Math.random() * 0.2
+    sprite.anchor.set(0.5,0.5)
     new Doge(gm, sprite)
   }
 }
@@ -58,42 +60,36 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
   var life = maxLife
   var runningAway = false
   var damageEndMs = 0.0
+  var canAttackAtMs = 0.0
 
-  def init() {
 
-  }
+  def attack() {
+    if (gm.game.time.now >= canAttackAtMs) {
+      val attackDurMs = 100
+      val tween = gm.game.add.tween(sprite).to(OBJ(angle = 30), attackDurMs, phaser.easing.Linear.None _)
+        .to(OBJ(angle = -30), attackDurMs*2, phaser.easing.Linear.None _)
+        .to(OBJ(angle = 0), attackDurMs*3, phaser.easing.Linear.None _)
 
-  override def attack(player: PlayerManager) {
-    gm.game.sound.play(Resources.xbite, .1)
-    player.takeDamage(gm.randy.getIntMR(5, 2).max(0))
+      tween.start()
+
+      canAttackAtMs = gm.game.time.now + 1000
+      gm.audioManager.playRandom(Resources.xbite)
+      gm.playerManager.takeDamage(gm.randy.getIntMR(5, 2).max(0))
+    }
   }
   override def takeDamage(amount: DamageAmounts) {
-    damageEndMs = gm.game.time.now + 100
+    damageEndMs = gm.game.time.now + 250
     life -= amount.total.floor.toInt
 
     if (life <= 0) {
       //      gm.game.sound.play(Resources.whine, gm.randy.getDblIE(0.05, 0.2))
       life = 0
-      gm.scoreManager.dogPower -= gm.randy.getIntII(1, 5)
+      gm.levelManager.enemiesAlive -= 1
       sprite.body.velocity.y = -400
       runningAway = true
-      val sound = gm.game.sound.add(Resources.xwhine)
-      sound.play()
+      gm.audioManager.playRandom(Resources.xwhine)
     } else {
-      //gm.game.sound.play(Resources.whimper, gm.randy.getDblIE(0.05, 0.2))
-      //TODO DREAM Make the sounds be harmonic be locking the pitches to semitones corresponing to steps in the major or minor (or whatever scale)
-      //TODO FOR Each mob pack assingn a root note and for each hit to the MOB in that group play upwards on the scale
-      //Skip steps for larger chunks of damage,
-      //Death will always be the last step in the scale
-      val semitone = 1.0/12
-
-      val sound = gm.game.sound.add(Resources.xwhimper)
-      sound.onPlay.addOnce({ (x: js.Any) =>
-        //Increases the pitch of the sound
-        sound._sound.playbackRate.value = gm.randy.getDblIE(.8,1.2)
-      }: js.Function)
-      //.playbackRate = 5
-      sound.play()
+      gm.audioManager.playRandom(Resources.xwhimper)
     }
   }
   override def update() {
@@ -105,7 +101,6 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
       } else if (life < maxLife) {
         val red = ((1 - (life / maxLife.toDouble)) * 255).toInt.min(255).max(0)
         val tint = (red << 16) | ((red / 2) << 8) | (red / 2)
-
         sprite.tint = tint
       } else {
         sprite.tint = 0x00ffaa
@@ -115,5 +110,10 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
     if (runningAway && sprite.y + sprite.height <= 0) {
       sprite.kill()
     }
+
+    if (sprite.y >=  (gm.game.height - 200) / 4) {
+      attack()
+    }
+
   }
 }

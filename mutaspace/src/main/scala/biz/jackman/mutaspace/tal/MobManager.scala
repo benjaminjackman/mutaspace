@@ -28,6 +28,9 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
       mobLst ::= m
       group.add(m.sprite)
     }
+    def clearDead() {
+      mobLst = mobLst.filter(_.sprite.alive)
+    }
   }
 
 
@@ -37,13 +40,12 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
 
   def inBBRange(range : Double, mob: Mob): Boolean = {
     val ap = gm.game.input.activePointer
-    phaser.Math.distance(ap.x, ap.y, mob.sprite.x + mob.sprite.width / 2, mob.sprite.y + mob.sprite.height / 2) <= range
+    phaser.Math.distance(ap.x, ap.y, mob.sprite.x , mob.sprite.y) <= range
   }
 
 
   def getMobNearestCursor(range: Double) : Option[Mob] = {
     Mobs.mobs.find(inBBRange(range, _))
-
   }
 
   def preload() {
@@ -73,18 +75,27 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
     lastUpdateMs = curMs
 
     def updateChild(mob: Mob) {
-      if (mob.sprite.y > gm.game.height - 200) {
-        mob.sprite.y = 0
-        //Player takes damage when the mobs wrap
-        mob.attack(player)
+
+      if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
+        if (mob.sprite.body.velocity.y > 0) {
+          mob.sprite.body.velocity.y *= -1
+        }
       }
-      if (mob.sprite.x > gm.game.width) {
-        mob.sprite.x = 0
+      if (mob.sprite.x + mob.sprite.width >= gm.game.width) {
+        if (mob.sprite.body.velocity.x > 0) {
+          mob.sprite.body.velocity.x *= -1
+        }
+      }
+      if (mob.sprite.x <= 0) {
+        if (mob.sprite.body.velocity.x < 0) {
+          mob.sprite.body.velocity.x *= -1
+        }
       }
 
       mob.update()
     }
 
+    Mobs.clearDead()
     Mobs.mobs.foreach(updateChild)
   }
 
