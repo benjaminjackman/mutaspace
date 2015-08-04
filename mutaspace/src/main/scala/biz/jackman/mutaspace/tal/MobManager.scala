@@ -77,7 +77,12 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
     def updateChild(mob: Mob) {
 
       if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
-        if (mob.sprite.body.velocity.y > 0) {
+        if (mob.sprite.body.velocity.y > 0 ) {
+          mob.sprite.body.velocity.y *= -1
+        }
+      }
+      if (mob.sprite.y < 0 ) {
+        if (mob.sprite.body.velocity.y < 0 && mob.life() > 0) {
           mob.sprite.body.velocity.y *= -1
         }
       }
@@ -108,8 +113,8 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
     cnt times {
       val mob = Doge(gm)
       Mobs += mob
-      mob.sprite.x = randy.getIntII(0, gm.game.width.toInt - mob.sprite.width.toInt)
-      mob.sprite.y = randy.getIntII(0, 100)
+      mob.sprite.x = randy.getIntII(1, gm.game.width.toInt - mob.sprite.width.toInt)
+      mob.sprite.y = randy.getIntII(1, 50)
     }
   }
 }

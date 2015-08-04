@@ -160,6 +160,14 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     inputManager.update()
     scoreManager.update()
     skillManager.update()
+
+    if (playerManager.life < 0) {
+      gm.die()
+    }
+
+    if (levelManager.remainingEnemies <= 0) {
+      gm.win()
+    }
   }
 
   def displayInventory() {

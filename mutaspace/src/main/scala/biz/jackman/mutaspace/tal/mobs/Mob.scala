@@ -14,6 +14,7 @@ import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 //////////////////////////////////////////////////////////////
 
 trait Mob {
+  def life() : Int
   def takeDamage(amount: DamageAmounts): Unit
   def sprite: Sprite
   def update(): Unit

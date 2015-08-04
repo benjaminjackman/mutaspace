@@ -22,9 +22,6 @@ class PlayerManager(gm: GameManager) {
 
   def takeDamage(x: Int) = {
     life -= x
-    if (life < 0) {
-      gm.die()
-    }
   }
 
   var life = 100
