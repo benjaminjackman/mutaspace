@@ -10,6 +10,8 @@ GET        /tal-classic        controllers.MainController.talClassic
 GET            /assets/*file                                            controllers.Assets.at(path="/public", file)
 
 
+GET       /v/:version/*file                                             controllers.VersionedController.lookup(version, file)
+
 ## Home page
 #OPTIONS        /*path                                                   controllers.Application.options(path : String)
 #GET            /                                                        controllers.MainController.mainPage()

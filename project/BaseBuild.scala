@@ -1,5 +1,6 @@
 import cgta.sbtxsjs.SbtXSjsPlugin.XSjsProjects
 import com.typesafe.sbt.packager.universal.UniversalKeys
+import com.typesafe.sbt.web.Import.WebKeys
 import com.typesafe.sbt.web.SbtWeb
 import sbt.Keys._
 import sbt._
@@ -92,7 +93,8 @@ object BaseBuild extends Build with UniversalKeys {
       .aggregate(sjsProjects: _*)
       .settings(publish := {})
       .settings(basicSettings: _*)
-      .settings(sjsForPlayOutDir := (crossTarget in Compile).value / "classes" / "public" / "javascripts",
+//      .settings(sjsForPlayOutDir := (crossTarget in Compile).value / "classes" / "public" / "javascripts",
+      .settings(sjsForPlayOutDir := (WebKeys.public in Assets).value / "javascripts" / "sjs",
         compile in Compile <<= (compile in Compile) dependsOn (fastOptJS in(lastSjsProject, Compile)),
         includeFilter in(Assets, LessKeys.less) := "*.less",
         dist <<= dist dependsOn (fullOptJS in(lastSjsProject, Compile))
