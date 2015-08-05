@@ -69,6 +69,7 @@ object Projects extends Build with UniversalKeys {
 //    .settings(sjsTasks.map(t => crossTarget in(Compile, t) := sjsOutDir.value): _*)
 
   lazy val mutaplay = playProject(Seq(mutaspace))
+    .settings(Libs.Cgta.settingsJvm : _*)
     .settings(sbtide.Keys.ideExcludedDirectories := List(file("target"), file("public")))
 
 

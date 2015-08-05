@@ -2,15 +2,18 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET        /          controllers.MainController.mainPage()
-GET        /tal        controllers.MainController.tal
-GET        /tal-classic        controllers.MainController.talClassic
+GET        /                               controllers.MainController.mainPage()
+GET        /tal                            controllers.MainController.tal
+GET        /tal-classic                    controllers.MainController.talClassic
 
 ## Map static resources from the /public folder to the /assets URL path
-GET            /assets/*file                                            controllers.Assets.at(path="/public", file)
+GET        /assets/*file                   controllers.Assets.at(path="/public", file)
 
 
-GET       /v/:version/*file                                             controllers.VersionedController.lookup(version, file)
+GET        /v/:version/                    controllers.VersionedController.lookup(version, file="index.html")
+GET        /v/:version/*file               controllers.VersionedController.lookup(version, file)
+#GET        /sha256/$sha<[a-zA-Z0-9]+>             controllers.VersionedController.getBySha256(sha)
+#GET        /sha256/$sha<[^.]+>.:ext        controllers.VersionedController.getBySha256Ext(sha, ext)
 
 ## Home page
 #OPTIONS        /*path                                                   controllers.Application.options(path : String)
