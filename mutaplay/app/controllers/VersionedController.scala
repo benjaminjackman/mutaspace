@@ -4,10 +4,12 @@ import java.io.File
 
 
 import cgta.oscala.util.Slurp
-import play.Play
+import cgta.oscala.util.debugging.PRINT
 import play.api.libs.MimeTypes
 import play.api.mvc.Action
 import play.api.mvc.Controller
+
+import scala.util.Properties
 
 
 //////////////////////////////////////////////////////////////
@@ -18,32 +20,34 @@ import play.api.mvc.Controller
 // Created by bjackman @ 8/5/15 7:21 AM
 //////////////////////////////////////////////////////////////
 
-case class VersionManifestEntry(name: String, sha256: String)
-case class VersionManifest(shaToName: IMap[String, Set[String]], nameToSha: IMap[String, String])
+case class VersionManifestEntry(path: String, hash: String)
+case class VersionManifest(urlToHash: IMap[String, Set[String]], nameToHash: IMap[String, String])
 
 class VersionCacher(versionDir: File) {
   val lock = OLock()
   val manifestExt = "manifest"
-  var versionCache: Map[String, VersionManifest] = _
+  var versionCache =  IMap.empty[String, VersionManifest]
   def getVersionManifest(version: String): Option[VersionManifest] = {
     versionCache.get(version) match {
       case Some(manifest) => Some(manifest)
       case None =>
         val manifestOpt = versionDir.listFiles().find(f => f.isFile && f.getName == s"$version.$manifestExt") map { f =>
-          val sha_names = Slurp.asString(f.getPath).split("\n").flatMap {
+          val hash_paths = Slurp.asString(f.getPath).split("\n").flatMap {
             _.split(" ").toList match {
-              case sha :: path :: Nil => Some(sha -> path)
+              case path :: hash :: Nil => Some(hash -> path)
               case _ => None
             }
           }
           VersionManifest(
-            shaToName = sha_names.groupBy(_._1).mapValues(_.map(_._2).toSet),
-            nameToSha = IMap() ++ sha_names.map(sn => sn._2 -> sn._1)
+            urlToHash = hash_paths.groupBy(_._1).mapValues(_.map(_._2).toSet),
+            nameToHash = IMap() ++ hash_paths.map(sn => sn._2 -> sn._1)
           )
         }
+
         manifestOpt.foreach { manifest =>
-          lock.using {
-            versionCache += version -> manifest
+          //Dont cache the head version!
+          if (!version.startsWith("HEAD")) {
+            lock.using(versionCache += version -> manifest)
           }
         }
         manifestOpt
@@ -59,35 +63,74 @@ class VersionCacher(versionDir: File) {
   }
 }
 
+class Sha256Cacher(sha256Dir: File) {
+  require(sha256Dir.exists())
+  val canon = sha256Dir.getCanonicalFile
+  val canonPath = sha256Dir.getCanonicalPath
+  val lock = OLock()
+  var shaCache = IMap.empty[String, File]
+
+  def get(sha256: String): Option[File] = {
+    shaCache.get(sha256).orElse {
+      val f = new File(sha256Dir, sha256)
+      if (f.getParentFile.getCanonicalPath == canonPath) {
+        lock.using(shaCache += sha256 -> f)
+        Some(f)
+      } else {
+        None
+      }
+    }
+  }
+}
+
 
 object VersionedController extends Controller {
-  val manifestDir = System.getProperty("manifestdir").nullSafe
-  val sha256Dir = System.getProperty("sha256dir").nullSafe
+  val manifestDir = (Properties.userHome + "/muta/label/dns/mutaspace.jackman.biz/version").toFile
+  val sha256Dir = (Properties.userHome + "/muta/hash/sha256").toFile
 
-  val versionCacher = new VersionCacher(manifestDir.get.toFile)
+  val versionCacher = new VersionCacher(manifestDir)
+  val sha256Cacher = new Sha256Cacher(sha256Dir)
 
-  def lookup(version: String, file: String) = Action {
+  def lookup(version: String, file: String) = Action { req =>
     versionCacher.getVersionManifest(version) match {
       case Some(manifest) =>
-        manifest.nameToSha.get(file).map(sha => getBySha256(sha256 = sha, file)).getOrElse(NotFound)
+        val hash = manifest.nameToHash.get(file)
+        hash match {
+          case Some(hash) =>
+            req.headers.get(IF_NONE_MATCH).foreach(PRINT | _)
+            req.headers.get(IF_NONE_MATCH) match {
+              case Some(etags) if etags.split(",").map(_.trim).contains(hash) => NotModified
+              case None => getByUrl(hash = hash, file)
+            }
+          case None =>
+            PRINT | "NO HASH: " + version + " " + file
+            NotFound
+        }
       case None =>
+        PRINT | "NO VERSION"
         NotFound
     }
   }
+  val sha256Protocol = "sha256://"
 
-  def getBySha256(sha256: String, filename: String) =
-    sha256Dir match {
-      case Some(dir) =>
-        val f = new File(Play.application().getFile(dir), sha256)
-        if (f.exists()) {
-          val resp = Ok.sendFile(f, inline = true)
-          MimeTypes.forFileName(filename).map(mt => resp.withHeaders(CONTENT_TYPE -> mt)).getOrElse(resp)
-        } else {
-          NotFound
-        }
-      case None =>
+  def getByUrl(hash: String, filename: String) = {
+    if (hash.startsWith(sha256Protocol)) {
+      val sha256 = hash.drop(sha256Protocol.length)
+      sha256Cacher.get(sha256).map { f =>
+        var resp = Ok.sendFile(f, inline = true)
+        MimeTypes.forFileName(filename).foreach(mt => resp = resp.withHeaders(CONTENT_TYPE -> mt))
+        resp = resp.withHeaders(
+          ETAG -> ("\"" + hash + "\""),
+          CACHE_CONTROL -> "public, max-age=31536000"
+        )
+        resp
+      } getOrElse {
         NotFound
+      }
+    } else {
+      NotFound
     }
 
+  }
 
 }
