@@ -28,7 +28,6 @@ object Doge {
     override def soundBasePath = super.soundBasePath + "/dog"
 
     case object doge extends Image()
-    case object van extends Image()
     case object xbite extends Audio()
     case object xgrowl extends Audio()
     case object xwhimper extends Audio()

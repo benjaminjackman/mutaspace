@@ -4,15 +4,15 @@
 #for j in $(for i in $(cd mutaplay/target/web/public/main/;find -type f); do echo $i; done | grep -v '^.$' | cut -b3- ); do sha256sum mutaplay/target/web/public/main/$j | awk '{print $1}' | xargs echo $j; done
 
 
-SERVER="ubuntu@washington.jackman.biz"
+SERVER=tal
 KEY="$HOME/keys/ben-personal.pem"
 
 sbt 'project mutaplay' 'dist'
 
 if [ $? ]; then
-  scp -i $KEY mutaplay/target/universal/mutaplay-0.1-SNAPSHOT.zip $SERVER:
-  ssh -i $KEY $SERVER unzip -o mutaplay-0.1-SNAPSHOT.zip
-  ssh -i $KEY $SERVER ./bounce.sh
+  scp mutaplay/target/universal/mutaplay-0.1-SNAPSHOT.zip $SERVER:
+  ssh $SERVER unzip -o mutaplay-0.1-SNAPSHOT.zip
+  ssh $SERVER ./bounce.sh
 fi 
 
 

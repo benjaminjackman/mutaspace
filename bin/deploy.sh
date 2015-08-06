@@ -8,29 +8,41 @@ set -euf -o pipefail
 
 #See: https://sipb.mit.edu/doc/safe-shell/
 
-DIR=mutaplay/target/web/public/main
+EXPORT_DIR=mutaplay/target/web/public/main
 VER_OUT=version.manifest
-VER_HEAD=$HOME/muta/label/dns/mutaspace.jackman.biz/version/HEAD.manifest
+VER_HEAD=$HOME/muta/label/dns/tal.jackman.biz/version/HEAD
 SHA_REPO=$HOME/muta/hash/sha256
 
 files() {
-  cd $DIR
+  cd "$EXPORT_DIR"
   find -type f
 }
 
 trimmed() {
   files | grep -v '^.$' | cut -b3-
 }
+
+getTarget() {
+  if [ $(dirname $1) == "." ]; then
+    echo $1
+  else
+    echo "assets/"$1
+  fi
+}
+
+getSha256() {
+  sha256sum "$1" | awk '{print $1}'
+}
 for j in $(trimmed); do
-  sha256sum $DIR/$j | awk '{print $1}' | xargs echo $j | awk '{print $1 " sha256://" $2}';
+  echo $(getTarget "$j") sha256://$(getSha256 "$EXPORT_DIR/$j")
 done | tee $VER_OUT
 
-
 cp $VER_OUT $VER_HEAD
+echo "Wrote to $VER_OUT & $VER_HEAD"
 
 
 for j in $(trimmed); do
-  F="$DIR/$j"
+  F="$EXPORT_DIR/$j"
   SHA256=$(sha256sum "$F" | awk '{print $1}')
   OF="$SHA_REPO/$SHA256"
 
@@ -42,6 +54,10 @@ for j in $(trimmed); do
       rm "$OF"
     fi
   else
-    echo Bypassing $F
+    echo Bypassing Existing SHA256 for $F
   fi
 done
+
+
+rsync -avz ~/muta/ tal:muta
+
