@@ -44,13 +44,16 @@ class BasicAttack(gm: GameManager) extends Skill {
 
       nextWeaponSlot = (nextWeaponSlot + 1) & 1
       val dmgs = gm.randy.roll(weapon.damageRanges)
-      gm.mobManager.getMobNearestCursor(weapon.range).foreach { mob =>
+      gm.mobManager.getMobNearestCursor(25).foreach { mob =>
         mob.takeDamage(dmgs)
         if (weaponSlot =?= 0) {
           mob.sprite.body.velocity.x += 25
+          mob.sprite.body.angularVelocity = 360
         } else {
           mob.sprite.body.velocity.x -= 25
+          mob.sprite.body.angularVelocity = -360
         }
+
 
         mob.sprite.body.velocity.y = mob.sprite.body.velocity.y - 25
       }

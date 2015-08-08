@@ -6,10 +6,8 @@ import biz.jackman.facades.phaser
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
-import biz.jackman.mutaspace.tal.PlayerManager
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import cgta.cenum.CEnum
-import cgta.oscala.util.debugging.PRINT
 
 import scala.scalajs.js
 
@@ -43,8 +41,8 @@ object Doge {
     val text = gm.game.add.text(1, 1, "cujo", OBJ(font = "100px Arial", fill = "red"))
     val sprite = gm.game.add.sprite(100, 50, Resources.doge)
     sprite.addChild(text)
-    sprite.height = 100
-    sprite.width = 100
+    sprite.height = 50
+    sprite.width = 50
     gm.game.physics.arcade.enable(sprite)
     sprite.body.velocity.set(0, 20)
     sprite.body.bounce.y = 0.7 * js.Math.random() * 0.2

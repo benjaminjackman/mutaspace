@@ -20,7 +20,7 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   object Mobs {
     lazy val group = gm.game.add.group()
     private var mobLst: List[Mob] = Nil
-    def mobs: Iterator[Mob] = mobLst.iterator
+    def mobs: List[Mob] = mobLst
     def create() {
       group
     }
@@ -38,14 +38,12 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   var lastUpdateMs = 0.0
   var lastMobMs = 0.0
 
-  def inBBRange(range : Double, mob: Mob): Boolean = {
-    val ap = gm.game.input.activePointer
-    phaser.Math.distance(ap.x, ap.y, mob.sprite.x , mob.sprite.y) <= range
-  }
-
-
   def getMobNearestCursor(range: Double) : Option[Mob] = {
-    Mobs.mobs.find(inBBRange(range, _))
+    def distance(mob : Mob) = {
+      val ap = gm.game.input.activePointer
+      phaser.Math.distance(ap.x, ap.y, mob.sprite.x , mob.sprite.y)
+    }
+    Mobs.mobs.minByOpt(distance).filter(distance(_) < range)
   }
 
   def preload() {
