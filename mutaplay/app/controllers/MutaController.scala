@@ -151,7 +151,7 @@ object MutaController extends Controller {
       case Some(url) =>
         if (url.startsWith(sha256Protocol)) {
           req.headers.get(IF_NONE_MATCH) match {
-            case Some(etags)  =>
+            case Some(etags) =>
               if (etags.replaceAll("\"", "").split(",").map(_.trim).contains(url)) {
                 NotModified
               } else {
@@ -168,6 +168,35 @@ object MutaController extends Controller {
     }
   }
 
+  def getBySha256(rawSha256: String) = Action { req =>
+    val sha256 = rawSha256.takeWhile(c => (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z'))
+    def get() = sha256Cacher.get(sha256) match {
+      case Some(f) =>
+        var resp = Ok.sendFile(f, inline = true)
+        MimeTypes.forFileName(rawSha256).foreach(mt => resp = resp.withHeaders(CONTENT_TYPE -> mt))
+        resp = resp.withHeaders(
+          CACHE_CONTROL -> "public, max-age=31536000",
+          ETAG -> ("\"" + sha256 + "\"")
+        )
+        resp
+      case None => NotFound
+    }
+
+    req.headers.get(IF_NONE_MATCH) match {
+      case Some(etags) =>
+        if (etags.contains(sha256)) {
+          //More throrough but tottally unneeded version
+          //        if (etags.replaceAll("\"", "").split(",").map(_.trim).contains(sha256)) {
+          NotModified
+        } else {
+          get()
+        }
+      case _ =>
+        get()
+    }
+
+  }
+
   def getByHashUrl(hashUrl: String, filename: String) = {
     if (hashUrl.startsWith(sha256Protocol)) {
       val sha256 = hashUrl.drop(sha256Protocol.length)
@@ -176,8 +205,8 @@ object MutaController extends Controller {
         MimeTypes.forFileName(filename).foreach(mt => resp = resp.withHeaders(CONTENT_TYPE -> mt))
         resp = resp.withHeaders(
           ETAG -> ("\"" + hashUrl + "\""),
-        //TODO Consider not using no-cache
-        //See this for more detail: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control
+          //TODO Consider not using no-cache
+          //See this for more detail: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control
           CACHE_CONTROL -> "public, no-cache, max-age=31536000"
         )
         resp

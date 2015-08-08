@@ -8,8 +8,8 @@ GET        /tal                        controllers.MainController.tal
 
 ## Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file               controllers.Assets.at(path="/public", file)
-
 GET        /current-host/*label        controllers.MutaController.labelByCurrentHost(label)
+GET        /sha256/:sha                controllers.MutaController.getBySha256(sha)
 
 
 
