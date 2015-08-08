@@ -150,7 +150,6 @@ object MutaController extends Controller {
     labelCacher.resolveDns(host, label) match {
       case Some(url) =>
         if (url.startsWith(sha256Protocol)) {
-          req.headers.get(IF_NONE_MATCH).foreach(PRINT | _)
           req.headers.get(IF_NONE_MATCH) match {
             case Some(etags)  =>
               if (etags.replaceAll("\"", "").split(",").map(_.trim).contains(url)) {
