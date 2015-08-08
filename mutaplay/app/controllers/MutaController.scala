@@ -130,10 +130,14 @@ object MutaController extends Controller {
   val labelCacher = new LabelCacher(labelDir)
   val sha256Cacher = new Sha256Cacher(sha256Dir)
 
+  val sha256Protocol = "sha256://"
+
 
   def labelByCurrentHost(label: String) = Action { implicit req =>
 
-    PRINT | s"${req.remoteAddress} ${req.uri} $label"
+    //TODO Embed the hashes into the names of the files
+
+    PRINT | s"${req.remoteAddress} ${req.headers.get("X-Real-IP")} ${req.uri} $label"
 
     val host = if (req.host.split(":")(0) == "localhost") {
       PRINT | "localhost override"
@@ -164,7 +168,6 @@ object MutaController extends Controller {
         NotFound
     }
   }
-  val sha256Protocol = "sha256://"
 
   def getByHashUrl(hashUrl: String, filename: String) = {
     if (hashUrl.startsWith(sha256Protocol)) {
@@ -174,6 +177,8 @@ object MutaController extends Controller {
         MimeTypes.forFileName(filename).foreach(mt => resp = resp.withHeaders(CONTENT_TYPE -> mt))
         resp = resp.withHeaders(
           ETAG -> ("\"" + hashUrl + "\""),
+        //TODO Consider not using no-cache
+        //See this for more detail: https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching#cache-control
           CACHE_CONTROL -> "public, no-cache, max-age=31536000"
         )
         resp
@@ -183,51 +188,6 @@ object MutaController extends Controller {
     } else {
       NotFound
     }
-
   }
 
 }
-
-
-//case class VersionManifestEntry(path: String, hash: String)
-//case class VersionManifest(urlToHash: IMap[String, Set[String]], nameToHash: IMap[String, String])
-//
-//class VersionCacher(versionDir: File) {
-//  val lock = OLock()
-//  val manifestExt = "manifest"
-//  var versionCache = IMap.empty[String, VersionManifest]
-//  def getVersionManifest(version: String): Option[VersionManifest] = {
-//    versionCache.get(version) match {
-//      case Some(manifest) => Some(manifest)
-//      case None =>
-//        val manifestOpt = versionDir.listFiles().find(f => f.isFile && f.getName == s"$version.$manifestExt") map { f =>
-//          val hash_paths = Slurp.asString(f.getPath).split("\n").flatMap {
-//            _.split(" ").toList match {
-//              case path :: hash :: Nil => Some(hash -> path)
-//              case _ => None
-//            }
-//          }
-//          VersionManifest(
-//            urlToHash = hash_paths.groupBy(_._1).mapValues(_.map(_._2).toSet),
-//            nameToHash = IMap() ++ hash_paths.map(sn => sn._2 -> sn._1)
-//          )
-//        }
-//
-//        manifestOpt.foreach { manifest =>
-//          //Dont cache the head version!
-//          if (!version.startsWith("HEAD")) {
-//            lock.using(versionCache += version -> manifest)
-//          }
-//        }
-//        manifestOpt
-//    }
-//
-//  }
-//  def getAllVersions(): List[String] = {
-//    versionDir
-//      .listFiles()
-//      .filter(f => f.isFile && f.getName.endsWith(s".$manifestExt"))
-//      .map(_.getName.dropRight(manifestExt.length + 1))
-//      .toList
-//  }
-//}
