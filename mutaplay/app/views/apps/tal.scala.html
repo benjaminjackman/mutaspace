@@ -1,17 +1,16 @@
 @(showVideos: Boolean)
 
 <html>
-  <head>
-    @*<script src="@routes.Assets.at("javascripts/threejs/r70/three.js")"></script>*@
-    @libs.phaserJs("v2.3.0")
-    @libs.scalaJs()
-    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mutaspace.css")">
-    </head>
-  <body>
-    <div id="content"></div>
-    <div id="footer"></div>
-    <script>
-    biz.jackman.mutaspace.tal.TalMain().main (@(showVideos))
-    </script>
-  </body>
+<head>
+    <script src="assets/javascripts/phaser/v2.3.0/phaser.js"></script>
+    <script src="assets/javascripts/sjs/mutaspace-fastopt.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/mutaspace.css">
+</head>
+<body>
+<div id="content"></div>
+<div id="footer"></div>
+<script>
+    biz.jackman.mutaspace.tal.TalMain().main(@(showVideos))
+</script>
+</body>
 </html>

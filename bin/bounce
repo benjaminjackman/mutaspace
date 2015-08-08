@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#killall java
+#nohup ./mutaplay >> std.log 2>&1 &
+
+ubuntu@ip-172-31-40-174:~$ ls -l
+total 35276
+-rwxrw-r-- 1 ubuntu ubuntu       61 Aug  8 02:06 bounce.sh
+drwxr-xr-x 4 ubuntu ubuntu     4096 Aug  5 21:01 muta
+lrwxrwxrwx 1 ubuntu ubuntu       34 Jul 15 07:27 mutaplay -> mutaplay-0.1-SNAPSHOT/bin/mutaplay
+drwxrwxr-x 7 ubuntu ubuntu     4096 Aug  8 02:19 mutaplay-0.1-SNAPSHOT
+-rw-r--r-- 1 ubuntu ubuntu 36097324 Aug  8 02:19 mutaplay-0.1-SNAPSHOT.zip
+-rw------- 1 ubuntu ubuntu      447 Jul 15 07:30 nohup.out
+-rw-rw-r-- 1 ubuntu ubuntu     5819 Aug  8 02:21 std.log

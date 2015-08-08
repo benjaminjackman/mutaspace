@@ -132,6 +132,9 @@ object MutaController extends Controller {
 
 
   def labelByCurrentHost(label: String) = Action { implicit req =>
+
+    PRINT | s"${req.remoteAddress} ${req.uri} $label"
+
     val host = if (req.host.split(":")(0) == "localhost") {
       PRINT | "localhost override"
       "tal.jackman.biz"
@@ -139,12 +142,18 @@ object MutaController extends Controller {
       req.host
     }
 
+
     labelCacher.resolveDns(host, label) match {
       case Some(url) =>
         if (url.startsWith(sha256Protocol)) {
-//          req.headers.get(IF_NONE_MATCH).foreach(PRINT | _)
+          req.headers.get(IF_NONE_MATCH).foreach(PRINT | _)
           req.headers.get(IF_NONE_MATCH) match {
-            case Some(etags) if etags.split(",").map(_.trim).contains(url) => NotModified
+            case Some(etags)  =>
+              if (etags.replaceAll("\"", "").split(",").map(_.trim).contains(url)) {
+                NotModified
+              } else {
+                getByHashUrl(hashUrl = url, label)
+              }
             case _ => getByHashUrl(hashUrl = url, label)
           }
         } else {
@@ -165,7 +174,7 @@ object MutaController extends Controller {
         MimeTypes.forFileName(filename).foreach(mt => resp = resp.withHeaders(CONTENT_TYPE -> mt))
         resp = resp.withHeaders(
           ETAG -> ("\"" + hashUrl + "\""),
-          CACHE_CONTROL -> "public, max-age=31536000"
+          CACHE_CONTROL -> "public, no-cache, max-age=31536000"
         )
         resp
       } getOrElse {
