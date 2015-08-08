@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#Generate the version manifest
-#for j in $(for i in $(cd mutaplay/target/web/public/main/;find -type f); do echo $i; done | grep -v '^.$' | cut -b3- ); do sha256sum mutaplay/target/web/public/main/$j | awk '{print $1}' | xargs echo $j; done
-
 
 SERVER=tal
 KEY="$HOME/keys/ben-personal.pem"

@@ -2,14 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET        /                        controllers.MainController.mainPage()
-GET        /tal                     controllers.MainController.tal
-GET        /tal-classic             controllers.MainController.talClassic
+GET        /                           controllers.Default.redirect(to="/current-host/version/HEAD/index.html")
+GET        /tal                        controllers.MainController.tal
+GET        /tal-classic                controllers.MainController.talClassic
 
 ## Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file            controllers.Assets.at(path="/public", file)
+GET        /assets/*file               controllers.Assets.at(path="/public", file)
 
-GET        /current-host/*label              controllers.MutaController.labelByCurrentHost(label)
+GET        /current-host/*label        controllers.MutaController.labelByCurrentHost(label)
 
 
 
