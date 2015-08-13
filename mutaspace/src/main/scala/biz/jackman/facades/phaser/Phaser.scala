@@ -5,7 +5,7 @@ import scala.scalajs.js
 import js.annotation._
 import org.scalajs.dom.raw._
 import scala.scalajs.js.typedarray._
-import biz.jackman.facades.phaser.Physics
+
 
 
 object Phaser extends js.Object {
@@ -52,6 +52,7 @@ object Phaser extends js.Object {
 
 package phaser {
 import importedjs.PIXI
+import importedjs.p2
 
 @JSName("Phaser.Animation")
 class Animation protected() extends js.Object {
@@ -2618,302 +2619,302 @@ class Tile protected() extends js.Object {
 
 }
 
-//@JSName("Phaser.Physics.P2")
-//class P2 protected () extends js.Object {
-//  def this(game: phaser.Game, config: js.Any = ???) = this()
-//  var applyDamping: Boolean = js.native
-//  var applyGravity: Boolean = js.native
-//  var applySpringForces: Boolean = js.native
-//  var boundsCollidesWith: js.Array[phaser.physics.p2.Body] = js.native
-//  var boundsCollisionGroup: phaser.physics.p2.CollisionGroup = js.native
-//  var config: js.Any = js.native
-//  var callbackContext: js.Any = js.native
-//  var collisionGroups: js.Array[phaser.physics.p2.CollisionGroup] = js.native
-//  var contactMaterial: phaser.physics.p2.ContactMaterial = js.native
-//  var emitImpactEvent: Boolean = js.native
-//  var everythingCollisionGroup: phaser.physics.p2.CollisionGroup = js.native
-//  var frameRate: Double = js.native
-//  var friction: Double = js.native
-//  var game: phaser.Game = js.native
-//  var gravity: phaser.physics.p2.InversePointProxy = js.native
-//  var materials: js.Array[phaser.physics.p2.Material] = js.native
-//  var nothingCollisionGroup: phaser.physics.p2.CollisionGroup = js.native
-//  var onBodyAdded: phaser.Signal = js.native
-//  var onBodyRemoved: phaser.Signal = js.native
-//  var onBeginContact: phaser.Signal = js.native
-//  var onConstraintAdded: phaser.Signal = js.native
-//  var onConstraintRemoved: phaser.Signal = js.native
-//  var onContactMaterialAdded: phaser.Signal = js.native
-//  var onContactMaterialRemoved: phaser.Signal = js.native
-//  var onEndContact: phaser.Signal = js.native
-//  var onSpringAdded: phaser.Signal = js.native
-//  var onSpringRemoved: phaser.Signal = js.native
-//  var paused: Boolean = js.native
-//  var postBroaddphaseCallback: js.Function = js.native
-//  var restitution: Double = js.native
-//  var solveConstraints: Boolean = js.native
-//  var time: js.Any = js.native
-//  var total: Double = js.native
-//  var useElapsedTime: Boolean = js.native
-//  var walls: js.Any = js.native
-//  var world: p2.World = js.native
-//  def addBody(body: phaser.physics.p2.Body): Boolean = js.native
-//  def addContactMaterial(material: phaser.physics.p2.ContactMaterial): phaser.physics.p2.ContactMaterial = js.native
-//  def addConstraint[T](constraint: T): T = js.native
-//  def addSpring(spring: phaser.physics.p2.Spring): phaser.physics.p2.Spring = js.native
-//  def beginContactHandler(event: js.Any): Unit = js.native
-//  def clear(): Unit = js.native
-//  def clearTilemapLayerBodies(map: phaser.Tilemap, layer: js.Any = ???): Unit = js.native
-//  def convertCollisionObjects(map: phaser.Tilemap, layer: js.Any = ???, addToWorld: Boolean = ???): js.Array[phaser.physics.p2.Body] = js.native
-//  def convertTilemap(map: phaser.Tilemap, layer: js.Any = ???, addToWorld: Boolean = ???, optimize: Boolean = ???): js.Array[phaser.physics.p2.Body] = js.native
-//  def createBody(x: Double, y: Double, mass: Double, addToWorld: Boolean = ???, options: p2.BodyOptions = ???, data: js.Array[js.Array[Double]] = ???): phaser.physics.p2.Body = js.native
-//  def createCollisionGroup(group: phaser.Group = ???): phaser.physics.p2.CollisionGroup = js.native
-//  def createContactMaterial(materialA: phaser.physics.p2.Material, materialB: phaser.physics.p2.Material, options: p2.ContactMaterialOptions = ???): phaser.physics.p2.ContactMaterial = js.native
-//  def createDistanceConstraint(bodyA: js.Any, bodyB: js.Any, distance: Double, localAnchorA: js.Array[Double] = ???, localAnchorB: js.Array[Double] = ???, maxForce: Double = ???): phaser.physics.p2.DistanceConstraint = js.native
-//  def createGearConstraint(bodyA: js.Any, bodyB: js.Any, angle: Double = ???, ratio: Double = ???): phaser.physics.p2.GearConstraint = js.native
-//  def createLockConstraint(bodyA: js.Any, bodyB: js.Any, offset: js.Array[Double] = ???, angle: Double = ???, maxForce: Double = ???): phaser.physics.p2.LockConstraint = js.native
-//  def createMaterial(name: String = ???, body: phaser.physics.p2.Body = ???): phaser.physics.p2.Material = js.native
-//  def createParticle(x: Double, y: Double, mass: Double, addToWorld: Boolean = ???, options: p2.BodyOptions = ???, data: js.Array[js.Array[Double]] = ???): phaser.physics.p2.Body = js.native
-//  def createPrismaticConstraint(body: js.Any, bodyB: js.Any, lockRotation: Boolean = ???, anchorA: js.Array[Double] = ???, anchorB: js.Array[Double] = ???, axis: Float32Array = ???, maxForce: Double = ???): phaser.physics.p2.PrismaticConstraint = js.native
-//  def createRevoluteConstraint(bodyA: js.Any, pivotA: js.Array[Double], bodyB: js.Any, pivotB: js.Array[Double], maxForce: Double = ???, worldPivot: js.Array[Double] = ???): phaser.physics.p2.RevoluteConstraint = js.native
-//  def createRotationalSpring(bodyA: js.Any, bodyB: js.Any, restAngle: Double = ???, stiffness: Double = ???, damping: Double = ???): p2.RotationalSpring = js.native
-//  def createSpring(bodyA: js.Any, bodyB: js.Any, restLength: Double = ???, stiffness: Double = ???, damping: Double = ???, worldA: js.Array[Double] = ???, worldB: js.Array[Double] = ???, localA: js.Array[Double] = ???, localB: js.Array[Double] = ???): phaser.physics.p2.Spring = js.native
-//  def destroy(): Unit = js.native
-//  def enable(`object`: js.Any, debug: Boolean = ???, children: Boolean = ???): Unit = js.native
-//  def enableBody(`object`: js.Any, debug: Boolean): Unit = js.native
-//  def endContactHandler(event: js.Any): Unit = js.native
-//  def getBodies(): js.Array[phaser.physics.p2.Body] = js.native
-//  def getBody(`object`: js.Any): phaser.physics.p2.Body = js.native
-//  def getConstraints(): js.Array[p2.Constraint] = js.native
-//  def getSprings(): js.Array[phaser.physics.p2.Spring] = js.native
-//  def getContactMaterial(materialA: phaser.physics.p2.Material, materialB: phaser.physics.p2.Material): phaser.physics.p2.ContactMaterial = js.native
-//  def hitTest(worldPoint: phaser.Point, bodies: js.Array[js.Any] = ???, precision: Double = ???, filterStatic: Boolean = ???): js.Array[phaser.physics.p2.Body] = js.native
-//  def mpx(v: Double): Double = js.native
-//  def mpxi(v: Double): Double = js.native
-//  def pause(): Unit = js.native
-//  def preUpdate(): Unit = js.native
-//  def pxm(v: Double): Double = js.native
-//  def pxmi(v: Double): Double = js.native
-//  def removeBody(body: phaser.physics.p2.Body): phaser.physics.p2.Body = js.native
-//  def removeBodyNextStep(body: phaser.physics.p2.Body): Unit = js.native
-//  def removeConstraint[T](constraint: T): T = js.native
-//  def removeContactMaterial(material: phaser.physics.p2.ContactMaterial): phaser.physics.p2.ContactMaterial = js.native
-//  def removeSpring(spring: phaser.physics.p2.Spring): phaser.physics.p2.Spring = js.native
-//  def reset(): Unit = js.native
-//  def resume(): Unit = js.native
-//  def setBounds(x: Double, y: Double, width: Double, height: Double, left: Boolean = ???, right: Boolean = ???, top: Boolean = ???, bottom: Boolean = ???, setCollisionGroup: Boolean = ???): Unit = js.native
-//  def setBoundsToWorld(left: Boolean = ???, right: Boolean = ???, top: Boolean = ???, bottom: Boolean = ???, setCollisionGroup: Boolean = ???): Unit = js.native
-//  def setCollisionGroup(`object`: js.Any, group: phaser.physics.p2.CollisionGroup): Unit = js.native
-//  def setImpactEvents(state: Boolean): Unit = js.native
-//  def setMaterial(material: phaser.physics.p2.Material, bodies: js.Array[phaser.physics.p2.Body] = ???): Unit = js.native
-//  def setPostBroadphaseCallback(callback: js.Function, context: js.Any): Unit = js.native
-//  def setWorldMaterial(material: phaser.physics.p2.Material, left: Boolean = ???, right: Boolean = ???, top: Boolean = ???, bottom: Boolean = ???): Unit = js.native
-//  def toJSON(): js.Dynamic = js.native
-//  def update(): Unit = js.native
-//  def updateBoundsCollisionGroup(setCollisionGroup: Boolean = ???): Unit = js.native
-//}
-//
-//package p2 {
-//
-//@JSName("Phaser.Physics.P2.Body")
-//class Body protected () extends js.Object {
-//  def this(game: phaser.Game, sprite: phaser.Sprite = ???, x: Double = ???, y: Double = ???, mass: Double = ???) = this()
-//  var allowSleep: Boolean = js.native
-//  var angle: Double = js.native
-//  var angularDamping: Double = js.native
-//  var angularForce: Double = js.native
-//  var angularVelocity: Double = js.native
-//  var collidesWith: js.Array[phaser.physics.p2.CollisionGroup] = js.native
-//  var collideWorldBounds: Boolean = js.native
-//  var damping: Double = js.native
-//  var data: p2.Body = js.native
-//  var debug: Boolean = js.native
-//  var debugBody: phaser.physics.p2.BodyDebug = js.native
-//  var dynamic: Boolean = js.native
-//  var fixedRotation: Boolean = js.native
-//  var force: phaser.physics.p2.InversePointProxy = js.native
-//  var kinematic: Boolean = js.native
-//  var game: phaser.Game = js.native
-//  var gravity: phaser.Point = js.native
-//  var id: Double = js.native
-//  var inertia: Double = js.native
-//  var mass: Double = js.native
-//  var motionState: Double = js.native
-//  var offset: phaser.Point = js.native
-//  var onBeginContact: phaser.Signal = js.native
-//  var onEndContact: phaser.Signal = js.native
-//  var rotation: Double = js.native
-//  var removeNextStep: Boolean = js.native
-//  var sprite: phaser.Sprite = js.native
-//  var sleepSpeedLimit: Double = js.native
-//  var static: Boolean = js.native
-//  var `type`: Double = js.native
-//  var velocity: phaser.physics.p2.InversePointProxy = js.native
-//  var world: phaser.physics.P2 = js.native
-//  var x: Double = js.native
-//  var y: Double = js.native
-//  def addToWorld(): Unit = js.native
-//  def addCapsule(length: Double, radius: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Capsule = js.native
-//  def addCircle(radius: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Circle = js.native
-//  def addFixture(fixtureData: String): js.Array[p2.Shape] = js.native
-//  def addLine(length: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Line = js.native
-//  def addParticle(offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Particle = js.native
-//  def addPolygon(options: js.Any, points: js.Array[js.Array[Double]]): Boolean = js.native
-//  def addPhaserPolygon(key: String, `object`: String): phaser.physics.p2.FixtureList = js.native
-//  def addPlane(offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Plane = js.native
-//  def addRectangle(width: Double, height: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Rectangle = js.native
-//  def addShape(shape: p2.Shape, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Shape = js.native
-//  def adjustCenterOfMass(): Unit = js.native
-//  def applyDamping(dt: Double): Unit = js.native
-//  def applyForce(force: js.Array[Double], worldX: Double, worldY: Double): Unit = js.native
-//  def clearCollision(clearGroup: Boolean = ???, cleanMask: Boolean = ???, shape: p2.Shape = ???): Unit = js.native
-//  def clearShapes(): Unit = js.native
-//  def collides(group: js.Any, callback: js.Function = ???, callbackContext: js.Any = ???, shape: p2.Shape = ???): Unit = js.native
-//  def createBodyCallback(`object`: js.Any, callback: js.Function, callbackContext: js.Any): Unit = js.native
-//  def createGroupCallback(group: phaser.physics.p2.CollisionGroup, callback: js.Function, callbackContext: js.Any): Unit = js.native
-//  def destroy(): Unit = js.native
-//  def getCollisionMask(): Double = js.native
-//  def loadPolygon(key: String, `object`: String): Boolean = js.native
-//  def moveBackward(speed: Double): Unit = js.native
-//  def moveDown(speed: Double): Unit = js.native
-//  def moveForward(speed: Double): Unit = js.native
-//  def moveLeft(speed: Double): Unit = js.native
-//  def moveRight(speed: Double): Unit = js.native
-//  def moveUp(speed: Double): Unit = js.native
-//  def preUpdate(): Unit = js.native
-//  def postUpdate(): Unit = js.native
-//  def removeFromWorld(): Unit = js.native
-//  def removeShape(shape: p2.Shape): Boolean = js.native
-//  def reverse(speed: Double): Unit = js.native
-//  def rotateLeft(speed: Double): Unit = js.native
-//  def rotateRight(speed: Double): Unit = js.native
-//  def reset(x: Double, y: Double, resetDamping: Boolean = ???, resetMass: Boolean = ???): Unit = js.native
-//  def shapeChanged(): Unit = js.native
-//  def setCircle(radius: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Circle = js.native
-//  def setCollisionGroup(group: phaser.physics.p2.CollisionGroup, shape: p2.Shape = ???): Unit = js.native
-//  def setRectangle(width: Double = ???, height: Double = ???, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Rectangle = js.native
-//  def setRectangleFromSprite(sprite: js.Any): p2.Rectangle = js.native
-//  def setMaterial(material: phaser.physics.p2.Material, shape: p2.Shape = ???): Unit = js.native
-//  def setZeroDamping(): Unit = js.native
-//  def setZeroForce(): Unit = js.native
-//  def setZeroRotation(): Unit = js.native
-//  def setZeroVelocity(): Unit = js.native
-//  def toLocalFrame(out: js.Array[Double], worldPoint: js.Array[Double]): Unit = js.native
-//  def thrust(speed: Double): Unit = js.native
-//  def toWorldFrame(out: js.Array[Double], localPoint: js.Array[Double]): Unit = js.native
-//  def updateCollisionMask(shape: p2.Shape = ???): Unit = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.Body")
-//object Body extends js.Object {
-//  var DYNAMIC: Double = js.native
-//  var STATIC: Double = js.native
-//  var KINEMATIC: Double = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.BodyDebug")
-//class BodyDebug protected () extends phaser.Group {
-//  def this(game: phaser.Game, body: phaser.physics.p2.Body, settings: js.Any) = this()
-//  var body: phaser.physics.p2.Body = js.native
-//  var canvas: phaser.Graphics = js.native
-//  var ppu: Double = js.native
-//  def updateSpriteTransform(): Unit = js.native
-//  def draw(): Unit = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.CollisionGroup")
-//class CollisionGroup protected () extends js.Object {
-//  def this(bitmask: Double) = this()
-//  var mask: Double = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.ContactMaterial")
-//class ContactMaterial extends p2.ContactMaterial {
-//}
-//
-//@JSName("Phaser.Physics.P2.DistanceConstraint")
-//class DistanceConstraint protected () extends p2.DistanceConstraint {
-//  def this(world: phaser.physics.P2, bodyA: phaser.physics.p2.Body, bodyB: phaser.physics.p2.Body, distance: Double, maxForce: Double) = this()
-//  var game: phaser.Game = js.native
-//  var world: phaser.physics.P2 = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.FixtureList")
-//class FixtureList protected () extends js.Object {
-//  def this(list: js.Array[js.Any]) = this()
-//  def flatten(array: js.Array[js.Any]): js.Array[js.Any] = js.native
-//  def getFixtures(keys: String): js.Array[js.Any] = js.native
-//  def getFixtureByKey(key: String): js.Array[js.Any] = js.native
-//  def getGroup(groupID: Double): js.Array[js.Any] = js.native
-//  def init(): Unit = js.native
-//  def parse(): Unit = js.native
-//  def setCategory(bit: Double, fictureKey: String): Unit = js.native
-//  def setMask(bit: Double, fixtureKey: String): Unit = js.native
-//  def setMaterial(material: js.Any, fixtureKey: String): Unit = js.native
-//  def setSensor(value: Boolean, fixtureKey: String): Unit = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.GearConstraint")
-//class GearConstraint protected () extends p2.GearConstraint {
-//  def this(world: phaser.physics.P2, bodyA: phaser.physics.p2.Body, bodyB: phaser.physics.p2.Body, angle: Double = ???, ratio: Double = ???) = this()
-//  var game: phaser.Game = js.native
-//  var world: phaser.physics.P2 = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.InversePointProxy")
-//class InversePointProxy protected () extends js.Object {
-//  def this(world: phaser.physics.P2, destination: js.Any) = this()
-//  var x: Double = js.native
-//  var y: Double = js.native
-//  var mx: Double = js.native
-//  var my: Double = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.LockConstraint")
-//class LockConstraint protected () extends p2.LockConstraint {
-//  def this(world: phaser.physics.P2, bodyA: phaser.physics.p2.Body, bodyB: phaser.physics.p2.Body, offset: js.Array[Double] = ???, angle: Double = ???, maxForce: Double = ???) = this()
-//  var game: phaser.Game = js.native
-//  var world: phaser.physics.P2 = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.Material")
-//class Material protected () extends p2.Material {
-//  def this(name: String) = this()
-//  var name: String = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.PointProxy")
-//class PointProxy protected () extends js.Object {
-//  def this(world: phaser.physics.P2, destination: js.Any) = this()
-//  var x: Double = js.native
-//  var y: Double = js.native
-//  var mx: Double = js.native
-//  var my: Double = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.PrismaticConstraint")
-//class PrismaticConstraint protected () extends p2.PrismaticConstraint {
-//  def this(world: phaser.physics.P2, bodyA: phaser.physics.p2.Body = ???, bodyB: phaser.physics.p2.Body = ???, lockRotation: Boolean = ???, anchorA: js.Array[Double] = ???, anchorB: js.Array[Double] = ???, axis: js.Array[Double] = ???, maxForce: Double = ???) = this()
-//  var game: phaser.Game = js.native
-//  var world: phaser.physics.P2 = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.RevoluteConstraint")
-//class RevoluteConstraint protected () extends p2.RevoluteConstraint {
-//  def this(world: phaser.physics.P2, bodyA: phaser.physics.p2.Body, pivotA: js.Array[Double], bodyB: phaser.physics.p2.Body, pivotB: js.Array[Double], maxForce: Double = ???) = this()
-//  var game: phaser.Game = js.native
-//  var world: phaser.physics.P2 = js.native
-//}
-//
-//@JSName("Phaser.Physics.P2.Spring")
-//class Spring protected () extends js.Object {
-//  def this(world: phaser.physics.P2, bodyA: phaser.physics.p2.Body, bodyB: phaser.physics.p2.Body, restLength: Double = ???, stiffness: Double = ???, damping: Double = ???, worldA: js.Array[Double] = ???, worldB: js.Array[Double] = ???, localA: js.Array[Double] = ???, localB: js.Array[Double] = ???) = this()
-//  var data: p2.LinearSpring = js.native
-//  var game: phaser.Game = js.native
-//  var world: phaser.physics.P2 = js.native
-//}
-//
-////}
+@JSName("Phaser.Physics.P2")
+class P2 protected () extends js.Object {
+  def this(game: phaser.Game, config: js.Any = ???) = this()
+  var applyDamping: Boolean = js.native
+  var applyGravity: Boolean = js.native
+  var applySpringForces: Boolean = js.native
+  var boundsCollidesWith: js.Array[phaser.physics.pp2.Body] = js.native
+  var boundsCollisionGroup: phaser.physics.pp2.CollisionGroup = js.native
+  var config: js.Any = js.native
+  var callbackContext: js.Any = js.native
+  var collisionGroups: js.Array[phaser.physics.pp2.CollisionGroup] = js.native
+  var contactMaterial: phaser.physics.pp2.ContactMaterial = js.native
+  var emitImpactEvent: Boolean = js.native
+  var everythingCollisionGroup: phaser.physics.pp2.CollisionGroup = js.native
+  var frameRate: Double = js.native
+  var friction: Double = js.native
+  var game: phaser.Game = js.native
+  var gravity: phaser.physics.pp2.InversePointProxy = js.native
+  var materials: js.Array[phaser.physics.pp2.Material] = js.native
+  var nothingCollisionGroup: phaser.physics.pp2.CollisionGroup = js.native
+  var onBodyAdded: phaser.Signal = js.native
+  var onBodyRemoved: phaser.Signal = js.native
+  var onBeginContact: phaser.Signal = js.native
+  var onConstraintAdded: phaser.Signal = js.native
+  var onConstraintRemoved: phaser.Signal = js.native
+  var onContactMaterialAdded: phaser.Signal = js.native
+  var onContactMaterialRemoved: phaser.Signal = js.native
+  var onEndContact: phaser.Signal = js.native
+  var onSpringAdded: phaser.Signal = js.native
+  var onSpringRemoved: phaser.Signal = js.native
+  var paused: Boolean = js.native
+  var postBroaddphaseCallback: js.Function = js.native
+  var restitution: Double = js.native
+  var solveConstraints: Boolean = js.native
+  var time: js.Any = js.native
+  var total: Double = js.native
+  var useElapsedTime: Boolean = js.native
+  var walls: js.Any = js.native
+  var world: p2.World = js.native
+  def addBody(body: phaser.physics.pp2.Body): Boolean = js.native
+  def addContactMaterial(material: phaser.physics.pp2.ContactMaterial): phaser.physics.pp2.ContactMaterial = js.native
+  def addConstraint[T](constraint: T): T = js.native
+  def addSpring(spring: phaser.physics.pp2.Spring): phaser.physics.pp2.Spring = js.native
+  def beginContactHandler(event: js.Any): Unit = js.native
+  def clear(): Unit = js.native
+  def clearTilemapLayerBodies(map: phaser.Tilemap, layer: js.Any = ???): Unit = js.native
+  def convertCollisionObjects(map: phaser.Tilemap, layer: js.Any = ???, addToWorld: Boolean = ???): js.Array[phaser.physics.pp2.Body] = js.native
+  def convertTilemap(map: phaser.Tilemap, layer: js.Any = ???, addToWorld: Boolean = ???, optimize: Boolean = ???): js.Array[phaser.physics.pp2.Body] = js.native
+  def createBody(x: Double, y: Double, mass: Double, addToWorld: Boolean = ???, options: p2.BodyOptions = ???, data: js.Array[js.Array[Double]] = ???): phaser.physics.pp2.Body = js.native
+  def createCollisionGroup(group: phaser.Group = ???): phaser.physics.pp2.CollisionGroup = js.native
+  def createContactMaterial(materialA: phaser.physics.pp2.Material, materialB: phaser.physics.pp2.Material, options: p2.ContactMaterialOptions = ???): phaser.physics.pp2.ContactMaterial = js.native
+  def createDistanceConstraint(bodyA: js.Any, bodyB: js.Any, distance: Double, localAnchorA: js.Array[Double] = ???, localAnchorB: js.Array[Double] = ???, maxForce: Double = ???): phaser.physics.pp2.DistanceConstraint = js.native
+  def createGearConstraint(bodyA: js.Any, bodyB: js.Any, angle: Double = ???, ratio: Double = ???): phaser.physics.pp2.GearConstraint = js.native
+  def createLockConstraint(bodyA: js.Any, bodyB: js.Any, offset: js.Array[Double] = ???, angle: Double = ???, maxForce: Double = ???): phaser.physics.pp2.LockConstraint = js.native
+  def createMaterial(name: String = ???, body: phaser.physics.pp2.Body = ???): phaser.physics.pp2.Material = js.native
+  def createParticle(x: Double, y: Double, mass: Double, addToWorld: Boolean = ???, options: p2.BodyOptions = ???, data: js.Array[js.Array[Double]] = ???): phaser.physics.pp2.Body = js.native
+  def createPrismaticConstraint(body: js.Any, bodyB: js.Any, lockRotation: Boolean = ???, anchorA: js.Array[Double] = ???, anchorB: js.Array[Double] = ???, axis: Float32Array = ???, maxForce: Double = ???): phaser.physics.pp2.PrismaticConstraint = js.native
+  def createRevoluteConstraint(bodyA: js.Any, pivotA: js.Array[Double], bodyB: js.Any, pivotB: js.Array[Double], maxForce: Double = ???, worldPivot: js.Array[Double] = ???): phaser.physics.pp2.RevoluteConstraint = js.native
+  def createRotationalSpring(bodyA: js.Any, bodyB: js.Any, restAngle: Double = ???, stiffness: Double = ???, damping: Double = ???): p2.RotationalSpring = js.native
+  def createSpring(bodyA: js.Any, bodyB: js.Any, restLength: Double = ???, stiffness: Double = ???, damping: Double = ???, worldA: js.Array[Double] = ???, worldB: js.Array[Double] = ???, localA: js.Array[Double] = ???, localB: js.Array[Double] = ???): phaser.physics.pp2.Spring = js.native
+  def destroy(): Unit = js.native
+  def enable(`object`: js.Any, debug: Boolean = ???, children: Boolean = ???): Unit = js.native
+  def enableBody(`object`: js.Any, debug: Boolean): Unit = js.native
+  def endContactHandler(event: js.Any): Unit = js.native
+  def getBodies(): js.Array[phaser.physics.pp2.Body] = js.native
+  def getBody(`object`: js.Any): phaser.physics.pp2.Body = js.native
+  def getConstraints(): js.Array[p2.Constraint] = js.native
+  def getSprings(): js.Array[phaser.physics.pp2.Spring] = js.native
+  def getContactMaterial(materialA: phaser.physics.pp2.Material, materialB: phaser.physics.pp2.Material): phaser.physics.pp2.ContactMaterial = js.native
+  def hitTest(worldPoint: phaser.Point, bodies: js.Array[js.Any] = ???, precision: Double = ???, filterStatic: Boolean = ???): js.Array[phaser.physics.pp2.Body] = js.native
+  def mpx(v: Double): Double = js.native
+  def mpxi(v: Double): Double = js.native
+  def pause(): Unit = js.native
+  def preUpdate(): Unit = js.native
+  def pxm(v: Double): Double = js.native
+  def pxmi(v: Double): Double = js.native
+  def removeBody(body: phaser.physics.pp2.Body): phaser.physics.pp2.Body = js.native
+  def removeBodyNextStep(body: phaser.physics.pp2.Body): Unit = js.native
+  def removeConstraint[T](constraint: T): T = js.native
+  def removeContactMaterial(material: phaser.physics.pp2.ContactMaterial): phaser.physics.pp2.ContactMaterial = js.native
+  def removeSpring(spring: phaser.physics.pp2.Spring): phaser.physics.pp2.Spring = js.native
+  def reset(): Unit = js.native
+  def resume(): Unit = js.native
+  def setBounds(x: Double, y: Double, width: Double, height: Double, left: Boolean = ???, right: Boolean = ???, top: Boolean = ???, bottom: Boolean = ???, setCollisionGroup: Boolean = ???): Unit = js.native
+  def setBoundsToWorld(left: Boolean = ???, right: Boolean = ???, top: Boolean = ???, bottom: Boolean = ???, setCollisionGroup: Boolean = ???): Unit = js.native
+  def setCollisionGroup(`object`: js.Any, group: phaser.physics.pp2.CollisionGroup): Unit = js.native
+  def setImpactEvents(state: Boolean): Unit = js.native
+  def setMaterial(material: phaser.physics.pp2.Material, bodies: js.Array[phaser.physics.pp2.Body] = ???): Unit = js.native
+  def setPostBroadphaseCallback(callback: js.Function, context: js.Any): Unit = js.native
+  def setWorldMaterial(material: phaser.physics.pp2.Material, left: Boolean = ???, right: Boolean = ???, top: Boolean = ???, bottom: Boolean = ???): Unit = js.native
+  def toJSON(): js.Dynamic = js.native
+  def update(): Unit = js.native
+  def updateBoundsCollisionGroup(setCollisionGroup: Boolean = ???): Unit = js.native
+}
+
+package pp2 {
+
+@JSName("Phaser.Physics.P2.Body")
+class Body protected () extends js.Object {
+  def this(game: phaser.Game, sprite: phaser.Sprite = ???, x: Double = ???, y: Double = ???, mass: Double = ???) = this()
+  var allowSleep: Boolean = js.native
+  var angle: Double = js.native
+  var angularDamping: Double = js.native
+  var angularForce: Double = js.native
+  var angularVelocity: Double = js.native
+  var collidesWith: js.Array[phaser.physics.pp2.CollisionGroup] = js.native
+  var collideWorldBounds: Boolean = js.native
+  var damping: Double = js.native
+  var data: p2.Body = js.native
+  var debug: Boolean = js.native
+  var debugBody: phaser.physics.pp2.BodyDebug = js.native
+  var dynamic: Boolean = js.native
+  var fixedRotation: Boolean = js.native
+  var force: phaser.physics.pp2.InversePointProxy = js.native
+  var kinematic: Boolean = js.native
+  var game: phaser.Game = js.native
+  var gravity: phaser.Point = js.native
+  var id: Double = js.native
+  var inertia: Double = js.native
+  var mass: Double = js.native
+  var motionState: Double = js.native
+  var offset: phaser.Point = js.native
+  var onBeginContact: phaser.Signal = js.native
+  var onEndContact: phaser.Signal = js.native
+  var rotation: Double = js.native
+  var removeNextStep: Boolean = js.native
+  var sprite: phaser.Sprite = js.native
+  var sleepSpeedLimit: Double = js.native
+  var static: Boolean = js.native
+  var `type`: Double = js.native
+  var velocity: phaser.physics.pp2.InversePointProxy = js.native
+  var world: phaser.physics.P2 = js.native
+  var x: Double = js.native
+  var y: Double = js.native
+  def addToWorld(): Unit = js.native
+  def addCapsule(length: Double, radius: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Capsule = js.native
+  def addCircle(radius: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Circle = js.native
+  def addFixture(fixtureData: String): js.Array[p2.Shape] = js.native
+  def addLine(length: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Line = js.native
+  def addParticle(offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Particle = js.native
+  def addPolygon(options: js.Any, points: js.Array[js.Array[Double]]): Boolean = js.native
+  def addPhaserPolygon(key: String, `object`: String): phaser.physics.pp2.FixtureList = js.native
+  def addPlane(offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Plane = js.native
+  def addRectangle(width: Double, height: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Rectangle = js.native
+  def addShape(shape: p2.Shape, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Shape = js.native
+  def adjustCenterOfMass(): Unit = js.native
+  def applyDamping(dt: Double): Unit = js.native
+  def applyForce(force: js.Array[Double], worldX: Double, worldY: Double): Unit = js.native
+  def clearCollision(clearGroup: Boolean = ???, cleanMask: Boolean = ???, shape: p2.Shape = ???): Unit = js.native
+  def clearShapes(): Unit = js.native
+  def collides(group: js.Any, callback: js.Function = ???, callbackContext: js.Any = ???, shape: p2.Shape = ???): Unit = js.native
+  def createBodyCallback(`object`: js.Any, callback: js.Function, callbackContext: js.Any): Unit = js.native
+  def createGroupCallback(group: phaser.physics.pp2.CollisionGroup, callback: js.Function, callbackContext: js.Any): Unit = js.native
+  def destroy(): Unit = js.native
+  def getCollisionMask(): Double = js.native
+  def loadPolygon(key: String, `object`: String): Boolean = js.native
+  def moveBackward(speed: Double): Unit = js.native
+  def moveDown(speed: Double): Unit = js.native
+  def moveForward(speed: Double): Unit = js.native
+  def moveLeft(speed: Double): Unit = js.native
+  def moveRight(speed: Double): Unit = js.native
+  def moveUp(speed: Double): Unit = js.native
+  def preUpdate(): Unit = js.native
+  def postUpdate(): Unit = js.native
+  def removeFromWorld(): Unit = js.native
+  def removeShape(shape: p2.Shape): Boolean = js.native
+  def reverse(speed: Double): Unit = js.native
+  def rotateLeft(speed: Double): Unit = js.native
+  def rotateRight(speed: Double): Unit = js.native
+  def reset(x: Double, y: Double, resetDamping: Boolean = ???, resetMass: Boolean = ???): Unit = js.native
+  def shapeChanged(): Unit = js.native
+  def setCircle(radius: Double, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Circle = js.native
+  def setCollisionGroup(group: phaser.physics.pp2.CollisionGroup, shape: p2.Shape = ???): Unit = js.native
+  def setRectangle(width: Double = ???, height: Double = ???, offsetX: Double = ???, offsetY: Double = ???, rotation: Double = ???): p2.Rectangle = js.native
+  def setRectangleFromSprite(sprite: js.Any): p2.Rectangle = js.native
+  def setMaterial(material: phaser.physics.pp2.Material, shape: p2.Shape = ???): Unit = js.native
+  def setZeroDamping(): Unit = js.native
+  def setZeroForce(): Unit = js.native
+  def setZeroRotation(): Unit = js.native
+  def setZeroVelocity(): Unit = js.native
+  def toLocalFrame(out: js.Array[Double], worldPoint: js.Array[Double]): Unit = js.native
+  def thrust(speed: Double): Unit = js.native
+  def toWorldFrame(out: js.Array[Double], localPoint: js.Array[Double]): Unit = js.native
+  def updateCollisionMask(shape: p2.Shape = ???): Unit = js.native
+}
+
+@JSName("Phaser.Physics.P2.Body")
+object Body extends js.Object {
+  var DYNAMIC: Double = js.native
+  var STATIC: Double = js.native
+  var KINEMATIC: Double = js.native
+}
+
+@JSName("Phaser.Physics.P2.BodyDebug")
+class BodyDebug protected () extends phaser.Group {
+  def this(game: phaser.Game, body: phaser.physics.pp2.Body, settings: js.Any) = this()
+  var body: phaser.physics.pp2.Body = js.native
+  var canvas: phaser.Graphics = js.native
+  var ppu: Double = js.native
+  def updateSpriteTransform(): Unit = js.native
+  def draw(): Unit = js.native
+}
+
+@JSName("Phaser.Physics.P2.CollisionGroup")
+class CollisionGroup protected () extends js.Object {
+  def this(bitmask: Double) = this()
+  var mask: Double = js.native
+}
+
+@JSName("Phaser.Physics.P2.ContactMaterial")
+class ContactMaterial extends p2.ContactMaterial {
+}
+
+@JSName("Phaser.Physics.P2.DistanceConstraint")
+class DistanceConstraint protected () extends p2.DistanceConstraint {
+  def this(world: phaser.physics.P2, bodyA: phaser.physics.pp2.Body, bodyB: phaser.physics.pp2.Body, distance: Double, maxForce: Double) = this()
+  var game: phaser.Game = js.native
+  var world: phaser.physics.P2 = js.native
+}
+
+@JSName("Phaser.Physics.P2.FixtureList")
+class FixtureList protected () extends js.Object {
+  def this(list: js.Array[js.Any]) = this()
+  def flatten(array: js.Array[js.Any]): js.Array[js.Any] = js.native
+  def getFixtures(keys: String): js.Array[js.Any] = js.native
+  def getFixtureByKey(key: String): js.Array[js.Any] = js.native
+  def getGroup(groupID: Double): js.Array[js.Any] = js.native
+  def init(): Unit = js.native
+  def parse(): Unit = js.native
+  def setCategory(bit: Double, fictureKey: String): Unit = js.native
+  def setMask(bit: Double, fixtureKey: String): Unit = js.native
+  def setMaterial(material: js.Any, fixtureKey: String): Unit = js.native
+  def setSensor(value: Boolean, fixtureKey: String): Unit = js.native
+}
+
+@JSName("Phaser.Physics.P2.GearConstraint")
+class GearConstraint protected () extends p2.GearConstraint {
+  def this(world: phaser.physics.P2, bodyA: phaser.physics.pp2.Body, bodyB: phaser.physics.pp2.Body, angle: Double = ???, ratio: Double = ???) = this()
+  var game: phaser.Game = js.native
+  var world: phaser.physics.P2 = js.native
+}
+
+@JSName("Phaser.Physics.P2.InversePointProxy")
+class InversePointProxy protected () extends js.Object {
+  def this(world: phaser.physics.P2, destination: js.Any) = this()
+  var x: Double = js.native
+  var y: Double = js.native
+  var mx: Double = js.native
+  var my: Double = js.native
+}
+
+@JSName("Phaser.Physics.P2.LockConstraint")
+class LockConstraint protected () extends p2.LockConstraint {
+  def this(world: phaser.physics.P2, bodyA: phaser.physics.pp2.Body, bodyB: phaser.physics.pp2.Body, offset: js.Array[Double] = ???, angle: Double = ???, maxForce: Double = ???) = this()
+  var game: phaser.Game = js.native
+  var world: phaser.physics.P2 = js.native
+}
+
+@JSName("Phaser.Physics.P2.Material")
+class Material protected () extends p2.Material {
+  def this(name: String) = this()
+  var name: String = js.native
+}
+
+@JSName("Phaser.Physics.P2.PointProxy")
+class PointProxy protected () extends js.Object {
+  def this(world: phaser.physics.P2, destination: js.Any) = this()
+  var x: Double = js.native
+  var y: Double = js.native
+  var mx: Double = js.native
+  var my: Double = js.native
+}
+
+@JSName("Phaser.Physics.P2.PrismaticConstraint")
+class PrismaticConstraint protected () extends p2.PrismaticConstraint {
+  def this(world: phaser.physics.P2, bodyA: phaser.physics.pp2.Body = ???, bodyB: phaser.physics.pp2.Body = ???, lockRotation: Boolean = ???, anchorA: js.Array[Double] = ???, anchorB: js.Array[Double] = ???, axis: js.Array[Double] = ???, maxForce: Double = ???) = this()
+  var game: phaser.Game = js.native
+  var world: phaser.physics.P2 = js.native
+}
+
+@JSName("Phaser.Physics.P2.RevoluteConstraint")
+class RevoluteConstraint protected () extends p2.RevoluteConstraint {
+  def this(world: phaser.physics.P2, bodyA: phaser.physics.pp2.Body, pivotA: js.Array[Double], bodyB: phaser.physics.pp2.Body, pivotB: js.Array[Double], maxForce: Double = ???) = this()
+  var game: phaser.Game = js.native
+  var world: phaser.physics.P2 = js.native
+}
+
+@JSName("Phaser.Physics.P2.Spring")
+class Spring protected () extends js.Object {
+  def this(world: phaser.physics.P2, bodyA: phaser.physics.pp2.Body, bodyB: phaser.physics.pp2.Body, restLength: Double = ???, stiffness: Double = ???, damping: Double = ???, worldA: js.Array[Double] = ???, worldB: js.Array[Double] = ???, localA: js.Array[Double] = ???, localB: js.Array[Double] = ???) = this()
+  var data: p2.LinearSpring = js.native
+  var game: phaser.Game = js.native
+  var world: phaser.physics.P2 = js.native
+}
+
+}
 
 }
 
