@@ -44,14 +44,18 @@ class BasicAttack(gm: GameManager) extends Skill {
 
       nextWeaponSlot = (nextWeaponSlot + 1) & 1
       val dmgs = gm.randy.roll(weapon.damageRanges)
+      var isHit = false
       gm.mobManager.getMobNearestCursor(25).foreach { mob =>
+        isHit = true
         mob.takeDamage(dmgs)
+        val vel = gm.randy.getIntII(10,30)
+        val avel = gm.randy.getIntII(0,720)
         if (weaponSlot =?= 0) {
-          mob.sprite.body.velocity.x += 25
-          mob.sprite.body.angularVelocity = 360
+          mob.sprite.body.velocity.x +=  -vel
+          mob.sprite.body.angularVelocity = avel
         } else {
-          mob.sprite.body.velocity.x -= 25
-          mob.sprite.body.angularVelocity = -360
+          mob.sprite.body.velocity.x -= vel
+          mob.sprite.body.angularVelocity = -avel
         }
 
 
@@ -59,16 +63,12 @@ class BasicAttack(gm: GameManager) extends Skill {
       }
       val attackDurMs = weapon.attackDurMs
       cooldownUntilMs = t + attackDurMs
-      def playWeaponSound() {
-        val baseSound = weapon.sound.key
-        val sound = gm.game.sound.add(baseSound)
-        sound.onPlay.addOnce({ (x: js.Any) =>
-          //Vary the pitch and speed of the sound
-          sound._sound.playbackRate.value = gm.randy.getDblIE(.8, 1.2)
-        }: js.Function)
-        sound.play()
+      if (isHit) {
+        gm.audioManager.play(weapon.hitSound, rate = gm.randy.getDblIE(.8, 1.2))
+      } else {
+        gm.audioManager.play(weapon.missSound, rate = gm.randy.getDblIE(.8, 1.2))
       }
-      playWeaponSound()
+
 
       def playWeaponAnimation() {
         sprite = weapon.playAttackSpriteAnimation(gm, weaponSlot)

@@ -23,6 +23,7 @@ object Fist {
     override def imageBasePath = super.imageBasePath + "/weapons"
     //case object doge extends Image()
     case object punch extends Audio()
+    case object whiffs extends Audio(startMs = 100, endMs = 400)
     case object fistl extends Image()
     final override val elements = CEnum.getElements(this)
   }
@@ -36,7 +37,8 @@ class Fist extends Weapon {
   override val range: Double = 50
   override val damageRanges: DamageRanges = DamageRanges(physical = 4 -> 10)
   override val attackDurMs: Double = 500
-  override val sound: ResourceSet#Audio = Resources.punch
+  override val hitSound: ResourceSet#Audio = Resources.punch
+  override val missSound: ResourceSet#Audio = Resources.whiffs
   override val image: ResourceSet#Image = Resources.fistl
   override def playAttackSpriteAnimation(gm: GameManager, slot: Int): Sprite = {
     val ap = gm.game.input.activePointer

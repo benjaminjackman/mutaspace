@@ -25,12 +25,23 @@ class AudioManager(gm: GameManager) {
   def play(clip: ResourceSet#Audio, vol: Double = 1.0, rate: Double = 1.0) {
     val sound = gm.game.sound.add(clip.key)
     if (rate != 1.0) {
-      sound.onPlay.addOnce({ (x: js.Any) =>
+      sound.onPlay.addOnce({ () =>
         //Increases the pitch of the sound
         sound._sound.playbackRate.value = rate
       }: js.Function)
     }
-    sound.play()
+    if (clip.startMs != 0 || clip.endMs != -1) {
+      if (clip.endMs != -1) {
+        sound.addMarker("a", clip.startMs / 1000.0, (clip.endMs - clip.startMs)/ 1000.0)
+      } else {
+        sound.addMarker("a", clip.startMs/ 1000.0, clip.endMs/ 1000.0)
+      }
+      sound.play("a")
+    } else {
+      sound.play()
+    }
+
+
   }
   def playRandom(clip: ResourceSet#Audio, vol: Double = 1.0) = play(clip, vol = vol, rate = gm.randy.getDblIE(0.8, 1.2))
 

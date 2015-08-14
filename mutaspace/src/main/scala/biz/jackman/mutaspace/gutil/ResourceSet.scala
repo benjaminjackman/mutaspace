@@ -51,7 +51,7 @@ trait ResourceSet extends CEnum {
     override def path = if (cpath.isEmpty) s"$imageBasePath/$key.$ext" else cpath
   }
 
-  abstract class Audio(cpath: String = "", ext: String = "mp3") extends Resource {
+  abstract class Audio(cpath: String = "", ext: String = "mp3", val startMs : Int = 0, val endMs : Int = -1) extends Resource {
     override def preload(game: Game) { game.load.audio(key, path) }
     override def path = if (cpath.isEmpty) s"$soundBasePath/$key.$ext" else cpath
   }

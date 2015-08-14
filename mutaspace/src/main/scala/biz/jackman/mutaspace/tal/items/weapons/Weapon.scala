@@ -27,7 +27,8 @@ trait Weapon {
   def damageRanges : DamageRanges
   def range: Double
   def attackDurMs : Double
-  def sound : ResourceSet#Audio
+  def hitSound : ResourceSet#Audio
+  def missSound : ResourceSet#Audio
   def image: ResourceSet#Image
   def playAttackSpriteAnimation(gm : GameManager, slot : Int): Sprite
 }
