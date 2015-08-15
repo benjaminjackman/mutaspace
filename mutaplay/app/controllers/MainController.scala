@@ -14,4 +14,5 @@ import play.api.mvc.{Action, Controller}
 
 object MainController extends Controller {
   def tal = Action {Ok(views.html.apps.tal(false))}
+  def lab = Action {Ok(views.html.apps.lab())}
 }

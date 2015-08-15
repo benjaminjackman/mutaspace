@@ -4,6 +4,7 @@
 
 GET        /                           controllers.Default.redirect(to="/current-host/version/HEAD/index.html")
 GET        /tal                        controllers.MainController.tal
+GET        /lab                        controllers.MainController.lab
 #GET        /tal-classic                controllers.MainController.talClassic
 
 ## Map static resources from the /public folder to the /assets URL path
