@@ -32,7 +32,7 @@ getSha256() {
 
 #  ls version | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | tail -n 1
 lastVersion() {
-  ls version | sort -V | tail -n 1
+  ls version | grep -v HEAD | sort -V | tail -n 1
 }
 nextVersion() {
   lastVersion | awk -F. '{print $1 "." $2 "." $3+1}'
