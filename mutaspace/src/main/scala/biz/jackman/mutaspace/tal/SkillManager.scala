@@ -1,8 +1,8 @@
 package biz.jackman.mutaspace
 package tal
 
-import biz.jackman.mutaspace.tal.skills.BasicAttack
 import biz.jackman.mutaspace.tal.skills.Skill
+import biz.jackman.mutaspace.tal.skills.primary.BasicAttack
 
 
 //////////////////////////////////////////////////////////////
@@ -14,19 +14,21 @@ import biz.jackman.mutaspace.tal.skills.Skill
 //////////////////////////////////////////////////////////////
 
 class SkillManager(gm: GameManager) {
-  val skills = Array[Skill](BasicAttack(gm))
-  var currentSkillIdx = 0
+  val skills = Array[Skill](
+    BasicAttack(gm)
+  )
+  var currentSkillSlot = 0
 
   def setCurrentSkill(n : Int) {
 
   }
   
   def executeSkill() {
-    skills(currentSkillIdx).execute()
+    skills(currentSkillSlot).execute()
   }
 
   def update() {
-    val skill = skills(currentSkillIdx)
+    val skill = skills(currentSkillSlot)
     skill.currentSkillUpdate()
   }
 

@@ -1,12 +1,10 @@
 package biz.jackman.mutaspace
-package tal.skills
+package tal.skills.primary
 
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.GameManager
-import biz.jackman.mutaspace.tal.mobs.Mob
-import biz.jackman.facades.phaser
-
-import scala.scalajs.js
+import biz.jackman.mutaspace.tal.skills.Skill
+import biz.jackman.mutaspace.tal.skills.SkillBuilder
 
 
 //////////////////////////////////////////////////////////////
@@ -28,7 +26,7 @@ class BasicAttack(gm: GameManager) extends Skill {
   gm.playerManager
   var cooldownUntilMs = 0.0
   var nextWeaponSlot = 0
-  var sprite: Sprite = null
+
 
   //  def inBBRange(mob: Mob): Boolean = {
   //    val ap = gm.game.input.activePointer
@@ -44,6 +42,7 @@ class BasicAttack(gm: GameManager) extends Skill {
 
       nextWeaponSlot = (nextWeaponSlot + 1) & 1
       val dmgs = gm.randy.roll(weapon.damageRanges)
+
       var isHit = false
       gm.mobManager.getMobNearestCursor(25).foreach { mob =>
         isHit = true
@@ -58,7 +57,6 @@ class BasicAttack(gm: GameManager) extends Skill {
           mob.sprite.body.angularVelocity = -avel
         }
 
-
         mob.sprite.body.velocity.y = mob.sprite.body.velocity.y - 25
       }
       val attackDurMs = weapon.attackDurMs
@@ -71,7 +69,7 @@ class BasicAttack(gm: GameManager) extends Skill {
 
 
       def playWeaponAnimation() {
-        sprite = weapon.playAttackSpriteAnimation(gm, weaponSlot)
+        weapon.playAttackSpriteAnimation(gm, weaponSlot)
       }
       playWeaponAnimation()
 
@@ -79,15 +77,6 @@ class BasicAttack(gm: GameManager) extends Skill {
   }
 
   override def currentSkillUpdate() {
-    //Move the weapon icon around on the screen
 
   }
-
-
-  //  val cooldownMs = 200.0
-  //  var lastShotMs = 0.0
-  //  val damages = Array(1,1,1,2,3,4,5,6,12,12)
-  //
-  //
-
 }

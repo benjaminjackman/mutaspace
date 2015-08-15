@@ -15,9 +15,28 @@ import scala.scalajs.js
 // Created by bjackman @ 7/27/15 8:18 PM
 //////////////////////////////////////////////////////////////
 
+object RandomManager {
+  def weightIndexedSeq[A](weight_values_itr : Iterator[(Double, A)])(loc : Double) : Option[A] = {
+    var remW = loc
+    var done = false
+    var v : Option[A] = None
+    while(weight_values_itr.hasNext && !done) {
+      val (cw, cv) = weight_values_itr.next()
+      v = Some(cv)
+      remW -= cw
+      done = remW <= 0
+    }
+    v
+  }
+}
+
 class RandomManager {
 
-
+  def getByWeight[A](weight_value_* : (Double, A)*) : A = {
+    val totW = weight_value_*.iterator.map(_._1).sum
+    val loc = getDblIE(0.0, totW)
+    RandomManager.weightIndexedSeq(weight_value_*.iterator)(loc).get
+  }
 
   //inclusive to exclusive
   def getDblIE(min: Double, max: Double): Double = {

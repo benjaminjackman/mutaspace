@@ -1,8 +1,9 @@
 package biz.jackman.mutaspace
 package tal
 
-import biz.jackman.mutaspace.tal.mobs.Doge
-import biz.jackman.mutaspace.tal.mobs.Mob
+import biz.jackman.mutaspace.tal.mob.Cardinal
+import biz.jackman.mutaspace.tal.mob.Doge
+import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
 
 
@@ -47,7 +48,8 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   }
 
   def preload() {
-    Doge.preload(gm)
+    Doge.Resources.preload(gm.game)
+    Cardinal.Resources.preload(gm.game)
   }
 
   def create() {
@@ -102,14 +104,18 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
     Mobs.mobs.foreach(updateChild)
   }
 
-  def spawnRandomMob() {
-    Mobs += Doge(gm)
+  def getRandomMob() : Mob = {
+    val randomMob = gm.randy.getByWeight(
+      2.0 -> Doge.apply _,
+      2.0 -> Cardinal.apply _
+    )
+    randomMob(gm)
   }
 
   def spawnRandomMobPack(): Unit = {
     val cnt = randy.getIntII(3, 8)
     cnt times {
-      val mob = Doge(gm)
+      val mob = getRandomMob()
       Mobs += mob
       mob.sprite.x = randy.getIntII(1, gm.game.width.toInt - mob.sprite.width.toInt)
       mob.sprite.y = randy.getIntII(1, 50)

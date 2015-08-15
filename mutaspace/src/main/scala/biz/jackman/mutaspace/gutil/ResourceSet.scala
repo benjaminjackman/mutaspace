@@ -41,10 +41,11 @@ trait ResourceSet extends CEnum {
   }
   def imageBasePath = "assets/images"
   def soundBasePath = "assets/sounds"
+  def mobBasePath = "assets/mob"
 
-  object Image {
-    implicit def resourceAsJsAny(r: Image): js.Any = r.key
-  }
+//  object Image {
+//    implicit def resourceAsJsAny(r: Image): js.Any = r.key
+//  }
 
   abstract class Image(cpath: String = "", ext: String = "png") extends Resource {
     override def preload(game: Game) { game.load.image(toString, path) }

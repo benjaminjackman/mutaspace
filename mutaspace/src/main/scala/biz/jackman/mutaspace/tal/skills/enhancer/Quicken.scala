@@ -1,8 +1,7 @@
 package biz.jackman.mutaspace
-package tal.mobs
+package tal.skills.enhancer
 
-import biz.jackman.facades.phaser.Sprite
-import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
+import biz.jackman.mutaspace.tal.skills.EnhancerSkill
 
 
 //////////////////////////////////////////////////////////////
@@ -10,12 +9,10 @@ import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 // All Rights Reserved
 // please contact ben@jackman.biz
 // for licensing inquiries
-// Created by bjackman @ 7/27/15 3:38 PM
+// Created by bjackman @ 8/14/15 10:51 PM
 //////////////////////////////////////////////////////////////
 
-trait Mob {
-  def life() : Int
-  def takeDamage(amount: DamageAmounts): Unit
-  def sprite: Sprite
-  def update(): Unit
+class Quicken extends EnhancerSkill {
+  
+  def getSpeedMultiplier : Double = 1.5
 }

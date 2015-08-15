@@ -7,9 +7,9 @@ package tal.skills
 // All Rights Reserved
 // please contact ben@jackman.biz
 // for licensing inquiries
-// Created by bjackman @ 7/30/15 12:23 AM
+// Created by bjackman @ 8/14/15 10:51 PM
 //////////////////////////////////////////////////////////////
 
-class Kick {
+class EnhancerSkill {
 
 }

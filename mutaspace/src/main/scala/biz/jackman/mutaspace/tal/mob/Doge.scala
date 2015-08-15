@@ -1,5 +1,5 @@
 package biz.jackman.mutaspace
-package tal.mobs
+package tal.mob
 
 
 import biz.jackman.facades.phaser
@@ -32,17 +32,14 @@ object Doge {
     case object xwhine extends Audio()
     final override val elements = CEnum.getElements(this)
   }
-  def preload(gm: GameManager) {
-    Resources.preload(gm.game)
-  }
 
 
   def apply(gm: GameManager): Doge = {
-    val text = gm.game.add.text(1, 1, "cujo", OBJ(font = "100px Arial", fill = "red"))
-    val sprite = gm.game.add.sprite(100, 50, Resources.doge)
+    val text = gm.game.add.text(1, 1, "cujo", OBJ(font = "10px Arial", fill = "red"))
+    val sprite = gm.game.add.sprite(100, 50, Resources.doge.key)
+    sprite.texture.frame.width = 50
+    sprite.texture.frame.height = 50
     sprite.addChild(text)
-    sprite.height = 50
-    sprite.width = 50
     gm.game.physics.arcade.enable(sprite)
     sprite.body.velocity.set(0, 20)
     sprite.body.bounce.y = 0.7 * js.Math.random() * 0.2
@@ -62,14 +59,13 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
 
   def attack() {
     if (gm.game.time.now >= canAttackAtMs) {
-      val attackDurMs = 100
-      val tween = gm.game.add.tween(sprite).to(OBJ(angle = 30), attackDurMs, phaser.easing.Linear.None _)
-        .to(OBJ(angle = -30), attackDurMs*2, phaser.easing.Linear.None _)
-        .to(OBJ(angle = 0), attackDurMs*3, phaser.easing.Linear.None _)
+      val attackDurMs = 500
+      gm.game.add.tween(sprite.scale).oEff { tween =>
+        tween.to(OBJ(x = 2, y=2), attackDurMs, phaser.easing.Bounce.InOut _)
+        tween.to(OBJ(x = 1, y=1), attackDurMs, phaser.easing.Bounce.InOut _)
+      }.start()
 
-      tween.start()
-
-      canAttackAtMs = gm.game.time.now + 1000
+      canAttackAtMs = gm.game.time.now + gm.randy.getDblIE(1000, 5000)
       gm.audioManager.playRandom(Resources.xbite)
       gm.playerManager.takeDamage(gm.randy.getIntMR(5, 2).max(0))
     }
