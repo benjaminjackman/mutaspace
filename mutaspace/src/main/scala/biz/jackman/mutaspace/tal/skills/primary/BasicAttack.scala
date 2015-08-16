@@ -46,7 +46,8 @@ class BasicAttack(gm: GameManager) extends Skill {
       var isHit = false
       gm.mobManager.getMobNearestCursor(25).foreach { mob =>
         isHit = true
-        mob.takeDamage(dmgs)
+        gm.mobManager.damageTo(mob, dmgs)
+
         val vel = gm.randy.getIntII(10,30)
         val avel = gm.randy.getIntII(0,720)
         if (weaponSlot =?= 0) {

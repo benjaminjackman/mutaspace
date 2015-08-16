@@ -19,7 +19,8 @@ object LabMain {
   def main() {
     import Scalatags._
     val el = <.div("Hello World!").render
-    document.getElementsByTagName("body")(0).appendChild(el)
+    document.body.innerHTML = ""
+    document.body.appendChild(el)
   }
 
 }

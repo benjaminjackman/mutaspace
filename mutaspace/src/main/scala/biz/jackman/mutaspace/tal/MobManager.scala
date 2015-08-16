@@ -1,6 +1,7 @@
 package biz.jackman.mutaspace
 package tal
 
+import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import biz.jackman.mutaspace.tal.mob.Cardinal
 import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
@@ -16,6 +17,10 @@ import biz.jackman.facades.phaser
 //////////////////////////////////////////////////////////////
 
 class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
+  def damageTo(mob: Mob, amount: DamageAmounts) = {
+    gm.scoreManager.displayDamage(amount, mob.sprite)
+    mob.takeDamage(amount)
+  }
 
 
   object Mobs {

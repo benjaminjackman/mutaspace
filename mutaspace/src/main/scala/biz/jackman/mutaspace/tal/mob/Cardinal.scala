@@ -49,7 +49,7 @@ class Cardinal(gm: GameManager, val sprite: Sprite) extends Mob {
       def done() = {
         sprite.kill()
       }
-      val tween = gm.game.add.tween(sprite.scale).to(OBJ(x=0.0,y=0.0), 500, phaser.easing.Bounce.Out _)
+      val tween = gm.game.add.tween(sprite.scale).to(OBJ(x=0.0,y=0.0), 1000, phaser.easing.Elastic.Out _)
       tween.onComplete.addOnce(done _)
 //
       tween.start()

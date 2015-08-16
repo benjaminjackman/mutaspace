@@ -49,6 +49,9 @@ object TapAndLoot {
     gameEl.appendChild(footer.render)
 
     contentEl.appendChild(gameEl)
+    phaserEl.classList.add("noselect")
+    phaserEl.classList.add("cursor-crosshair")
+
 
     game = new phaser.Game(600, 800, Phaser.AUTO, phaserEl, state)
 
@@ -137,8 +140,6 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
       game.scale.refresh()
     }
 
-    game.canvas.classList.add("noselect")
-    game.canvas.classList.add("cursor-crosshair")
     game.add.sprite(0, 0, "sky")
 
     game.physics.startSystem(phaser.Physics.ARCADE)
