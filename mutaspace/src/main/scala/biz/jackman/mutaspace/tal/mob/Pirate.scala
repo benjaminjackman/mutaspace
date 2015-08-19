@@ -32,7 +32,8 @@ object Pirate {
     gm.game.physics.arcade.enable(sprite)
     sprite.body.velocity.set(0, 20)
     sprite.anchor.set(0.5, 0.5)
-
+    sprite.body.gravity.y = 200
+    sprite.body.mass = 2
 
     val mob = new Pirate(gm, sprite)
     MobHelp.addLifeBar(mob)(gm)

@@ -1,6 +1,7 @@
 package biz.jackman.mutaspace
 package tal
 
+import biz.jackman.facades.phaser.Physics
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import biz.jackman.mutaspace.tal.mob.Cardinal
 import biz.jackman.mutaspace.tal.mob.Doge
@@ -21,7 +22,7 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
 
 
   object Mobs {
-    lazy val group = gm.game.add.group()
+    lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)
     private var mobLst: List[Mob] = Nil
     def mobs: List[Mob] = mobLst
     def create() {
@@ -32,6 +33,7 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
       group.add(m.sprite)
     }
     def clearDead() {
+      mobLst.filterNot(_.sprite.alive).foreach(m=>group.remove(m.sprite))
       mobLst = mobLst.filter(_.sprite.alive)
     }
   }
@@ -66,6 +68,8 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   }
 
   def update() {
+    gm.game.physics.arcade.collide(Mobs.group)
+
     val curMs = gm.game.time.now
     if (lastUpdateMs == 0) {
       lastUpdateMs = curMs
