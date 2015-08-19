@@ -48,14 +48,14 @@ class BasicAttack(gm: GameManager) extends Skill {
         isHit = true
         gm.mobManager.damageTo(mob, dmgs)
 
-        val vel = gm.randy.getIntII(10,30)
-        val avel = gm.randy.getIntII(0,720)
+        val vel = gm.randy.getIntII(10, 30)
+        //        val avel = gm.randy.getIntII(0,720)
         if (weaponSlot =?= 0) {
-          mob.sprite.body.velocity.x +=  -vel
-          mob.sprite.body.angularVelocity = avel
+          mob.sprite.body.velocity.x += vel
+          //          mob.sprite.body.angularVelocity = avel
         } else {
           mob.sprite.body.velocity.x -= vel
-          mob.sprite.body.angularVelocity = -avel
+          //          mob.sprite.body.angularVelocity = -avel
         }
 
         mob.sprite.body.velocity.y = mob.sprite.body.velocity.y - 25

@@ -6,6 +6,7 @@ import biz.jackman.mutaspace.tal.mob.Cardinal
 import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
+import biz.jackman.mutaspace.tal.mob.Pirate
 
 
 //////////////////////////////////////////////////////////////
@@ -17,10 +18,6 @@ import biz.jackman.facades.phaser
 //////////////////////////////////////////////////////////////
 
 class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
-  def damageTo(mob: Mob, amount: DamageAmounts) = {
-    gm.scoreManager.displayDamage(amount, mob.sprite)
-    mob.takeDamage(amount)
-  }
 
 
   object Mobs {
@@ -44,6 +41,12 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   var lastUpdateMs = 0.0
   var lastMobMs = 0.0
 
+  def damageTo(mob: Mob, amount: DamageAmounts) = {
+    gm.scoreManager.displayDamage(amount, mob.sprite)
+    mob.takeDamage(amount)
+  }
+
+
   def getMobNearestCursor(range: Double) : Option[Mob] = {
     def distance(mob : Mob) = {
       val ap = gm.game.input.activePointer
@@ -55,6 +58,7 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   def preload() {
     Doge.Resources.preload(gm.game)
     Cardinal.Resources.preload(gm.game)
+    Pirate.Resources.preload(gm.game)
   }
 
   def create() {
@@ -102,7 +106,13 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
         }
       }
 
-      mob.update()
+      val hans = mob.onUpdateHandlers
+      val len = hans.length
+      var i = 0
+      while (i < len) {
+        hans(i)()
+        i+=1
+      }
     }
 
     Mobs.clearDead()
@@ -112,6 +122,7 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   def getRandomMob() : Mob = {
     val randomMob = gm.randy.getByWeight(
       2.0 -> Doge.apply _,
+      2.0 -> Pirate.apply _,
       2.0 -> Cardinal.apply _
     )
     randomMob(gm)

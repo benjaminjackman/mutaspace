@@ -17,16 +17,16 @@ import cgta.cenum.CEnum
 // Created by bjackman @ 8/15/15 12:30 PM
 //////////////////////////////////////////////////////////////
 
-object Cardinal {
+object Pirate {
   object Resources extends ResourceSet {
-    override def imageBasePath = super.mobBasePath + "/cardinal"
+    override def imageBasePath = super.mobBasePath + "/pirate"
 
-    case object cardinal_100x120 extends Image()
+    case object pirate_60x78 extends Image()
     final override val elements = CEnum.getElements(this)
   }
 
-  def apply(gm: GameManager): Cardinal = {
-    val sprite = gm.game.add.sprite(100, 50, Resources.cardinal_100x120.key)
+  def apply(gm: GameManager): Pirate = {
+    val sprite = gm.game.add.sprite(100, 50, Resources.pirate_60x78.key)
     sprite.texture.frame.width = 50
     sprite.texture.frame.height = 60
     gm.game.physics.arcade.enable(sprite)
@@ -34,14 +34,13 @@ object Cardinal {
     sprite.anchor.set(0.5, 0.5)
 
 
-    val mob = new Cardinal(gm, sprite)
+    val mob = new Pirate(gm, sprite)
     MobHelp.addLifeBar(mob)(gm)
     mob
   }
 
 }
-
-class Cardinal(gm: GameManager, val sprite: Sprite) extends Mob {
+class Pirate(gm: GameManager, val sprite: Sprite) extends Mob {
   var maxLife = 10.0
   var life = maxLife
   var lastLife = life

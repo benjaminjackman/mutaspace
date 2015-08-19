@@ -3683,7 +3683,7 @@ class Sprite protected() extends PIXI.Sprite {
   var world: phaser.Point = js.native
   var z: Double = js.native
   def bringToTop(): phaser.Sprite = js.native
-  def crop(rect: phaser.Rectangle, copy: Boolean): Unit = js.native
+  def crop(rect: phaser.Rectangle, copy: Boolean = ???): Unit = js.native
   def damage(amount: Double): phaser.Sprite = js.native
   def destroy(destroyChildren: Boolean = ???): Unit = js.native
   def drawPolygon(): Unit = js.native

@@ -44,13 +44,15 @@ object Doge {
     sprite.body.velocity.set(0, 20)
     sprite.body.bounce.y = 0.7 * js.Math.random() * 0.2
     sprite.anchor.set(0.5,0.5)
-    new Doge(gm, sprite)
+    val doge = new Doge(gm, sprite)
+    MobHelp.addLifeBar(doge)(gm)
+    doge
   }
 }
 
 class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
   import Doge.Resources
-  val maxLife = 12
+  val maxLife = 12.0
   var life = maxLife
   var runningAway = false
   var damageEndMs = 0.0
@@ -85,7 +87,10 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
       gm.audioManager.playRandom(Resources.xwhimper)
     }
   }
-  override def update() {
+
+  onUpdateHandlers += update
+
+  private def update() {
     def setTint() {
       if (gm.game.time.now < damageEndMs) {
         sprite.tint = 0xff0000
