@@ -52,7 +52,7 @@ object Doge {
 
 class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
   import Doge.Resources
-  val maxLife = 12.0
+  val maxLife = 50.0
   var life = maxLife
   var runningAway = false
   var damageEndMs = 0.0
