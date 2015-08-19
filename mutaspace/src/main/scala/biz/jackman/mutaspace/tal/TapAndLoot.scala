@@ -143,6 +143,7 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     game.add.sprite(0, 0, "sky")
 
     game.physics.startSystem(phaser.Physics.ARCADE)
+    game.physics.arcade.gravity.y = 50
     mobManager.create()
     scoreManager.create()
 

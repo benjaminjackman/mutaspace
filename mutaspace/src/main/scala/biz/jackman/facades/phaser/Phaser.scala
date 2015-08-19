@@ -2304,7 +2304,7 @@ class Arcade protected() extends js.Object {
   def angleBetween(source: js.Any, target: js.Any): Double = js.native
   def angleToPointer(displayObject: js.Any, pointer: phaser.Pointer = ???): Double = js.native
   def angleToXY(displayObject: js.Any, x: Double, y: Double): Double = js.native
-  def collide(object1: js.Any, object2: js.Any, collideCallback: js.Function = ???, processCallback: js.Function = ???, callbackContext: js.Any = ???): Boolean = js.native
+  def collide(object1: js.Any, object2: js.Any = ???, collideCallback: js.Function = ???, processCallback: js.Function = ???, callbackContext: js.Any = ???): Boolean = js.native
   def computeVelocity(axis: Double, body: phaser.physics.arcade.Body, velocity: Double, acceleration: Double, drag: Double, max: Double = ???): Double = js.native
   def distanceBetween(source: js.Any, target: js.Any): Double = js.native
   def distanceToPointer(displayObject: js.Any, pointer: phaser.Pointer = ???): Double = js.native

@@ -21,7 +21,7 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
 
 
   object Mobs {
-    lazy val group = gm.game.add.group()
+    lazy val group = gm.game.add.physicsGroup(phaser.Physics.ARCADE)
     private var mobLst: List[Mob] = Nil
     def mobs: List[Mob] = mobLst
     def create() {
@@ -66,6 +66,10 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   }
 
   def update() {
+
+
+    gm.game.physics.arcade.collide(Mobs.group)
+
     val curMs = gm.game.time.now
     if (lastUpdateMs == 0) {
       lastUpdateMs = curMs
