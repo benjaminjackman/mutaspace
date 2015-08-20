@@ -40,7 +40,7 @@ class Fist extends Weapon {
   override val hitSound: ResourceSet#Audio = Resources.punch
   override val missSound: ResourceSet#Audio = Resources.whiffs
   override val image: ResourceSet#Image = Resources.fistl
-  override def playAttackSpriteAnimation(gm: GameManager, slot: Int): Sprite = {
+  override def playAttackSpriteAnimation(gm: GameManager, slot: Int){
     val ap = gm.game.input.activePointer
     val sprite = gm.game.add.sprite(x = ap.x, y = ap.y + 60, image.key)
     sprite.alpha = 1
@@ -64,6 +64,5 @@ class Fist extends Weapon {
       sprite.alpha = 0
       sprite.kill()
     })
-    sprite
   }
 }

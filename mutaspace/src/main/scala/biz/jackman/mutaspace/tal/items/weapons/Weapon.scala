@@ -30,5 +30,5 @@ trait Weapon {
   def hitSound : ResourceSet#Audio
   def missSound : ResourceSet#Audio
   def image: ResourceSet#Image
-  def playAttackSpriteAnimation(gm : GameManager, slot : Int): Sprite
+  def playAttackSpriteAnimation(gm : GameManager, slot : Int)
 }

@@ -3,6 +3,7 @@ package tal.items
 
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.items.weapons.Fist
+import biz.jackman.mutaspace.tal.items.weapons.Shotgun
 
 
 //////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@ import biz.jackman.mutaspace.tal.items.weapons.Fist
 //////////////////////////////////////////////////////////////
 
 class ItemManager(gm : GameManager) {
-  val weapons = List(Fist.Resources)
+  val weapons = List(Fist.Resources, Shotgun.Resources)
   def preload() = {
     weapons.foreach(_.preload(gm.game))
   }

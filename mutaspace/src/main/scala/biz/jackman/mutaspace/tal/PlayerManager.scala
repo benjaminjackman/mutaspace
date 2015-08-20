@@ -2,6 +2,7 @@ package biz.jackman.mutaspace
 package tal
 
 import biz.jackman.mutaspace.tal.items.weapons.Fist
+import biz.jackman.mutaspace.tal.items.weapons.Shotgun
 import biz.jackman.mutaspace.tal.items.weapons.Weapon
 
 
@@ -14,10 +15,16 @@ import biz.jackman.mutaspace.tal.items.weapons.Weapon
 //////////////////////////////////////////////////////////////
 
 class PlayerManager(gm: GameManager) {
-  lazy val weapon = Fist(gm)
-  
+  lazy val fist = Fist(gm)
+  lazy val shotgun = Shotgun(gm)
+
+
   def getWeapon(slot: Int) : Weapon = {
-    weapon
+    if (slot == 0) {
+     fist
+    } else{
+      shotgun
+    }
   }
 
   def takeDamage(x: Int) = {
