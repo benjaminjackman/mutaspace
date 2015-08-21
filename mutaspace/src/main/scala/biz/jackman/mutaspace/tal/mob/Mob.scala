@@ -6,6 +6,7 @@ import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import cgta.serland.SerBuilder
+import cgta.serland.SerClass
 
 import scala.scalajs.js
 
@@ -23,65 +24,77 @@ object Mob {
 }
 
 trait Mob {
-  def life() : Double
-  def maxLife() : Double
   def takeDamage(amount: DamageAmounts): Unit
   def sprite: Sprite
   var onUpdateHandlers = new js.Array[() => Unit]()
 }
 
 trait MobFactory {
-  def preload(implicit gm : GameManager) : Unit
-  def create(implicit gm : GameManager) : Mob
+  def preload() : Unit
+  def create() : Mob
 
 }
 
-object MobImageCfg {implicit val ser = SerBuilder.forCase(this.apply _)}
+object MobImageCfg {implicit val ser: SerClass[MobImageCfg] = SerBuilder.forCase(this.apply _)}
 case class MobImageCfg(base: String) {
   def baseKey : String = base.split("/").last.split("\\.").head
 }
 
+object HeightWidthCfg{implicit val ser: SerClass[HeightWidthCfg] = SerBuilder.forCase(this.apply _)}
+case class HeightWidthCfg(height: String, width: String)
 
-object MobCfg {implicit val ser = SerBuilder.forCase(this.apply _)}
-case class MobCfg(
-  name: String,
-  maxLife: String,
-  image: MobImageCfg
-  ) {
-  def getMaxLife : Double = {
+object MobSpriteCfg {implicit val ser: SerClass[MobSpriteCfg] = SerBuilder.forCase(this.apply _)}
+case class MobSpriteCfg(texture_frame: HeightWidthCfg)
+
+object MobStatsCfg {implicit val ser: SerClass[MobStatsCfg] = SerBuilder.forCase(this.apply _)}
+case class MobStatsCfg(maxHealth: String) {
+  def getMaxHealth : Double = {
     //val RangeRegex = "^(\\d+)-(\\d+)$".r
     val NumberRegex = "^(\\d+)$".r
-    maxLife.trim match {
+    maxHealth.trim match {
       case NumberRegex(n) => n.toDouble
       case x =>
         console.error("Not a number", x)
         sys.error(s"Not a number $x")
     }
   }
+
+}
+
+object MobCfg {implicit val ser: SerClass[MobCfg] = SerBuilder.forCase(this.apply _)}
+case class MobCfg(
+  name: String,
+  stats: MobStatsCfg,
+  image: MobImageCfg,
+  sprite: MobSpriteCfg
+  ) {
+  var mobYml : js.Any = null
 }
 
 
-case class MobCfgFactory(cfg : MobCfg) extends MobFactory {
-  override def preload(implicit gm : GameManager) : Unit = {
+case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFactory {
+  override def preload() : Unit = {
     gm.game.load.image(cfg.image.baseKey, cfg.image.base)
   }
-  override def create(implicit gm : GameManager) : Mob = {
-    val sprite = gm.game.add.sprite(100, 50, cfg.image.baseKey)
-    sprite.texture.frame.width = 50
-    sprite.texture.frame.height = 60
+  override def create() : Mob = {
+    val sprite = gm.game.add.sprite(0, 0, cfg.image.baseKey)
+    sprite.texture.frame.width = cfg.sprite.texture_frame.width.toDouble
+    sprite.texture.frame.height = cfg.sprite.texture_frame.height.toDouble
     gm.game.physics.arcade.enable(sprite)
-    sprite.body.velocity.set(0, 20)
     sprite.anchor.set(0.5, 0.5)
+    sprite.maxHealth = cfg.stats.getMaxHealth
+    sprite.health = sprite.maxHealth
+    sprite.body.collideWorldBounds = true
+    sprite.body.gravity.y = 10
+    sprite.body.setSize(cfg.sprite.texture_frame.width.toDouble, cfg.sprite.texture_frame.height.toDouble)
+
     val ss = sprite
     val mob = new Mob {
       override val sprite: Sprite = ss
-      var maxLife = cfg.getMaxLife
-      var life = maxLife
-      var lastLife = life
       var dying = false
 
       onUpdateHandlers += { () =>
-        if (life <= 0 && !dying) {
+        if (sprite.health <= 0 && !dying) {
           dying = true
           def done() = {
             sprite.kill()
@@ -96,7 +109,7 @@ case class MobCfgFactory(cfg : MobCfg) extends MobFactory {
 
       override def takeDamage(amount: DamageAmounts): Unit = {
         //Show some read feathers randomly or something
-        life -= amount.total.toInt
+        sprite.health -= amount.total.toInt
       }
     }
     MobHelp.addLifeBar(mob)

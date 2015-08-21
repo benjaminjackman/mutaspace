@@ -42,7 +42,7 @@ class ScoreManager(gm: GameManager) {
   def update() {
     val life = gm.playerManager.life
     val mana = gm.playerManager.mana
-    val enemies = gm.levelManager.remainingEnemies
+    val enemies = 0 //gm.levelManager.remainingEnemies
 
     lifeText.text = s"Life: $life%"
     enemyText.text = s"Enemies: $enemies"

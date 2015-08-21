@@ -2,6 +2,7 @@ package biz.jackman.mutaspace
 package tal
 
 import biz.jackman.facades.phaser.Physics
+import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import biz.jackman.mutaspace.tal.mob.Cardinal
 import biz.jackman.mutaspace.tal.mob.Doge
@@ -10,6 +11,7 @@ import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.tal.mob.MobCfg
 import biz.jackman.mutaspace.tal.mob.MobCfgFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
+import cgta.oscala.util.debugging.PRINT
 
 
 //////////////////////////////////////////////////////////////
@@ -20,9 +22,9 @@ import biz.jackman.mutaspace.tal.mob.Pirate
 // Created by bjackman @ 7/27/15 8:17 PM
 //////////////////////////////////////////////////////////////
 
-class MobManager(gm: GameManager, cfgs : Seq[MobCfg]) {
+class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
 
-  val cardinalFactory = MobCfgFactory(cfgs.find(_.name == "cardinal").getOrElse(sys.error("Can't find cardinal")))
+  val factoryMap = IMap() ++ cfgs.map(cfg=>cfg.name -> MobCfgFactory(cfg))
 
   object Mobs {
     lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)
@@ -46,18 +48,24 @@ class MobManager(gm: GameManager, cfgs : Seq[MobCfg]) {
   var lastUpdateMs = 0.0
   var lastMobMs = 0.0
 
-  def damageTo(mob: Mob, amount: DamageAmounts) = {
-    gm.scoreManager.displayDamage(amount, mob.sprite)
-    mob.takeDamage(amount)
+  def damageTo(sprite: Sprite, amount: DamageAmounts) = {
+    gm.scoreManager.displayDamage(amount, sprite)
+    sprite.health -= amount.total
   }
 
 
-  def getMobNearestCursor(range: Double) : Option[Mob] = {
-    def distance(mob : Mob) = {
-      val ap = gm.game.input.activePointer
-      phaser.Math.distance(ap.x, ap.y, mob.sprite.x , mob.sprite.y)
-    }
-    Mobs.mobs.minByOpt(distance).filter(distance(_) < range)
+  def getSpriteNearestCursor(range: Double) : Option[Sprite] = {
+    val ap = gm.game.input.activePointer
+    val mobs = gm.game.physics.arcade.getObjectsAtLocation(ap.x, ap.y, Mobs.group)
+    console.log(mobs)
+
+//    def distance(mob : Mob) = {
+//      val ap = gm.game.input.activePointer
+//      phaser.Math.distance(ap.x, ap.y, mob.sprite.x , mob.sprite.y)
+//    }
+//    Mobs.mobs.minByOpt(distance).filter(distance(_) < range)
+
+    mobs.headOption
   }
 
   def preload() {
@@ -92,16 +100,16 @@ class MobManager(gm: GameManager, cfgs : Seq[MobCfg]) {
 
     def updateChild(mob: Mob) {
 
-      if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
-        if (mob.sprite.body.velocity.y > 0 ) {
-          mob.sprite.body.velocity.y *= -1
-        }
-      }
-      if (mob.sprite.y < 0 ) {
-        if (mob.sprite.body.velocity.y < 0 && mob.life() > 0) {
-          mob.sprite.body.velocity.y *= -1
-        }
-      }
+//      if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
+//        if (mob.sprite.body.velocity.y > 0 ) {
+//          mob.sprite.body.velocity.y *= -1
+//        }
+//      }
+//      if (mob.sprite.y < 0 ) {
+//        if (mob.sprite.body.velocity.y < 0 && mob.life() > 0) {
+//          mob.sprite.body.velocity.y *= -1
+//        }
+//      }
       if (mob.sprite.x + mob.sprite.width >= gm.game.width) {
         if (mob.sprite.body.velocity.x > 0) {
           mob.sprite.body.velocity.x *= -1
@@ -126,22 +134,31 @@ class MobManager(gm: GameManager, cfgs : Seq[MobCfg]) {
     Mobs.mobs.foreach(updateChild)
   }
 
-  def getRandomMob() : Mob = {
-    val randomMob = gm.randy.getByWeight[GameManager => Mob](
-      2.0 -> ((gm) => Doge.apply(gm)),
-      2.0 -> ((gm) => Pirate.apply(gm)),
-      2.0 -> ((gm) => cardinalFactory.create(gm))
+  def getRandomMobFactory() : MobCfgFactory = {
+    gm.randy.getByWeight[MobCfgFactory](
+      2.0 -> factoryMap("cardinal")
     )
-    randomMob(gm)
   }
 
   def spawnRandomMobPack(): Unit = {
     val cnt = gm.randy.getIntII(3, 8)
+    val factory = getRandomMobFactory()
+    val x = gm.randy.getIntII(100, gm.game.width.toInt - 100)
+    val eliteMob = factory.create()
+    eliteMob.sprite.x = x
+    eliteMob.sprite.y = 100
+    eliteMob.sprite.tint = 0x33FF00
+    eliteMob.sprite.scale.set(2,2)
+    eliteMob.sprite.maxHealth = eliteMob.sprite.maxHealth * 5
+    eliteMob.sprite.health = eliteMob.sprite.maxHealth
+    eliteMob.sprite.scale.set(2,2)
+    PRINT | eliteMob.sprite.body.halfHeight
+    Mobs += eliteMob
     cnt times {
-      val mob = getRandomMob()
+      val mob = factory.create()
       Mobs += mob
-      mob.sprite.x = gm.randy.getIntII(1, gm.game.width.toInt - mob.sprite.width.toInt)
-      mob.sprite.y = gm.randy.getIntII(1, 50)
+      mob.sprite.x = gm.randy.getIntII(x - 100, x + 100)
+      mob.sprite.y = gm.randy.getIntII(0,200)
     }
   }
 }

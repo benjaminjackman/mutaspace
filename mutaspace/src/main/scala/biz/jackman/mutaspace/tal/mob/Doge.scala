@@ -79,7 +79,6 @@ class Doge(val gm: GameManager, val sprite: Sprite) extends Mob {
     if (life <= 0) {
       //      gm.game.sound.play(Resources.whine, gm.randy.getDblIE(0.05, 0.2))
       life = 0
-      gm.levelManager.enemiesAlive -= 1
       sprite.body.velocity.y = -400
       runningAway = true
       gm.audioManager.playRandom(Resources.xwhine)

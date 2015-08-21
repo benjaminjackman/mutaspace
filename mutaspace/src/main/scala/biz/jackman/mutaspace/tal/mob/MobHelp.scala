@@ -51,10 +51,10 @@ object MobHelp {
     lifeSprite.crop(rect, copy = false)
 
     def onUpdate() {
-      if (lastLife != mob.life()) {
+      if (lastLife != mob.sprite.health) {
         PRINT | "LIFE DIFF"
-        lastLife = mob.life()
-        rect.width = (width * (mob.life() / mob.maxLife())).ceil
+        lastLife = mob.sprite.health
+        rect.width = (width * (mob.sprite.health / mob.sprite.maxHealth)).ceil
         lifeSprite.updateCrop()
       }
     }

@@ -10,8 +10,12 @@ package tal
 //////////////////////////////////////////////////////////////
 
 class LevelManager(gm : GameManager) {
-  var enemiesAlive : Int = 15
+  def begin() {
 
-  def remainingEnemies : Int  = enemiesAlive
+  }
+
+  def nextLevel() {
+
+  }
 
 }

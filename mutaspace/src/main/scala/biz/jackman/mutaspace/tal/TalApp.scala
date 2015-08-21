@@ -29,7 +29,7 @@ trait TalResources {
 
 //TODO READ THIS
 //http://invrse.co/phaser-cheatsheet/
-object TapAndLoot {
+object TalApp {
 
   def start(showVideos: Boolean) {
 
@@ -40,7 +40,9 @@ object TapAndLoot {
         mobYmls.flatMap { mobYml =>
           val json = JSON.stringify(mobYml)
           try {
-            Some(json.fromJson[MobCfg])
+            val obj = json.fromJson[MobCfg]
+            obj.mobYml = mobYml
+            Some(obj)
           } catch {
             case e : Throwable =>
               PRINT | "ERROROR"
@@ -56,7 +58,7 @@ object TapAndLoot {
 
       var game: phaser.Game = null
 
-      val tal = new TapAndLoot(showVideos, () => game, ress)
+      val tal = new TalApp(showVideos, () => game, ress)
       val state = new State()
       state.asJsDyn.preload = () => tal.preload()
       state.asJsDyn.create = () => tal.create()
@@ -94,13 +96,13 @@ object TapAndLoot {
   }
 }
 
-class TapAndLoot(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) {tal =>
+class TalApp(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) {tal =>
 
   lazy val game = gameFn()
 
 
   lazy val randy = new RandomManager
-  lazy val gm: GameManager = new GameManager {
+  implicit lazy val gm: GameManager = new GameManager {
     override def game: Game = tal.game
     override def randy: RandomManager = tal.randy
     override def scoreManager: ScoreManager = tal.scoreManager
@@ -145,7 +147,7 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game, resources : TalResourc
 
   }
   lazy val playerManager = new PlayerManager(gm)
-  lazy val mobManager = new MobManager(gm, resources.mobCfgs)
+  lazy val mobManager = new MobManager(resources.mobCfgs)
   lazy val inputManager = new InputManager(gm)
   lazy val scoreManager = new ScoreManager(gm)
   lazy val skillManager = new SkillManager(gm)
@@ -174,18 +176,19 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game, resources : TalResourc
       game.scale.refresh()
     }
 
+    game.world.setBounds(0,0,600,600)
     game.add.sprite(0, 0, "sky")
 
     game.physics.startSystem(phaser.Physics.ARCADE)
     mobManager.create()
     scoreManager.create()
 
-    val turkey = game.add.image(0, 0, "turkey")
-    turkey.tint = 0x606060
-    turkey.width = game.width - 200
-    turkey.height = 200
-    turkey.x = 100
-    turkey.y = game.height - 200
+//    val turkey = game.add.image(0, 0, "turkey")
+//    turkey.tint = 0x606060
+//    turkey.width = game.width - 200
+//    turkey.height = 200
+//    turkey.x = 100
+//    turkey.y = game.height - 200
 
   }
 
@@ -196,13 +199,13 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game, resources : TalResourc
     scoreManager.update()
     skillManager.update()
 
-    if (playerManager.life < 0) {
-      gm.die()
-    }
+//    if (playerManager.life < 0) {
+//      gm.die()
+//    }
 
-    if (levelManager.remainingEnemies <= 0) {
-      gm.win()
-    }
+//    if (levelManager.remainingEnemies <= 0) {
+//      gm.win()
+//    }
   }
 
   def displayInventory() {

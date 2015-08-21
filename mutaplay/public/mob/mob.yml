@@ -2,14 +2,26 @@
 # Copyright (c) 2015 Ben Jackman
 # Created by bjackman @ 8/15/15 1:34 PM
 
+type: mob
 name: cardinal
-maxLife: 20
+stats:
+  maxHealth: 20
 image:
   base: /assets/mob/cardinal/cardinal_100x120.png
+sprite:
+  texture_frame: {width: 50, height: 60}
 
----
-
-name: raider
-maxLife: 30
-image:
-  base: /assets/mob/pirate/pirate_60x78.png
+#---
+#
+#name: doge
+#maxLife: 100
+#image:
+#  base: /assets/mob/doge/doge_
+#
+#---
+#
+#name: raider
+#maxLife: 100
+#image:
+#  base: /assets/mob/pirate/pirate_60x78.png
+#

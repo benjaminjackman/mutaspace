@@ -16,7 +16,7 @@ object TalMain {
 
   @JSExport
   def main(showVideos : Boolean) {
-    TapAndLoot.start(showVideos)
+    TalApp.start(showVideos)
   }
 
 }

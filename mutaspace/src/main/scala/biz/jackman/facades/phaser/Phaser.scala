@@ -3658,6 +3658,7 @@ class Sprite protected() extends PIXI.Sprite {
   var fresh: Boolean = js.native
   var game: phaser.Game = js.native
   var health: Double = js.native
+  var maxHealth: Double = js.native
   var inCamera: Boolean = js.native
   var input: phaser.InputHandler = js.native
   var inputEnabled: Boolean = js.native

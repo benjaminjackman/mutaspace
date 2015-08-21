@@ -1,0 +1,10 @@
+---
+# Copyright (c) 2015 Ben Jackman 
+# Created by bjackman @ 8/20/15 11:12 PM
+
+name: level_1
+mobs:
+  - cardinal
+#  - pirate
+#  - doge
+layout: {height: 50, width: 50}
