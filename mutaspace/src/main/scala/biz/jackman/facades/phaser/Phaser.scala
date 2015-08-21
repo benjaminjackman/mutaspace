@@ -2375,6 +2375,7 @@ class Body protected() extends js.Object {
   var gravity: phaser.Point = js.native
   var halfWidth: Double = js.native
   var halfHeight: Double = js.native
+  var height: Double = js.native
   var immovable: Boolean = js.native
   var mass: Double = js.native
   var maxAngular: Double = js.native
@@ -3352,6 +3353,7 @@ object Rectangle extends js.Object {
   def inflate(a: phaser.Rectangle, dx: Double, dy: Double): phaser.Rectangle = js.native
   def inflatePoint(a: phaser.Rectangle, point: phaser.Point): phaser.Rectangle = js.native
   def intersection(a: phaser.Rectangle, b: phaser.Rectangle, out: phaser.Rectangle = ???): phaser.Rectangle = js.native
+  def intersects(a: PIXI.Rectangle, b: PIXI.Rectangle): Boolean = js.native
   def intersects(a: phaser.Rectangle, b: phaser.Rectangle): Boolean = js.native
   def intersectsRaw(left: Double, right: Double, top: Double, bottom: Double, tolerance: Double): Boolean = js.native
   def size(a: phaser.Rectangle, output: phaser.Point = ???): phaser.Point = js.native

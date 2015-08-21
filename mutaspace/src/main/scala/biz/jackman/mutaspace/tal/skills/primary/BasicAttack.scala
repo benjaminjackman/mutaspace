@@ -41,12 +41,13 @@ class BasicAttack(gm: GameManager) extends Skill {
       val weapon = gm.playerManager.getWeapon(weaponSlot)
 
       nextWeaponSlot = (nextWeaponSlot + 1) & 1
-      val dmgs = gm.randy.roll(weapon.damageRanges)
 
       var isHit = false
-      gm.mobManager.getSpriteNearestCursor(25).foreach { sprite =>
+      val maxHitCnt = weapon.getHitCnt
+      val spread = weapon.getSpread
+      gm.mobManager.getSpritesUnderCursor(spread).iterator.take(maxHitCnt).foreach { sprite =>
         isHit = true
-        gm.mobManager.damageTo(sprite, dmgs)
+        gm.mobManager.damageTo(sprite, gm.randy.roll(weapon.damageRanges))
 
         val vel = gm.randy.getIntII(10, 30)
         //        val avel = gm.randy.getIntII(0,720)

@@ -27,11 +27,12 @@ trait Mob {
   def takeDamage(amount: DamageAmounts): Unit
   def sprite: Sprite
   var onUpdateHandlers = new js.Array[() => Unit]()
+  def addUpdateHandler(b : => Unit) {onUpdateHandlers += (() => b)}
 }
 
 trait MobFactory {
   def preload() : Unit
-  def create() : Mob
+  def create(mobId : Double) : Mob
 
 }
 
@@ -76,7 +77,7 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
   override def preload() : Unit = {
     gm.game.load.image(cfg.image.baseKey, cfg.image.base)
   }
-  override def create() : Mob = {
+  override def create(mobId : Double) : Mob = {
     val sprite = gm.game.add.sprite(0, 0, cfg.image.baseKey)
     sprite.texture.frame.width = cfg.sprite.texture_frame.width.toDouble
     sprite.texture.frame.height = cfg.sprite.texture_frame.height.toDouble
@@ -86,6 +87,7 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
     sprite.health = sprite.maxHealth
     sprite.body.collideWorldBounds = true
     sprite.body.setSize(cfg.sprite.texture_frame.width.toDouble, cfg.sprite.texture_frame.height.toDouble)
+    sprite.body.velocity.set(gm.randy.getIntIE(-20,20), gm.randy.getIntIE(-20,20))
 
     val ss = sprite
     val mob = new Mob {
@@ -105,7 +107,6 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
           //Show some feathers or something
         }
 
-        gm.game.physics.arcade.accelerateToXY(sprite, 300, 600, 5, 20, 20)
       }
 
       override def takeDamage(amount: DamageAmounts): Unit = {
@@ -113,6 +114,7 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
         sprite.health -= amount.total.toInt
       }
     }
+    ss.asJsDict("mob") = mob
     MobHelp.addLifeBar(mob)
     mob
   }

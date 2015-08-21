@@ -30,6 +30,8 @@ object Shotgun {
 
 class Shotgun extends Weapon {
   import Shotgun.Resources
+  override def getSpread: Double = 50
+  override def getHitCnt: Int = 50
   override val range: Double = 50
   override val damageRanges: DamageRanges = DamageRanges(physical = 20 -> 50)
   override val attackDurMs: Double = 1000
@@ -39,4 +41,5 @@ class Shotgun extends Weapon {
   override def playAttackSpriteAnimation(gm: GameManager, slot: Int): Unit = {
 
   }
+
 }

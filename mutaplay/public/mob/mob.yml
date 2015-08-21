@@ -7,7 +7,7 @@ name: cardinal
 stats:
   maxHealth: 20
 image:
-  base: /assets/mob/cardinal/cardinal_100x120.png
+  base: /assets/mob/cardinal/cardinal_bw_100x120.png
 sprite:
   texture_frame: {width: 50, height: 60}
 

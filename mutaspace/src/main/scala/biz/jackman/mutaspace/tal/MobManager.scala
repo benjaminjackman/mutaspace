@@ -1,10 +1,11 @@
 package biz.jackman.mutaspace
 package tal
 
+import java.util.concurrent.atomic.AtomicLong
+
 import biz.jackman.facades.phaser.Physics
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
-import biz.jackman.mutaspace.tal.mob.Cardinal
 import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
@@ -12,6 +13,10 @@ import biz.jackman.mutaspace.tal.mob.MobCfg
 import biz.jackman.mutaspace.tal.mob.MobCfgFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
 import cgta.oscala.util.debugging.PRINT
+import importedjs.PIXI
+
+import scala.scalajs.js
+import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 
 
 //////////////////////////////////////////////////////////////
@@ -22,9 +27,9 @@ import cgta.oscala.util.debugging.PRINT
 // Created by bjackman @ 7/27/15 8:17 PM
 //////////////////////////////////////////////////////////////
 
-class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
+class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) {
 
-  val factoryMap = IMap() ++ cfgs.map(cfg=>cfg.name -> MobCfgFactory(cfg))
+  val factoryMap = IMap() ++ cfgs.map(cfg => cfg.name -> MobCfgFactory(cfg))
 
   object Mobs {
     lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)
@@ -38,7 +43,7 @@ class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
       group.add(m.sprite)
     }
     def clearDead() {
-      mobLst.filterNot(_.sprite.alive).foreach(m=>group.remove(m.sprite))
+      mobLst.filterNot(_.sprite.alive).foreach(m => group.remove(m.sprite))
       mobLst = mobLst.filter(_.sprite.alive)
     }
   }
@@ -54,24 +59,23 @@ class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
   }
 
 
-  def getSpriteNearestCursor(range: Double) : Option[Sprite] = {
+  def getSpritesUnderCursor(range: Double): js.Array[Sprite] = {
     val ap = gm.game.input.activePointer
-    val mobs = gm.game.physics.arcade.getObjectsAtLocation(ap.x, ap.y, Mobs.group)
-    console.log(mobs)
+    if (range == 1) {
+      gm.game.physics.arcade.getObjectsAtLocation(ap.x, ap.y, Mobs.group)
+    } else {
+      val hitBounds = new PIXI.Rectangle(ap.x - 0.5* range, ap.y - 0.5* range, range , range)
+      Mobs.mobs.iterator.filter { m =>
+        phaser.Rectangle.intersects(m.sprite.getBounds(), hitBounds)
+      }.map(_.sprite).toJSArray
+    }
 
-//    def distance(mob : Mob) = {
-//      val ap = gm.game.input.activePointer
-//      phaser.Math.distance(ap.x, ap.y, mob.sprite.x , mob.sprite.y)
-//    }
-//    Mobs.mobs.minByOpt(distance).filter(distance(_) < range)
-
-    mobs.headOption
   }
 
   def preload() {
     Doge.Resources.preload(gm.game)
-    Cardinal.Resources.preload(gm.game)
     Pirate.Resources.preload(gm.game)
+    factoryMap.valuesIterator.foreach(_.preload())
   }
 
   def create() {
@@ -100,16 +104,16 @@ class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
 
     def updateChild(mob: Mob) {
 
-//      if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
-//        if (mob.sprite.body.velocity.y > 0 ) {
-//          mob.sprite.body.velocity.y *= -1
-//        }
-//      }
-//      if (mob.sprite.y < 0 ) {
-//        if (mob.sprite.body.velocity.y < 0 && mob.life() > 0) {
-//          mob.sprite.body.velocity.y *= -1
-//        }
-//      }
+      //      if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
+      //        if (mob.sprite.body.velocity.y > 0 ) {
+      //          mob.sprite.body.velocity.y *= -1
+      //        }
+      //      }
+      //      if (mob.sprite.y < 0 ) {
+      //        if (mob.sprite.body.velocity.y < 0 && mob.life() > 0) {
+      //          mob.sprite.body.velocity.y *= -1
+      //        }
+      //      }
       if (mob.sprite.x + mob.sprite.width >= gm.game.width) {
         if (mob.sprite.body.velocity.x > 0) {
           mob.sprite.body.velocity.x *= -1
@@ -126,7 +130,7 @@ class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
       var i = 0
       while (i < len) {
         hans(i)()
-        i+=1
+        i += 1
       }
     }
 
@@ -134,31 +138,52 @@ class MobManager(cfgs : Seq[MobCfg])(implicit gm: GameManager) {
     Mobs.mobs.foreach(updateChild)
   }
 
-  def getRandomMobFactory() : MobCfgFactory = {
+  def getRandomMobFactory(): MobCfgFactory = {
     gm.randy.getByWeight[MobCfgFactory](
       2.0 -> factoryMap("cardinal")
     )
   }
 
+  var lastMobId: Double = 0
+  def nextMobId() = {
+    lastMobId += 1
+    lastMobId
+  }
+
+
   def spawnRandomMobPack(): Unit = {
     val cnt = gm.randy.getIntII(3, 8)
     val factory = getRandomMobFactory()
     val x = gm.randy.getIntII(100, gm.game.width.toInt - 100)
-    val eliteMob = factory.create()
+    val eliteMob = factory.create(nextMobId())
+    val tint = locally {
+      val c = phaser.Color.HSLtoRGB(gm.randy.getDblIE(0, 1), gm.randy.getDblIE(.4, .9), gm.randy.getDblIE(.4, .9))
+      phaser.Color.getColor(c.r.asInstanceOf[Double], c.g.asInstanceOf[Double], c.b.asInstanceOf[Double])
+    }
     eliteMob.sprite.x = x
     eliteMob.sprite.y = 100
-    eliteMob.sprite.tint = 0x33FF00
-    eliteMob.sprite.scale.set(2,2)
+    eliteMob.sprite.tint = tint
+    eliteMob.sprite.scale.set(2, 2)
     eliteMob.sprite.maxHealth = eliteMob.sprite.maxHealth * 5
     eliteMob.sprite.health = eliteMob.sprite.maxHealth
-    eliteMob.sprite.scale.set(2,2)
-    PRINT | eliteMob.sprite.body.halfHeight
+    eliteMob.sprite.scale.set(2, 2)
+    eliteMob.addUpdateHandler {
+      gm.game.physics.arcade.accelerateToXY(eliteMob.sprite, 300, 600, 50, 100, 100)
+    }
     Mobs += eliteMob
     cnt times {
-      val mob = factory.create()
+      val mob = factory.create(nextMobId())
       Mobs += mob
       mob.sprite.x = gm.randy.getIntII(x - 100, x + 100)
-      mob.sprite.y = gm.randy.getIntII(0,200)
+      mob.sprite.y = gm.randy.getIntII(0, 200)
+      mob.sprite.tint = tint
+      mob.addUpdateHandler {
+        if (eliteMob.sprite.health > 0) {
+          gm.game.physics.arcade.accelerateToXY(mob.sprite, eliteMob.sprite.x, eliteMob.sprite.y, 100, 100, 100)
+        } else {
+          gm.game.physics.arcade.accelerateToXY(mob.sprite, 300, 600, 100, 100, 100)
+        }
+      }
     }
   }
 }

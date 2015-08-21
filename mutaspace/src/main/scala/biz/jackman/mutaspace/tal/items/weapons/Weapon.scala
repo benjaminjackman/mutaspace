@@ -22,8 +22,9 @@ object Weapon {
 }
 
 trait Weapon {
-  
 
+  def getSpread : Double
+  def getHitCnt: Int
   def damageRanges : DamageRanges
   def range: Double
   def attackDurMs : Double
