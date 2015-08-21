@@ -42,14 +42,14 @@ class ScoreManager(gm: GameManager) {
   def update() {
     val life = gm.playerManager.life
     val mana = gm.playerManager.mana
-    val enemies = 0 //gm.levelManager.remainingEnemies
+    val enemies = 0//gm.levelManager.remainingEnemies
 
     lifeText.text = s"Life: $life%"
     enemyText.text = s"Enemies: $enemies"
   }
 
   def displayDamage(amount: DamageAmounts, sprite: Sprite): Unit = {
-    val startY = sprite.y - sprite.height / 2 - 10
+    val startY = sprite.y - sprite.height / 2 - 40
     val endY = startY - 50
     val text = gm.game.add.text(sprite.x, startY, amount.total.toInt.toString, OBJ())
     text.font = "12 px sans"

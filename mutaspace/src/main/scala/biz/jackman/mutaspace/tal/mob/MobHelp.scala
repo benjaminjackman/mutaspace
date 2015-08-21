@@ -52,10 +52,10 @@ object MobHelp {
 
     def onUpdate() {
       if (lastLife != mob.sprite.health) {
-        PRINT | "LIFE DIFF"
         lastLife = mob.sprite.health
-        rect.width = (width * (mob.sprite.health / mob.sprite.maxHealth)).ceil
-        lifeSprite.updateCrop()
+        val newWidth = (width * (mob.sprite.health / mob.sprite.maxHealth)).ceil
+        val tween = gm.game.tweens.create(rect).to(OBJ(width=newWidth), 100, phaser.easing.Linear.None _).onUpdateCallback(lifeSprite.updateCrop _, lifeSprite)
+        tween.start()
       }
     }
 

@@ -85,7 +85,6 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
     sprite.maxHealth = cfg.stats.getMaxHealth
     sprite.health = sprite.maxHealth
     sprite.body.collideWorldBounds = true
-    sprite.body.gravity.y = 10
     sprite.body.setSize(cfg.sprite.texture_frame.width.toDouble, cfg.sprite.texture_frame.height.toDouble)
 
     val ss = sprite
@@ -105,6 +104,8 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
 
           //Show some feathers or something
         }
+
+        gm.game.physics.arcade.accelerateToXY(sprite, 300, 600, 5, 20, 20)
       }
 
       override def takeDamage(amount: DamageAmounts): Unit = {
