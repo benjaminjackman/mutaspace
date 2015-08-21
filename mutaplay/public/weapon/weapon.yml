@@ -1,0 +1,12 @@
+---
+# Copyright (c) 2015 Ben Jackman
+# Created by bjackman @ 8/21/15 11:55 AM
+
+
+type: weapon
+name: shotgun
+damage: 40+-10
+spread: 100
+recoil: 20
+pellets: 8
+burst: 1

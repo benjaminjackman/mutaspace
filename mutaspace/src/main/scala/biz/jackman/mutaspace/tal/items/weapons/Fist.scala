@@ -36,7 +36,6 @@ class Fist extends Weapon {
   import Fist.Resources
   override def getSpread: Double = 1
   override def getHitCnt: Int = 1
-  override val range: Double = 50
   override val damageRanges: DamageRanges = DamageRanges(physical = 4 -> 10)
   override val attackDurMs: Double = 500
   override val hitSound: ResourceSet#Audio = Resources.punch

@@ -30,9 +30,8 @@ object Shotgun {
 
 class Shotgun extends Weapon {
   import Shotgun.Resources
-  override def getSpread: Double = 50
+  override def getSpread: Double = 100
   override def getHitCnt: Int = 50
-  override val range: Double = 50
   override val damageRanges: DamageRanges = DamageRanges(physical = 20 -> 50)
   override val attackDurMs: Double = 1000
   override val hitSound: ResourceSet#Audio = Resources.shotgun_and_reload
