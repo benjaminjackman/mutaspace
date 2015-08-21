@@ -3,7 +3,7 @@
 # ~~~~
 
 GET        /                           controllers.Default.redirect(to="/current-host/version/HEAD/index.html")
-GET        /tal                        controllers.MainController.tal
+GET        /tal                        controllers.Assets.at(path="/public", file="/index.html")
 GET        /lab                        controllers.MainController.lab
 #GET        /tal-classic                controllers.MainController.talClassic
 

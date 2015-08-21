@@ -26,7 +26,8 @@ object IdeaStrip {
   val debug = false
 
   val projectNames = List(
-    "mutaspace"
+    "mutaspace",
+    "mutaplay"
   )
 
   val projects = for (p <- projectNames; target <- List("", "sjs", "jvm")) yield {
@@ -89,11 +90,17 @@ object LineParsers {
   def filepath(line: Line) = {
     if (line.lvl == Line.warn || line.lvl == Line.error) {
       val SrcRegex = "[^ ]+/src/(main|test)/scal(a-jvm|a-sjs|a)?/([^ ]*)/([^/ ]*)\\.scala:([0-9]*): (.*)".r
+      val PlaySrcRegex = "[^ ]+/app/([^ ]*)/([^/ ]*)\\.scala:([0-9]*): (.*)".r
       //Sample:
       //RAWLINE[/home/bjackman/cgta/orange/olib/src/main/scala-jvm/cgta/olib/db/OlibDbMappers.scala:39: type mismatch;]
 //      println(s"RAWLINE[${line.msg}]")
       line.msg match {
         case SrcRegex(_, packPath, _, clsName, lnum, msg) => {
+          List(
+            line.withMsg(stackElementify(packPath = packPath, clsName = clsName, lnum = lnum, msg = msg)),
+            line.withMsg(msg))
+        }
+        case PlaySrcRegex(packPath, clsName, lnum, msg) => {
           List(
             line.withMsg(stackElementify(packPath = packPath, clsName = clsName, lnum = lnum, msg = msg)),
             line.withMsg(msg))
