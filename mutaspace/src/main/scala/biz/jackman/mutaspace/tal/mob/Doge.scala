@@ -34,7 +34,7 @@ object Doge {
   }
 
 
-  def apply(gm: GameManager): Doge = {
+  def apply(implicit gm: GameManager): Doge = {
     val text = gm.game.add.text(1, 1, "cujo", OBJ(font = "10px Arial", fill = "red"))
     val sprite = gm.game.add.sprite(100, 50, Resources.doge.key)
     sprite.texture.frame.width = 50

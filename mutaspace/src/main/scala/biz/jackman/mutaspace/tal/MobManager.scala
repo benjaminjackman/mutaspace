@@ -7,6 +7,8 @@ import biz.jackman.mutaspace.tal.mob.Cardinal
 import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
+import biz.jackman.mutaspace.tal.mob.MobCfg
+import biz.jackman.mutaspace.tal.mob.MobCfgFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
 
 
@@ -18,8 +20,9 @@ import biz.jackman.mutaspace.tal.mob.Pirate
 // Created by bjackman @ 7/27/15 8:17 PM
 //////////////////////////////////////////////////////////////
 
-class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
+class MobManager(gm: GameManager, cfgs : Seq[MobCfg]) {
 
+  val cardinalFactory = MobCfgFactory(cfgs.find(_.name == "cardinal").getOrElse(sys.error("Can't find cardinal")))
 
   object Mobs {
     lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)
@@ -124,21 +127,21 @@ class MobManager(gm: GameManager, player: PlayerManager, randy: RandomManager) {
   }
 
   def getRandomMob() : Mob = {
-    val randomMob = gm.randy.getByWeight(
-      2.0 -> Doge.apply _,
-      2.0 -> Pirate.apply _,
-      2.0 -> Cardinal.apply _
+    val randomMob = gm.randy.getByWeight[GameManager => Mob](
+      2.0 -> ((gm) => Doge.apply(gm)),
+      2.0 -> ((gm) => Pirate.apply(gm)),
+      2.0 -> ((gm) => cardinalFactory.create(gm))
     )
     randomMob(gm)
   }
 
   def spawnRandomMobPack(): Unit = {
-    val cnt = randy.getIntII(3, 8)
+    val cnt = gm.randy.getIntII(3, 8)
     cnt times {
       val mob = getRandomMob()
       Mobs += mob
-      mob.sprite.x = randy.getIntII(1, gm.game.width.toInt - mob.sprite.width.toInt)
-      mob.sprite.y = randy.getIntII(1, 50)
+      mob.sprite.x = gm.randy.getIntII(1, gm.game.width.toInt - mob.sprite.width.toInt)
+      mob.sprite.y = gm.randy.getIntII(1, 50)
     }
   }
 }

@@ -5,11 +5,13 @@ import biz.jackman.facades.phaser.Game
 import biz.jackman.facades.phaser.State
 import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
+import biz.jackman.mutaspace.gutil.YamlHelp
 import biz.jackman.mutaspace.tal.items.ItemManager
+import biz.jackman.mutaspace.tal.mob.MobCfg
+import cgta.oscala.util.debugging.PRINT
 import org.scalajs.dom
-import org.scalajs.dom.MouseEvent
-import scala.scalajs.js
-import scalatags.JsDom
+import org.scalajs.dom.ext.Ajax
+import scala.async.Async
 
 
 //////////////////////////////////////////////////////////////
@@ -20,40 +22,70 @@ import scalatags.JsDom
 // Created by bjackman @ 7/21/15 8:47 PM
 //////////////////////////////////////////////////////////////
 
+trait TalResources {
+  val mobCfgs : Seq[MobCfg]
+}
+
 
 //TODO READ THIS
 //http://invrse.co/phaser-cheatsheet/
 object TapAndLoot {
 
   def start(showVideos: Boolean) {
-    var game: phaser.Game = null
-    val tal = new TapAndLoot(showVideos, () => game)
-    val state = new State()
-    state.asJsDyn.preload = () => tal.preload()
-    state.asJsDyn.create = () => tal.create()
-    state.asJsDyn.update = () => tal.update()
+
+    Async.async {
+      val mobCfgs_ = locally {
+        val mobTxt = Async.await(Ajax.get("assets/mob/mob.yml").map(_.responseText))
+        val mobYmls = YamlHelp.load(mobTxt)
+        mobYmls.flatMap { mobYml =>
+          val json = JSON.stringify(mobYml)
+          try {
+            Some(json.fromJson[MobCfg])
+          } catch {
+            case e : Throwable =>
+              PRINT | "ERROROR"
+              e.printStackTrace()
+              Nil
+          }
+        }
+      }
+
+      val ress = new TalResources {
+        override val mobCfgs: Seq[MobCfg] = mobCfgs_
+      }
+
+      var game: phaser.Game = null
+
+      val tal = new TapAndLoot(showVideos, () => game, ress)
+      val state = new State()
+      state.asJsDyn.preload = () => tal.preload()
+      state.asJsDyn.create = () => tal.create()
+      state.asJsDyn.update = () => tal.update()
 
 
-    import Scalatags._
-    val contentEl = document.getElementById("content")
+      import Scalatags._
+      val contentEl = document.getElementById("content")
 
-    val phaserEl = <.div.render
-    val footer = <.div(
-      <.a("[RESTART]", ^.color := "red", ^.onclick := { () => document.location.reload(true) }),
-      <.a("[PAUSE]", ^.color := "blue", ^.onclick := { () => {game.paused = !game.paused} }),
-      <.a("[INVENTORY]", ^.color := "blue", ^.onclick := { () => {tal.displayInventory()} })
-    )
+      val phaserEl = <.div.render
+      val footer = <.div(
+        <.a("[RESTART]", ^.color := "red", ^.onclick := { () => document.location.reload(true) }),
+        <.a("[PAUSE]", ^.color := "blue", ^.onclick := { () => {game.paused = !game.paused} }),
+        <.a("[INVENTORY]", ^.color := "blue", ^.onclick := { () => {tal.displayInventory()} })
+      )
 
-    val gameEl = <.div.render
-    gameEl.appendChild(phaserEl)
-    gameEl.appendChild(footer.render)
+      val gameEl = <.div.render
+      gameEl.appendChild(phaserEl)
+      gameEl.appendChild(footer.render)
 
-    contentEl.appendChild(gameEl)
-    phaserEl.classList.add("noselect")
-    phaserEl.classList.add("cursor-crosshair")
+      contentEl.appendChild(gameEl)
+      phaserEl.classList.add("noselect")
+      phaserEl.classList.add("cursor-crosshair")
 
 
-    game = new phaser.Game(600, 800, Phaser.AUTO, phaserEl, state)
+      game = new phaser.Game(600, 800, Phaser.AUTO, phaserEl, state)
+    }
+
+
 
     //    foot.textContent = "SAVE THE TURKEY! (The dogs are zombies and they don't even die)"
     //document.body.onclick = { (e: MouseEvent) => {game.paused = false; true} }
@@ -62,7 +94,7 @@ object TapAndLoot {
   }
 }
 
-class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
+class TapAndLoot(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) {tal =>
 
   lazy val game = gameFn()
 
@@ -78,6 +110,7 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
     override def itemManager: ItemManager = tal.itemManager
     override def levelManager: LevelManager = tal.levelManager
     override def audioManager: AudioManager = tal.audioManager
+    override def storeManager: StoreManager = tal.storeManager
 
     override def die() {
       if (showVidoes) {
@@ -112,13 +145,14 @@ class TapAndLoot(showVidoes: Boolean, gameFn: () => Game) {tal =>
 
   }
   lazy val playerManager = new PlayerManager(gm)
-  lazy val mobManager = new MobManager(gm, playerManager, randy)
+  lazy val mobManager = new MobManager(gm, resources.mobCfgs)
   lazy val inputManager = new InputManager(gm)
-  lazy val scoreManager = new ScoreManager(gm, playerManager)
+  lazy val scoreManager = new ScoreManager(gm)
   lazy val skillManager = new SkillManager(gm)
   lazy val itemManager = new ItemManager(gm)
   lazy val levelManager = new LevelManager(gm)
   lazy val audioManager = new AudioManager(gm)
+  lazy val storeManager = new StoreManager
 
   def preload() {
     game.load

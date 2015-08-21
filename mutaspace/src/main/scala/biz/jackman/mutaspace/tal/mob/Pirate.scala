@@ -25,7 +25,7 @@ object Pirate {
     final override val elements = CEnum.getElements(this)
   }
 
-  def apply(gm: GameManager): Pirate = {
+  def apply(implicit gm: GameManager): Pirate = {
     val sprite = gm.game.add.sprite(100, 50, Resources.pirate_60x78.key)
     sprite.texture.frame.width = 50
     sprite.texture.frame.height = 60

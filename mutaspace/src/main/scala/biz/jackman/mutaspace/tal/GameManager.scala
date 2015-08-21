@@ -25,6 +25,7 @@ trait GameManager {
   def itemManager: ItemManager
   def levelManager: LevelManager
   def audioManager: AudioManager
+  def storeManager: StoreManager
 
   def die(): Unit
   def win(): Unit

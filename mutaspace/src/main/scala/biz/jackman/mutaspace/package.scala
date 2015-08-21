@@ -3,6 +3,8 @@ package biz.jackman
 import cgta.oscala.{OScalaExportsPlat, OScalaExportsShared}
 import cgta.serland.{SerlandExportsPlat, SerlandExportsShared}
 
+import scala.concurrent.ExecutionContext
+
 //////////////////////////////////////////////////////////////
 // Copyright (c) 2015 Ben Jackman
 // All Rights Reserved
@@ -15,6 +17,8 @@ with SerlandExportsPlat
 with OScalaExportsShared
 with OScalaExportsPlat
 with MutaspaceExportsSjs {
+
+  implicit val dec : ExecutionContext = defaultExecutionContext
 
 }
 
