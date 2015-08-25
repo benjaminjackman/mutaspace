@@ -3,6 +3,7 @@ package tal
 
 import biz.jackman.mutaspace.tal.skills.Skill
 import biz.jackman.mutaspace.tal.skills.primary.BasicAttack
+import biz.jackman.mutaspace.tal.skills.primary.MagicMissileSkill
 
 
 //////////////////////////////////////////////////////////////
@@ -13,15 +14,16 @@ import biz.jackman.mutaspace.tal.skills.primary.BasicAttack
 // Created by bjackman @ 7/30/15 12:49 AM
 //////////////////////////////////////////////////////////////
 
-class SkillManager(gm: GameManager) extends IManager {
+class SkillManager(implicit gm: GameManager) extends IManager {
   val skills = Array[Skill](
-    BasicAttack(gm)
+    BasicAttack(gm),
+    new MagicMissileSkill
   )
-  var currentSkillSlot = 0
+  var currentSkillSlot = 1
 
-  def setCurrentSkill(n : Int) {
-
-  }
+//  def setCurrentSkill(n : Int) {
+//
+//  }
   
   def executeSkill() {
     skills(currentSkillSlot).execute()

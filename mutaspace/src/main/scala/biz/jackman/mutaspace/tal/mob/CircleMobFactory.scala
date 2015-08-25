@@ -49,7 +49,7 @@ class CircleMobFactory(implicit gm: GameManager) extends MobFactory {
       }
     }
 
-
+    sprite.asJsDyn.mob = mob.asJsAny
 
     MobHelp.addLifeBar(mob)
 

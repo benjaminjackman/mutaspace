@@ -40,8 +40,7 @@ class ScoreManager(gm: GameManager) extends IManager {
   }
 
   override def update() {
-    val life = gm.playerManager.life
-    val mana = gm.playerManager.mana
+    val life = gm.playerManager.Player.sprite.health
     val enemies = 0//gm.levelManager.remainingEnemies
 
     lifeText.text = s"Life: $life%"

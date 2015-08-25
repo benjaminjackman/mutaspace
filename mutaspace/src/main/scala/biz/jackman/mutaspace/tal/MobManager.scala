@@ -9,7 +9,6 @@ import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.tal.mob.MobCfg
-import biz.jackman.mutaspace.tal.mob.MobCfgFactory
 import biz.jackman.mutaspace.tal.mob.MobFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
 import importedjs.PIXI
@@ -103,28 +102,6 @@ class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
     lastUpdateMs = curMs
 
     def updateChild(mob: Mob) {
-
-      //      if (mob.sprite.y + mob.sprite.height > gm.game.height - 200) {
-      //        if (mob.sprite.body.velocity.y > 0 ) {
-      //          mob.sprite.body.velocity.y *= -1
-      //        }
-      //      }
-      //      if (mob.sprite.y < 0 ) {
-      //        if (mob.sprite.body.velocity.y < 0 && mob.life() > 0) {
-      //          mob.sprite.body.velocity.y *= -1
-      //        }
-      //      }
-      if (mob.sprite.x + mob.sprite.width >= gm.game.width) {
-        if (mob.sprite.body.velocity.x > 0) {
-          mob.sprite.body.velocity.x *= -1
-        }
-      }
-      if (mob.sprite.x <= 0) {
-        if (mob.sprite.body.velocity.x < 0) {
-          mob.sprite.body.velocity.x *= -1
-        }
-      }
-
       val hans = mob.onUpdateHandlers
       val len = hans.length
       var i = 0

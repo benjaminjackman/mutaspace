@@ -22,6 +22,7 @@ trait GameManager {
   def skillManager: SkillManager
   def mobManager : MobManager
   def playerManager: PlayerManager
+  def projectileManager: ProjectileManager
   def itemManager: ItemManager
   def scoreManager: ScoreManager
   def levelManager: LevelManager
@@ -37,6 +38,7 @@ trait GameManager {
     skillManager,
     mobManager,
     playerManager,
+    projectileManager,
     itemManager,
     scoreManager,
     levelManager,
