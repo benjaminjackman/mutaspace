@@ -12,8 +12,8 @@ package tal
 
 
 
-class InputManager(gm: GameManager) {
-  def update() {
+class InputManager(gm: GameManager) extends IManager {
+  override def update() {
     val ap = gm.game.input.activePointer
     if (ap.isDown) {
       gm.skillManager.executeSkill()

@@ -18,11 +18,12 @@ trait GameManager {
 
   def game: Game
   def randy: RandomManager
-  def scoreManager: ScoreManager
+  def inputManager: InputManager
   def skillManager: SkillManager
   def mobManager : MobManager
   def playerManager: PlayerManager
   def itemManager: ItemManager
+  def scoreManager: ScoreManager
   def levelManager: LevelManager
   def audioManager: AudioManager
   def storeManager: StoreManager
@@ -30,7 +31,17 @@ trait GameManager {
   def die(): Unit
   def win(): Unit
 
-  lazy val managers : Array[IManager] = Array(randy, scoreManager, skillManager, mobManager, playerManager, itemManager, levelManager, audioManager, storeManager)
+  lazy val managers : Array[IManager] = Array(
+    randy,
+    inputManager,
+    skillManager,
+    mobManager,
+    playerManager,
+    itemManager,
+    scoreManager,
+    levelManager,
+    audioManager,
+    storeManager)
 
 
   def preload() {

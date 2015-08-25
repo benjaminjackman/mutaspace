@@ -112,6 +112,7 @@ class TalGame(showVidoes: Boolean, gameFn: () => Game, resources : TalResources)
     override def mobManager: MobManager = tal.mobManager
     override def playerManager: PlayerManager = tal.playerManager
     override def itemManager: ItemManager = tal.itemManager
+    override def inputManager: InputManager = tal.inputManager
     override def levelManager: LevelManager = tal.levelManager
     override def audioManager: AudioManager = tal.audioManager
     override def storeManager: StoreManager = tal.storeManager
@@ -176,17 +177,7 @@ class TalGame(showVidoes: Boolean, gameFn: () => Game, resources : TalResources)
       game.scale.pageAlignVertically = true
       game.scale.refresh()
     } else {
-//      def onResize(sm : ScaleManager, r : Rectangle) {
-//        val wR = r.width / game.width
-//        val hR = r.height / game.height
-//        console.log(r, wR, hR)
-//        val rat = wR.min(hR)
-//        sm.setUserScale(rat, rat)
-//        game.scale.refresh()
-//
-//      }
       game.scale.scaleMode = phaser.ScaleManager.SHOW_ALL
-//      game.scale.setResizeCallback(onResize _)
       game.scale.refresh()
     }
 
@@ -199,11 +190,11 @@ class TalGame(showVidoes: Boolean, gameFn: () => Game, resources : TalResources)
 
 
   def update() {
-//    gm.managers.foreach(_.update())
-    mobManager.update()
-    inputManager.update()
-    scoreManager.update()
-    skillManager.update()
+    gm.managers.foreach(_.update())
+//    mobManager.update()
+//    inputManager.update()
+//    scoreManager.update()
+//    skillManager.update()
   }
 
   def displayInventory() {
