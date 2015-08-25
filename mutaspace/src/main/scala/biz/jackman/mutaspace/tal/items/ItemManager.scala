@@ -2,6 +2,7 @@ package biz.jackman.mutaspace
 package tal.items
 
 import biz.jackman.mutaspace.tal.GameManager
+import biz.jackman.mutaspace.tal.IManager
 import biz.jackman.mutaspace.tal.items.weapons.Fist
 import biz.jackman.mutaspace.tal.items.weapons.Shotgun
 
@@ -14,9 +15,9 @@ import biz.jackman.mutaspace.tal.items.weapons.Shotgun
 // Created by bjackman @ 7/30/15 1:50 AM
 //////////////////////////////////////////////////////////////
 
-class ItemManager(gm : GameManager) {
+class ItemManager(gm : GameManager) extends IManager {
   val weapons = List(Fist.Resources, Shotgun.Resources)
-  def preload() = {
+  override def preload() = {
     weapons.foreach(_.preload(gm.game))
   }
 

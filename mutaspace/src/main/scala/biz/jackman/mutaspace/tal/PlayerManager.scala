@@ -14,7 +14,7 @@ import biz.jackman.mutaspace.tal.items.weapons.Weapon
 // Created by bjackman @ 7/28/15 12:35 AM
 //////////////////////////////////////////////////////////////
 
-class PlayerManager(gm: GameManager) {
+class PlayerManager(gm: GameManager) extends IManager {
   lazy val fist = Fist(gm)
   lazy val shotgun = Shotgun(gm)
 

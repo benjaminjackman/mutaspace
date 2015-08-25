@@ -14,7 +14,7 @@ import scala.scalajs.js
 // Created by bjackman @ 8/1/15 9:40 PM
 //////////////////////////////////////////////////////////////
 
-class AudioManager(gm: GameManager) {
+class AudioManager(gm: GameManager) extends IManager {
 
   //gm.game.sound.play(Resources.whimper, gm.randy.getDblIE(0.05, 0.2))
   //TODO DREAM Make the sounds be harmonic be locking the pitches to semitones corresponing to steps in the major or minor (or whatever scale)

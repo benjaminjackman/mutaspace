@@ -2,6 +2,8 @@ package biz.jackman.mutaspace
 package tal
 
 import biz.jackman.facades.phaser.Game
+import biz.jackman.facades.phaser.Rectangle
+import biz.jackman.facades.phaser.ScaleManager
 import biz.jackman.facades.phaser.State
 import biz.jackman.facades.Phaser
 import biz.jackman.facades.phaser
@@ -29,7 +31,7 @@ trait TalResources {
 
 //TODO READ THIS
 //http://invrse.co/phaser-cheatsheet/
-object TalApp {
+object TalGame {
 
   def start(showVideos: Boolean) {
 
@@ -58,7 +60,7 @@ object TalApp {
 
       var game: phaser.Game = null
 
-      val tal = new TalApp(showVideos, () => game, ress)
+      val tal = new TalGame(showVideos, () => game, ress)
       val state = new State()
       state.asJsDyn.preload = () => tal.preload()
       state.asJsDyn.create = () => tal.create()
@@ -68,14 +70,14 @@ object TalApp {
       import Scalatags._
       val contentEl = document.getElementById("content")
 
-      val phaserEl = <.div.render
+      val phaserEl = <.div(^.height := "90%").render
       val footer = <.div(
         <.a("[RESTART]", ^.color := "red", ^.onclick := { () => document.location.reload(true) }),
         <.a("[PAUSE]", ^.color := "blue", ^.onclick := { () => {game.paused = !game.paused} }),
         <.a("[INVENTORY]", ^.color := "blue", ^.onclick := { () => {tal.displayInventory()} })
       )
 
-      val gameEl = <.div.render
+      val gameEl = <.div(^.height := "100vh").render
       gameEl.appendChild(phaserEl)
       gameEl.appendChild(footer.render)
 
@@ -96,7 +98,7 @@ object TalApp {
   }
 }
 
-class TalApp(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) {tal =>
+class TalGame(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) {tal =>
 
   lazy val game = gameFn()
 
@@ -165,7 +167,6 @@ class TalApp(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) 
       .spritesheet("dude", "assets/images/dude.png", 32, 48)
 
     gm.preload()
-
   }
 
   def create() {
@@ -174,38 +175,35 @@ class TalApp(showVidoes: Boolean, gameFn: () => Game, resources : TalResources) 
       game.scale.pageAlignHorizontally = true
       game.scale.pageAlignVertically = true
       game.scale.refresh()
+    } else {
+//      def onResize(sm : ScaleManager, r : Rectangle) {
+//        val wR = r.width / game.width
+//        val hR = r.height / game.height
+//        console.log(r, wR, hR)
+//        val rat = wR.min(hR)
+//        sm.setUserScale(rat, rat)
+//        game.scale.refresh()
+//
+//      }
+      game.scale.scaleMode = phaser.ScaleManager.SHOW_ALL
+//      game.scale.setResizeCallback(onResize _)
+      game.scale.refresh()
     }
 
     game.world.setBounds(0,0,600,600)
     game.add.sprite(0, 0, "sky")
 
     game.physics.startSystem(phaser.Physics.ARCADE)
-    mobManager.create()
-    scoreManager.create()
-
-//    val turkey = game.add.image(0, 0, "turkey")
-//    turkey.tint = 0x606060
-//    turkey.width = game.width - 200
-//    turkey.height = 200
-//    turkey.x = 100
-//    turkey.y = game.height - 200
-
+    gm.managers.foreach(_.create())
   }
 
 
   def update() {
+//    gm.managers.foreach(_.update())
     mobManager.update()
     inputManager.update()
     scoreManager.update()
     skillManager.update()
-
-//    if (playerManager.life < 0) {
-//      gm.die()
-//    }
-
-//    if (levelManager.remainingEnemies <= 0) {
-//      gm.win()
-//    }
   }
 
   def displayInventory() {

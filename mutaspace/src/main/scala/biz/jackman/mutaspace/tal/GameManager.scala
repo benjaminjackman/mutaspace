@@ -30,6 +30,8 @@ trait GameManager {
   def die(): Unit
   def win(): Unit
 
+  lazy val managers : Array[IManager] = Array(randy, scoreManager, skillManager, mobManager, playerManager, itemManager, levelManager, audioManager, storeManager)
+
 
   def preload() {
     mobManager.preload()

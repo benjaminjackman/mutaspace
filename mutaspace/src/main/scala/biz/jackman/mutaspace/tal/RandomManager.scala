@@ -30,7 +30,7 @@ object RandomManager {
   }
 }
 
-class RandomManager {
+class RandomManager extends IManager {
 
   def getByWeight[A](weight_value_* : (Double, A)*) : A = {
     val totW = weight_value_*.iterator.map(_._1).sum

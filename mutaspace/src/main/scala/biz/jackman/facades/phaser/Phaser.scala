@@ -3731,9 +3731,6 @@ class Stage protected() extends PIXI.Stage {
   def visibilityChange(event: Event): Unit = js.native
 }
 
-trait ResizeCallback extends js.Object {
-  def apply(scale: ScaleManager, parentBounds: Rectangle): js.Dynamic = js.native
-}
 
 @JSName("Phaser.ScaleManager")
 class ScaleManager protected() extends js.Object {
@@ -3802,7 +3799,7 @@ class ScaleManager protected() extends js.Object {
   def pauseUpdate(): Unit = js.native
   def refresh(): Unit = js.native
   def setGameSize(width: Double, height: Double): Unit = js.native
-  def setResizeCallback(callback: ResizeCallback, context: js.Any): Unit = js.native
+  def setResizeCallback(callback: js.Function2[ScaleManager, Rectangle, Any], context: js.Any = ???): Unit = js.native
   def setUserScale(hScale: Double, vScale: Double, hTrim: Double = ???, vTrim: Double = ???): Unit = js.native
   def setMinMax(minWidth: Double, minHeight: Double, maxWidth: Double = ???, maxHeight: Double = ???): Unit = js.native
   def setupScale(width: Double, height: Double): Unit = js.native

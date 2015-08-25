@@ -9,7 +9,7 @@ package tal
 // Created by bjackman @ 8/1/15 9:19 PM
 //////////////////////////////////////////////////////////////
 
-class LevelManager(gm : GameManager) {
+class LevelManager(gm : GameManager) extends IManager {
   def begin() {
 
   }

@@ -1,7 +1,6 @@
 package biz.jackman.mutaspace
 package tal.items.weapons
 
-import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.gutil.ResourceSet
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.mechanics.DamageRanges

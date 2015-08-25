@@ -16,7 +16,7 @@ import biz.jackman.facades.phaser
 // Created by bjackman @ 7/28/15 12:36 AM
 //////////////////////////////////////////////////////////////
 
-class ScoreManager(gm: GameManager) {
+class ScoreManager(gm: GameManager) extends IManager {
 
 
   lazy val lifeText: phaser.Text = gm.game.add.text(16, 16, "Life", OBJ()).oEff { text =>
@@ -34,12 +34,12 @@ class ScoreManager(gm: GameManager) {
   }
 
 
-  def create() {
+  override def create() {
     lifeText
     enemyText
   }
 
-  def update() {
+  override def update() {
     val life = gm.playerManager.life
     val mana = gm.playerManager.mana
     val enemies = 0//gm.levelManager.remainingEnemies

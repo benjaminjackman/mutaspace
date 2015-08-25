@@ -10,6 +10,6 @@ package tal
 // Created by bjackman @ 8/20/15 7:52 PM
 //////////////////////////////////////////////////////////////
 
-class StoreManager {
+class StoreManager extends IManager {
 
 }

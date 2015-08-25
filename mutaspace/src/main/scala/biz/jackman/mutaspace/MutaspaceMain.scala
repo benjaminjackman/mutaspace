@@ -16,7 +16,7 @@ import biz.jackman.mutaspace.reactive.web.KeyEvent
 import biz.jackman.mutaspace.reactive.web.KeyPublisher
 import biz.jackman.mutaspace.samples.BouncyBall
 import biz.jackman.mutaspace.samples.PhaserStarGameSample2
-import biz.jackman.mutaspace.tal.TalApp
+import biz.jackman.mutaspace.tal.TalGame
 //import biz.jackman.mutaspace.samples.TapAndLoot
 
 import biz.jackman.mutaspace.samples.Pong3d

@@ -1,8 +1,6 @@
 package biz.jackman.mutaspace
 package tal
 
-import java.util.concurrent.atomic.AtomicLong
-
 import biz.jackman.facades.phaser.Physics
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
@@ -12,7 +10,6 @@ import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.tal.mob.MobCfg
 import biz.jackman.mutaspace.tal.mob.MobCfgFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
-import cgta.oscala.util.debugging.PRINT
 import importedjs.PIXI
 
 import scala.scalajs.js
@@ -27,7 +24,7 @@ import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 // Created by bjackman @ 7/27/15 8:17 PM
 //////////////////////////////////////////////////////////////
 
-class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) {
+class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
 
   val factoryMap = IMap() ++ cfgs.map(cfg => cfg.name -> MobCfgFactory(cfg))
 
@@ -72,17 +69,17 @@ class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) {
 
   }
 
-  def preload() {
+  override def preload() {
     Doge.Resources.preload(gm.game)
     Pirate.Resources.preload(gm.game)
     factoryMap.valuesIterator.foreach(_.preload())
   }
 
-  def create() {
+  override def create() {
     Mobs.create()
   }
 
-  def update() {
+  override def update() {
     gm.game.physics.arcade.collide(Mobs.group)
 
     val curMs = gm.game.time.now

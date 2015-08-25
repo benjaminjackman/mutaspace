@@ -13,7 +13,7 @@ import biz.jackman.mutaspace.tal.skills.primary.BasicAttack
 // Created by bjackman @ 7/30/15 12:49 AM
 //////////////////////////////////////////////////////////////
 
-class SkillManager(gm: GameManager) {
+class SkillManager(gm: GameManager) extends IManager {
   val skills = Array[Skill](
     BasicAttack(gm)
   )
@@ -27,7 +27,7 @@ class SkillManager(gm: GameManager) {
     skills(currentSkillSlot).execute()
   }
 
-  def update() {
+  override def update() {
     val skill = skills(currentSkillSlot)
     skill.currentSkillUpdate()
   }
