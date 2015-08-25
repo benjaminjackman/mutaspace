@@ -27,21 +27,21 @@ trait Mob {
   def takeDamage(amount: DamageAmounts): Unit
   def sprite: Sprite
   var onUpdateHandlers = new js.Array[() => Unit]()
-  def addUpdateHandler(b : => Unit) {onUpdateHandlers += (() => b)}
+  def addUpdateHandler(b: => Unit) { onUpdateHandlers += (() => b) }
 }
 
 trait MobFactory {
-  def preload() : Unit
-  def create(mobId : Double) : Mob
+  def preload(): Unit
+  def create(mobId: Double): Mob
 
 }
 
 object MobImageCfg {implicit val ser: SerClass[MobImageCfg] = SerBuilder.forCase(this.apply _)}
 case class MobImageCfg(base: String) {
-  def baseKey : String = base.split("/").last.split("\\.").head
+  def baseKey: String = base.split("/").last.split("\\.").head
 }
 
-object HeightWidthCfg{implicit val ser: SerClass[HeightWidthCfg] = SerBuilder.forCase(this.apply _)}
+object HeightWidthCfg {implicit val ser: SerClass[HeightWidthCfg] = SerBuilder.forCase(this.apply _)}
 case class HeightWidthCfg(height: String, width: String)
 
 object MobSpriteCfg {implicit val ser: SerClass[MobSpriteCfg] = SerBuilder.forCase(this.apply _)}
@@ -49,7 +49,7 @@ case class MobSpriteCfg(texture_frame: HeightWidthCfg)
 
 object MobStatsCfg {implicit val ser: SerClass[MobStatsCfg] = SerBuilder.forCase(this.apply _)}
 case class MobStatsCfg(maxHealth: String) {
-  def getMaxHealth : Double = {
+  def getMaxHealth: Double = {
     //val RangeRegex = "^(\\d+)-(\\d+)$".r
     val NumberRegex = "^(\\d+)$".r
     maxHealth.trim match {
@@ -69,15 +69,15 @@ case class MobCfg(
   image: MobImageCfg,
   sprite: MobSpriteCfg
   ) {
-  var mobYml : js.Any = null
+  var mobYml: js.Any = null
 }
 
 
-case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFactory {
-  override def preload() : Unit = {
+case class MobCfgFactory(cfg: MobCfg)(implicit gm: GameManager) extends MobFactory {
+  override def preload(): Unit = {
     gm.game.load.image(cfg.image.baseKey, cfg.image.base)
   }
-  override def create(mobId : Double) : Mob = {
+  override def create(mobId: Double): Mob = {
     val sprite = gm.game.add.sprite(0, 0, cfg.image.baseKey)
     sprite.texture.frame.width = cfg.sprite.texture_frame.width.toDouble
     sprite.texture.frame.height = cfg.sprite.texture_frame.height.toDouble
@@ -87,26 +87,20 @@ case class MobCfgFactory(cfg : MobCfg)(implicit gm : GameManager) extends MobFac
     sprite.health = sprite.maxHealth
     sprite.body.collideWorldBounds = true
     sprite.body.setSize(cfg.sprite.texture_frame.width.toDouble, cfg.sprite.texture_frame.height.toDouble)
-    sprite.body.velocity.set(gm.randy.getIntIE(-20,20), gm.randy.getIntIE(-20,20))
+    sprite.body.velocity.set(gm.randy.getIntIE(-20, 20), gm.randy.getIntIE(-20, 20))
 
     val ss = sprite
     val mob = new Mob {
       override val sprite: Sprite = ss
       var dying = false
 
-      onUpdateHandlers += { () =>
+      addUpdateHandler {
         if (sprite.health <= 0 && !dying) {
           dying = true
-          def done() = {
-            sprite.kill()
-          }
           val tween = gm.game.add.tween(sprite.scale).to(OBJ(x = 0.0, y = 0.0), 1000, phaser.easing.Elastic.Out _)
-          tween.onComplete.addOnce(done _)
+          tween.onComplete.addOnce(() => sprite.kill())
           tween.start()
-
-          //Show some feathers or something
         }
-
       }
 
       override def takeDamage(amount: DamageAmounts): Unit = {

@@ -4,11 +4,13 @@ package tal
 import biz.jackman.facades.phaser.Physics
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
+import biz.jackman.mutaspace.tal.mob.CircleMobFactory
 import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.tal.mob.MobCfg
 import biz.jackman.mutaspace.tal.mob.MobCfgFactory
+import biz.jackman.mutaspace.tal.mob.MobFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
 import importedjs.PIXI
 
@@ -26,7 +28,8 @@ import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 
 class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
 
-  val factoryMap = IMap() ++ cfgs.map(cfg => cfg.name -> MobCfgFactory(cfg))
+  //val factoryMap = IMap() ++ cfgs.map(cfg => cfg.name -> MobCfgFactory(cfg))
+  val factoryMap = IMap("circle" -> new CircleMobFactory)
 
   object Mobs {
     lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)
@@ -135,9 +138,9 @@ class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
     Mobs.mobs.foreach(updateChild)
   }
 
-  def getRandomMobFactory(): MobCfgFactory = {
-    gm.randy.getByWeight[MobCfgFactory](
-      2.0 -> factoryMap("cardinal")
+  def getRandomMobFactory(): MobFactory = {
+    gm.randy.getByWeight[MobFactory](
+      2.0 -> factoryMap("circle")
     )
   }
 
