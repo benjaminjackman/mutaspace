@@ -34,6 +34,8 @@ object MobHelp {
       }
     )
     mob.sprite.addChild(bgSprite)
+//    mob.sprite.events.onKilled.addOnce(() => bgSprite.destroy())
+
 
     val lifeSprite = gm.game.add.sprite(- (width / 2), y,
       gm.game.add.bitmapData(width, height).oEff { bmd =>
@@ -44,6 +46,7 @@ object MobHelp {
       }
     )
     mob.sprite.addChild(lifeSprite)
+//    mob.sprite.events.onKilled.addOnce(() => lifeSprite.destroy())
 
 
     var lastLife = Double.NaN

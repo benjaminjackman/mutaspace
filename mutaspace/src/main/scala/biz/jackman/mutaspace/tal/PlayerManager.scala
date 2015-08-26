@@ -39,10 +39,10 @@ class PlayerManager(gm: GameManager) extends IManager {
   object Player {
 
     var sprite: Sprite = locally {
-      val s = gm.game.add.sprite(gm.game.world.bounds.width / 2, gm.game.world.bounds.height / 2)
+      val s = gm.game.add.sprite(gm.game.world.bounds.width / 2, gm.game.world.bounds.height)
       val triangle = gm.game.add.graphics(0, 0)
-      triangle.beginFill(0x008888, 1)
       val c = 10
+      triangle.beginFill(0x008888, 1)
       triangle.drawPolygon(new Polygon(js.Array(2 * c, 0, -c, c, -c, -c)))
       s.addChild(triangle)
       s.maxHealth = 100

@@ -51,6 +51,8 @@ class CircleMobFactory(implicit gm: GameManager) extends MobFactory {
 
     sprite.asJsDyn.mob = mob.asJsAny
 
+    sprite.events.onKilled.addOnce(() => graphics.destroy())
+
     MobHelp.addLifeBar(mob)
 
     mob

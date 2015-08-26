@@ -1,8 +1,12 @@
 package biz.jackman.mutaspace
 package tal.skills.primary
 
+import biz.jackman.facades.phaser
+import biz.jackman.facades.phaser.Polygon
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.skills.Skill
+
+import scala.scalajs.js
 
 
 //////////////////////////////////////////////////////////////
@@ -17,26 +21,31 @@ class MagicMissileSkill(implicit gm : GameManager) extends Skill {
   override def currentSkillUpdate(): Unit = {}
   override def execute(): Unit = {
     val r = 10
-
     val center = gm.playerManager.Player.sprite
-    val sprite = gm.game.add.sprite(center.x, center.y)
+
+    val sprite = gm.projectileManager.getSprite()
+    sprite.reset(center.x, center.y)
+
     gm.game.physics.arcade.enable(sprite)
     sprite.body.width = r
     sprite.body.height = r
 
-    val circle = gm.game.add.graphics(0,0)
-    circle.beginFill(0x9370DB)
-    circle.drawCircle(0,0,r)
-    sprite.addChild(circle)
+    val graphics = gm.game.add.graphics(0,0)
+//    graphics.beginFill(0x9370DB)
+//    graphics.drawCircle(0,0,r)
+    val c = 5
+    graphics.beginFill(0x9370DB)
+    graphics.drawPolygon(new Polygon(js.Array(2 * c, 0, -c, c, -c, -c)))
 
-    val dx = gm.game.input.activePointer.x - center.x
-    val dy = gm.game.input.activePointer.y - center.y
-
-    sprite.body.velocity.set(dx, dy)
-    sprite.body.velocity.setMagnitude(500)
+    sprite.addChild(graphics)
     sprite.outOfBoundsKill = true
     sprite.checkWorldBounds = true
 
-    gm.projectileManager.add(sprite)
+
+    val rot = phaser.Math.degToRad(gm.randy.getDblIE(-90,90)) + gm.playerManager.angleToPointer
+    sprite.rotation = rot
+    gm.game.physics.arcade.velocityFromRotation(rot, 400,  sprite.body.velocity)
+
+    sprite.events.onKilled.addOnce(() => graphics.destroy())
   }
 }

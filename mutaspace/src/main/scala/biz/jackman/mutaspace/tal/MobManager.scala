@@ -32,6 +32,7 @@ class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
 
   object Mobs {
     lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)
+    lazy val dyingGroup = gm.game.add.group()
     private var mobLst: List[Mob] = Nil
     def mobs: List[Mob] = mobLst
     def create() {
@@ -53,8 +54,15 @@ class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
   var lastMobMs = 0.0
 
   def damageTo(sprite: Sprite, amount: DamageAmounts) = {
-    gm.scoreManager.displayDamage(amount, sprite)
-    sprite.health -= amount.total
+    if (sprite.health > 0) {
+      gm.scoreManager.displayDamage(amount, sprite)
+      sprite.health -= amount.total
+      if (sprite.health <= 0) {
+        Mobs.group.remove(sprite)
+        Mobs.dyingGroup.add(sprite)
+      }
+    }
+
   }
 
 

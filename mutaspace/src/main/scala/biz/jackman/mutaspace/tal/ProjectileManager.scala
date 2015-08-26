@@ -3,9 +3,7 @@ package tal
 
 import biz.jackman.facades.phaser.Physics
 import biz.jackman.facades.phaser.Sprite
-import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import biz.jackman.mutaspace.tal.mechanics.DamageRanges
-import cgta.oscala.util.debugging.PRINT
 
 
 //////////////////////////////////////////////////////////////
@@ -20,10 +18,28 @@ class ProjectileManager(implicit gm: GameManager) extends IManager {
 
   object Projectiles {
     val playerProjs = gm.game.add.physicsGroup(Physics.ARCADE)
+    val unused = locally {
+      val g = gm.game.add.group()
+      def addSprite() = {
+        val s = gm.game.add.sprite(0, 0)
+        s.kill()
+        s.exists = false
+        s.anchor.x = 0.5
+        s.anchor.y = 0.5
+        s.outOfBoundsKill = true
+        s.checkWorldBounds = true
+        g.add(s)
+      }
+      (0 until 200).map(i => addSprite())
+      g
+    }
   }
 
-  def add(sprite: Sprite) {
-    Projectiles.playerProjs.add(sprite)
+  def getSprite(): Sprite = {
+    val p = Projectiles.unused.getFirstExists(false).asInstanceOf[Sprite]
+    Projectiles.playerProjs.add(p)
+    p.events.onKilled.addOnce(() => {Projectiles.playerProjs.remove(p);Projectiles.unused.add(p)})
+    p
   }
 
   override def update() {
@@ -31,9 +47,8 @@ class ProjectileManager(implicit gm: GameManager) extends IManager {
   }
 
   def projectileHitMob(projectile: Sprite, mob: Sprite) {
-    PRINT | Projectiles.playerProjs.countLiving()
     projectile.kill()
-    gm.mobManager.damageTo(mob, gm.randy.roll(DamageRanges(20->40)))
+    gm.mobManager.damageTo(mob, gm.randy.roll(DamageRanges(20 -> 40)))
   }
 
 }
