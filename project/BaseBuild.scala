@@ -35,8 +35,7 @@ object BaseBuild extends Build with UniversalKeys {
     scalacOptions += "-language:implicitConversions",
     scalacOptions += "-language:higherKinds",
     scalacOptions += "-language:existentials",
-    scalacOptions += "-language:postfixOps",
-    scalacOptions += "-Xfatal-warnings"
+    scalacOptions += "-language:postfixOps"
   )
 
   def getBasePackageName(projectName: String, suffix: String = null) = {
