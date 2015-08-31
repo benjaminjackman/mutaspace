@@ -28,8 +28,14 @@ class CircleMobFactory(implicit gm: GameManager) extends MobFactory {
     sprite.body.velocity.set(gm.randy.getIntIE(-20, 20), gm.randy.getIntIE(-20, 20))
 
     val graphics = gm.game.add.graphics(0, 0)
-    graphics.beginFill(0x008800, 1)
-    graphics.drawCircle(0, 0, 25)
+    val defaultColor= 0x00AA00
+
+    def draw(color : Int) {
+      graphics.clear()
+      graphics.beginFill(color, 1)
+      graphics.drawCircle(0, 0, 25)
+    }
+    draw(defaultColor)
 
     val ss = sprite
 
@@ -37,9 +43,17 @@ class CircleMobFactory(implicit gm: GameManager) extends MobFactory {
 
     val mob = new Mob {
       var dying = false
-      override def takeDamage(amount: DamageAmounts): Unit = sprite.health -= amount.total.toInt
+      var redrawMs = -1.0
+      override def takeDamage(amount: DamageAmounts): Unit = {
+        draw(0xFFFFFF)
+        redrawMs = gm.game.time.now + 50
+      }
       override def sprite: Sprite = ss
       addUpdateHandler {
+        if (redrawMs > 0 && gm.game.time.now > redrawMs) {
+          draw(defaultColor)
+          redrawMs = -1.0
+        }
         if (sprite.health <= 0 && !dying) {
           dying = true
           val tween = gm.game.add.tween(sprite.scale).to(OBJ(x = 0.0, y = 0.0), 1000, phaser.easing.Elastic.Out _)

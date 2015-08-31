@@ -57,6 +57,7 @@ class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
     if (sprite.health > 0) {
       gm.scoreManager.displayDamage(amount, sprite)
       sprite.health -= amount.total
+      sprite.asJsDyn.mob.asInstanceOf[Mob].takeDamage(amount)
       if (sprite.health <= 0) {
         Mobs.group.remove(sprite)
         Mobs.dyingGroup.add(sprite)
