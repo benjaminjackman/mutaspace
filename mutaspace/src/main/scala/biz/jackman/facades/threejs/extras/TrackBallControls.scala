@@ -9,6 +9,7 @@ import scala.scalajs.js.annotation.JSName
 
 
 @JSName("THREE.TrackballControls")
+@js.native
 class TrackBallControls( camera:Camera) extends js.Object{
 
   def getMouseOnScreen(clientX:Double,clientY:Double):Vector2 = js.native

@@ -24,6 +24,7 @@ object | {
   implicit def t2ToU4[T](x: T): Nothing | T | Nothing | Nothing = x.asInstanceOf[Nothing | T | Nothing | Nothing]
 }
 
+@js.native
 trait |[+T1, +T2] extends js.Object
 
 class A
@@ -31,6 +32,7 @@ class B
 class C
 class D
 
+@js.native
 trait Foo extends js.Object {
   def ab(x: A | B): js.Any = js.native
   def abc(x: A | B | C): js.Any = js.native

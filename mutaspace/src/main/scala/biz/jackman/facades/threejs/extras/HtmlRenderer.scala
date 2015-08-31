@@ -8,18 +8,21 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
 
 @JSName("THREE.CSS3DObject")
+@js.native
 class HtmlObject(element:html.Element) extends Object3D
 {
 
 }
 
 @JSName("THREE.CSS3DSprite")
+@js.native
 class HtmlSprite(element:html.Element) extends HtmlObject(element){
 
 }
 
 
 @JSName("THREE.CSS3DRenderer")
+@js.native
 class HtmlRenderer extends Renderer {
 
 //  def render(scene: Scene, camera: Camera): Unit = js.native

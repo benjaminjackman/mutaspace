@@ -9,6 +9,7 @@ package p2 {
 
 
 @JSName("p2.AABB")
+@js.native
 class AABB protected () extends js.Object {
   def this(options: js.Any = ???) = this()
   def setFromPoints(points: js.Array[js.Array[Double]], position: js.Array[Double], angle: Double, skinSize: Double): Unit = js.native
@@ -18,6 +19,7 @@ class AABB protected () extends js.Object {
 }
 
 @JSName("p2.Broadphase")
+@js.native
 class Broadphase protected () extends js.Object {
   def this(`type`: Double) = this()
   var `type`: Double = js.native
@@ -30,6 +32,7 @@ class Broadphase protected () extends js.Object {
 }
 
 @JSName("p2.Broadphase")
+@js.native
 object Broadphase extends js.Object {
   var AABB: Double = js.native
   var BOUNDING_CIRCLE: Double = js.native
@@ -41,6 +44,7 @@ object Broadphase extends js.Object {
 }
 
 @JSName("p2.GridBroadphase")
+@js.native
 class GridBroadphase protected () extends Broadphase {
   def this(options: js.Any = ???) = this()
   var xmin: Double = js.native
@@ -54,10 +58,12 @@ class GridBroadphase protected () extends Broadphase {
 }
 
 @JSName("p2.NativeBroadphase")
+@js.native
 class NativeBroadphase extends Broadphase {
 }
 
 @JSName("p2.Narrowphase")
+@js.native
 class Narrowphase extends js.Object {
   var contactEquations: js.Array[ContactEquation] = js.native
   var frictionEquations: js.Array[FrictionEquation] = js.native
@@ -82,12 +88,14 @@ class Narrowphase extends js.Object {
 }
 
 @JSName("p2.SAPBroadphase")
+@js.native
 class SAPBroadphase extends Broadphase {
   var axisList: js.Array[Body] = js.native
   var axisIndex: Double = js.native
 }
 
 @JSName("p2.Constraint")
+@js.native
 class Constraint protected () extends js.Object {
   def this(bodyA: Body, bodyB: Body, `type`: Double, options: js.Any = ???) = this()
   var `type`: Double = js.native
@@ -101,6 +109,7 @@ class Constraint protected () extends js.Object {
 }
 
 @JSName("p2.Constraint")
+@js.native
 object Constraint extends js.Object {
   var DISTANCE: Double = js.native
   var GEAR: Double = js.native
@@ -110,6 +119,7 @@ object Constraint extends js.Object {
 }
 
 @JSName("p2.DistanceConstraint")
+@js.native
 class DistanceConstraint protected () extends Constraint {
   def this(bodyA: Body, bodyB: Body, `type`: Double, options: js.Any = ???) = this()
   var localAnchorA: js.Array[Double] = js.native
@@ -126,6 +136,7 @@ class DistanceConstraint protected () extends Constraint {
 }
 
 @JSName("p2.GearConstraint")
+@js.native
 class GearConstraint protected () extends Constraint {
   def this(bodyA: Body, bodyB: Body, `type`: Double, options: js.Any = ???) = this()
   var ratio: Double = js.native
@@ -135,6 +146,7 @@ class GearConstraint protected () extends Constraint {
 }
 
 @JSName("p2.LockConstraint")
+@js.native
 class LockConstraint protected () extends Constraint {
   def this(bodyA: Body, bodyB: Body, `type`: Double, options: js.Any = ???) = this()
   def setMaxForce(force: Double): Unit = js.native
@@ -142,6 +154,7 @@ class LockConstraint protected () extends Constraint {
 }
 
 @JSName("p2.PrismaticConstraint")
+@js.native
 class PrismaticConstraint protected () extends Constraint {
   def this(bodyA: Body, bodyB: Body, `type`: Double, options: js.Any = ???) = this()
   var localAnchorA: js.Array[Double] = js.native
@@ -164,6 +177,7 @@ class PrismaticConstraint protected () extends Constraint {
 }
 
 @JSName("p2.RevoluteConstraint")
+@js.native
 class RevoluteConstraint protected () extends Constraint {
   def this(bodyA: Body, bodyB: Body, `type`: Double, options: js.Any = ???) = this()
   var pivotA: js.Array[Double] = js.native
@@ -186,6 +200,7 @@ class RevoluteConstraint protected () extends Constraint {
 }
 
 @JSName("p2.AngleLockEquation")
+@js.native
 class AngleLockEquation protected () extends Equation {
   def this(bodyA: Body, bodyB: Body, options: js.Any = ???) = this()
   def setRatio(ratio: Double): Double = js.native
@@ -193,6 +208,7 @@ class AngleLockEquation protected () extends Equation {
 }
 
 @JSName("p2.ContactEquation")
+@js.native
 class ContactEquation protected () extends Equation {
   def this(bodyA: Body, bodyB: Body) = this()
   var contactPointA: js.Array[Double] = js.native
@@ -206,6 +222,7 @@ class ContactEquation protected () extends Equation {
 }
 
 @JSName("p2.Equation")
+@js.native
 class Equation protected () extends js.Object {
   def this(bodyA: Body, bodyB: Body, minForce: Double = ???, maxForce: Double = ???) = this()
   var minForce: Double = js.native
@@ -236,12 +253,14 @@ class Equation protected () extends js.Object {
 }
 
 @JSName("p2.Equation")
+@js.native
 object Equation extends js.Object {
   var DEFAULT_STIFFNESS: Double = js.native
   var DEFAULT_RELAXATION: Double = js.native
 }
 
 @JSName("p2.FrictionEquation")
+@js.native
 class FrictionEquation protected () extends Equation {
   def this(bodyA: Body, bodyB: Body, slipForce: Double) = this()
   var contactPointA: js.Array[Double] = js.native
@@ -255,17 +274,20 @@ class FrictionEquation protected () extends Equation {
 }
 
 @JSName("p2.RotationalLockEquation")
+@js.native
 class RotationalLockEquation protected () extends Equation {
   def this(bodyA: Body, bodyB: Body, options: js.Any = ???) = this()
   var angle: Double = js.native
 }
 
 @JSName("p2.RotationalVelocityEquation")
+@js.native
 class RotationalVelocityEquation protected () extends Equation {
   def this(bodyA: Body, bodyB: Body) = this()
 }
 
 @JSName("p2.EventEmitter")
+@js.native
 class EventEmitter extends js.Object {
   def on(`type`: String, listener: js.Function, context: js.Any): EventEmitter = js.native
   def has(`type`: String, listener: js.Function): Boolean = js.native
@@ -274,6 +296,7 @@ class EventEmitter extends js.Object {
 }
 
 @JSName("p2.ContactMaterialOptions")
+@js.native
 class ContactMaterialOptions extends js.Object {
   var friction: Double = js.native
   var restitution: Double = js.native
@@ -285,6 +308,7 @@ class ContactMaterialOptions extends js.Object {
 }
 
 @JSName("p2.ContactMaterial")
+@js.native
 class ContactMaterial protected () extends js.Object {
   def this(materialA: Material, materialB: Material, options: ContactMaterialOptions = ???) = this()
   var id: Double = js.native
@@ -301,26 +325,31 @@ class ContactMaterial protected () extends js.Object {
 }
 
 @JSName("p2.ContactMaterial")
+@js.native
 object ContactMaterial extends js.Object {
   var idCounter: Double = js.native
 }
 
 @JSName("p2.Material")
+@js.native
 class Material protected () extends js.Object {
   def this(id: Double) = this()
   var id: Double = js.native
 }
 
 @JSName("p2.Material")
+@js.native
 object Material extends js.Object {
   var idCounter: Double = js.native
 }
 
 @JSName("p2.vec2")
+@js.native
 class vec2 extends js.Object {
 }
 
 @JSName("p2.vec2")
+@js.native
 object vec2 extends js.Object {
   def crossLength(a: js.Array[Double], b: js.Array[Double]): Double = js.native
   def crossVZ(out: js.Array[Double], vec: js.Array[Double], zcomp: Double): Double = js.native
@@ -358,6 +387,7 @@ object vec2 extends js.Object {
 }
 
 @JSName("p2.BodyOptions")
+@js.native
 class BodyOptions extends js.Object {
   var mass: Double = js.native
   var position: js.Array[Double] = js.native
@@ -370,6 +400,7 @@ class BodyOptions extends js.Object {
 }
 
 @JSName("p2.Body")
+@js.native
 class Body protected () extends EventEmitter {
   def this(options: BodyOptions = ???) = this()
   var sleepyEvent: js.Any = js.native
@@ -437,6 +468,7 @@ class Body protected () extends EventEmitter {
 }
 
 @JSName("p2.Body")
+@js.native
 object Body extends js.Object {
   var DYNAMIC: Double = js.native
   var STATIC: Double = js.native
@@ -447,6 +479,7 @@ object Body extends js.Object {
 }
 
 @JSName("p2.Spring")
+@js.native
 class Spring protected () extends js.Object {
   def this(bodyA: Body, bodyB: Body, options: js.Any = ???) = this()
   var stiffness: Double = js.native
@@ -457,6 +490,7 @@ class Spring protected () extends js.Object {
 }
 
 @JSName("p2.LinearSpring")
+@js.native
 class LinearSpring extends Spring {
   var localAnchorA: js.Array[Double] = js.native
   var localAnchorB: js.Array[Double] = js.native
@@ -468,12 +502,14 @@ class LinearSpring extends Spring {
 }
 
 @JSName("p2.RotationalSpring")
+@js.native
 class RotationalSpring protected () extends Spring {
   def this(bodyA: Body, bodyB: Body, options: js.Any = ???) = this()
   var restAngle: Double = js.native
 }
 
 @JSName("p2.Capsule")
+@js.native
 class Capsule protected () extends Shape {
   def this(length: Double = ???, radius: Double = ???) = this()
   var length: Double = js.native
@@ -481,12 +517,14 @@ class Capsule protected () extends Shape {
 }
 
 @JSName("p2.Circle")
+@js.native
 class Circle protected () extends Shape {
   def this(radius: Double) = this()
   var radius: Double = js.native
 }
 
 @JSName("p2.Convex")
+@js.native
 class Convex protected () extends Shape {
   def this(vertices: js.Array[js.Array[Double]], axes: js.Array[Double]) = this()
   var vertices: js.Array[js.Array[Double]] = js.native
@@ -499,11 +537,13 @@ class Convex protected () extends Shape {
 }
 
 @JSName("p2.Convex")
+@js.native
 object Convex extends js.Object {
   def triangleArea(a: js.Array[Double], b: js.Array[Double], c: js.Array[Double]): Double = js.native
 }
 
 @JSName("p2.Heightfield")
+@js.native
 class Heightfield protected () extends Shape {
   def this(data: js.Array[Double], options: js.Any = ???) = this()
   var data: js.Array[Double] = js.native
@@ -513,6 +553,7 @@ class Heightfield protected () extends Shape {
 }
 
 @JSName("p2.Shape")
+@js.native
 class Shape protected () extends js.Object {
   def this(`type`: Double) = this()
   var `type`: Double = js.native
@@ -530,6 +571,7 @@ class Shape protected () extends js.Object {
 }
 
 @JSName("p2.Shape")
+@js.native
 object Shape extends js.Object {
   var idCounter: Double = js.native
   var CIRCLE: Double = js.native
@@ -543,20 +585,24 @@ object Shape extends js.Object {
 }
 
 @JSName("p2.Line")
+@js.native
 class Line protected () extends Shape {
   def this(length: Double = ???) = this()
   var length: Double = js.native
 }
 
 @JSName("p2.Particle")
+@js.native
 class Particle extends Shape {
 }
 
 @JSName("p2.Plane")
+@js.native
 class Plane extends Shape {
 }
 
 @JSName("p2.Rectangle")
+@js.native
 class Rectangle protected () extends Shape {
   def this(width: Double = ???, height: Double = ???) = this()
   var width: Double = js.native
@@ -564,11 +610,13 @@ class Rectangle protected () extends Shape {
 }
 
 @JSName("p2.Rectangle")
+@js.native
 object Rectangle extends js.Object {
   def sameDimensions(a: Rectangle, b: Rectangle): Boolean = js.native
 }
 
 @JSName("p2.Solver")
+@js.native
 class Solver protected () extends EventEmitter {
   def this(options: js.Any = ???, `type`: Double = ???) = this()
   var `type`: Double = js.native
@@ -584,12 +632,14 @@ class Solver protected () extends EventEmitter {
 }
 
 @JSName("p2.Solver")
+@js.native
 object Solver extends js.Object {
   var GS: Double = js.native
   var ISLAND: Double = js.native
 }
 
 @JSName("p2.GSSolver")
+@js.native
 class GSSolver protected () extends Solver {
   def this(options: js.Any = ???) = this()
   var iterations: Double = js.native
@@ -600,6 +650,7 @@ class GSSolver protected () extends Solver {
 }
 
 @JSName("p2.OverlapKeeper")
+@js.native
 class OverlapKeeper protected () extends js.Object {
   def this(bodyA: Body, shapeA: Shape, bodyB: Body, shapeB: Shape) = this()
   var shapeA: Shape = js.native
@@ -613,6 +664,7 @@ class OverlapKeeper protected () extends js.Object {
 }
 
 @JSName("p2.TupleDictionary")
+@js.native
 class TupleDictionary extends js.Object {
   var data: js.Array[Double] = js.native
   var keys: js.Array[Double] = js.native
@@ -625,10 +677,12 @@ class TupleDictionary extends js.Object {
 }
 
 @JSName("p2.Utils")
+@js.native
 class Utils extends js.Object {
 }
 
 @JSName("p2.Utils")
+@js.native
 object Utils extends js.Object {
   def appendArray[T](a: js.Array[T], b: js.Array[T]): js.Array[T] = js.native
   def chanceRoll(chance: Double): Boolean = js.native
@@ -642,6 +696,7 @@ object Utils extends js.Object {
 }
 
 @JSName("p2.Island")
+@js.native
 class Island extends js.Object {
   var equations: js.Array[Equation] = js.native
   var bodies: js.Array[Body] = js.native
@@ -652,6 +707,7 @@ class Island extends js.Object {
 }
 
 @JSName("p2.IslandManager")
+@js.native
 class IslandManager extends Solver {
   var islands: js.Array[Island] = js.native
   var nodes: js.Array[IslandNode] = js.native
@@ -661,11 +717,13 @@ class IslandManager extends Solver {
 }
 
 @JSName("p2.IslandManager")
+@js.native
 object IslandManager extends js.Object {
   def getUnvisitedNode(nodes: js.Array[Node]): IslandNode = js.native
 }
 
 @JSName("p2.IslandNode")
+@js.native
 class IslandNode protected () extends js.Object {
   def this(body: Body) = this()
   var body: Body = js.native
@@ -676,6 +734,7 @@ class IslandNode protected () extends js.Object {
 }
 
 @JSName("p2.World")
+@js.native
 class World protected () extends EventEmitter {
   def this(options: js.Any = ???) = this()
   var postStepEvent: js.Any = js.native
@@ -736,6 +795,7 @@ class World protected () extends EventEmitter {
 }
 
 @JSName("p2.World")
+@js.native
 object World extends js.Object {
   var NO_SLEEPING: Double = js.native
   var BODY_SLEEPING: Double = js.native
