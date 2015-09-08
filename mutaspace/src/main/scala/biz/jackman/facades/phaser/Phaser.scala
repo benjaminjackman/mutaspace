@@ -2228,7 +2228,8 @@ class Emitter protected() extends phaser.Group {
   var on: Boolean = js.native
   var particleBringToTop: Boolean = js.native
   var particleSendToBack: Boolean = js.native
-  var particleClass: phaser.Sprite = js.native
+//  var particleClass: phaser.Sprite = js.native
+  var particleClass: js.Function = js.native
   var particleDrag: phaser.Point = js.native
   var right: Double = js.native
   var scaleData: js.Array[js.Any] = js.native
@@ -2238,7 +2239,7 @@ class Emitter protected() extends phaser.Group {
   def explode(lifespan: Double = ???, quantity: Double = ???): Unit = js.native
   def flow(lifespan: Double = ???, frequency: Double = ???, quantity: Double = ???, total: Double = ???, immediate: Boolean = ???): Unit = js.native
   def kill(): Unit = js.native
-  def makeParticles(keys: js.Any, frames: js.Any = ???, quantity: Double = ???, collide: Boolean = ???, collideWorldBounds: Boolean = ???): phaser.particles.arcade.Emitter = js.native
+  def makeParticles(keys: js.Any = ???, frames: js.Any = ???, quantity: Double = ???, collide: Boolean = ???, collideWorldBounds: Boolean = ???): phaser.particles.arcade.Emitter = js.native
   def reset(x: Double, y: Double, health: Double = ???): phaser.Particles = js.native
   def setAlpha(min: Double = ???, max: Double = ???, rate: Double = ???, ease: js.Function1[Double, Double] = ???, yoyo: Boolean = ???): Unit = js.native
   def setRotation(min: Double = ???, max: Double = ???): Unit = js.native

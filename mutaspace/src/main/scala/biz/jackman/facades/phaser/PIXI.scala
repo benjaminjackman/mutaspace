@@ -418,7 +418,7 @@ class DisplayObject extends js.Object {
   def displayObjectUpdateTransform(): Unit = js.native
   def getBounds(matrix: Matrix = ???): Rectangle = js.native
   def getLocalBounds(): Rectangle = js.native
-  def generateTexture(resolution: Double, scaleMode: scaleModes, renderer: PixiRenderer): RenderTexture = js.native
+  def generateTexture(resolution: Double = ???, scaleMode: scaleModes= ???, renderer: PixiRenderer= ???): RenderTexture = js.native
   def mousedown(e: InteractionData): Unit = js.native
   def mouseout(e: InteractionData): Unit = js.native
   def mouseover(e: InteractionData): Unit = js.native
