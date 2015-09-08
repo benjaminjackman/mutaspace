@@ -9,6 +9,7 @@ import biz.jackman.mutaspace.tal.mob.Doge
 import biz.jackman.mutaspace.tal.mob.Mob
 import biz.jackman.facades.phaser
 import biz.jackman.mutaspace.tal.mob.MobCfg
+import biz.jackman.mutaspace.tal.mob.MobCfgFactory
 import biz.jackman.mutaspace.tal.mob.MobFactory
 import biz.jackman.mutaspace.tal.mob.Pirate
 import importedjs.PIXI
@@ -27,8 +28,8 @@ import scala.scalajs.js.JSConverters.JSRichGenTraversableOnce
 
 class MobManager(cfgs: Seq[MobCfg])(implicit gm: GameManager) extends IManager {
 
-  //val factoryMap = IMap() ++ cfgs.map(cfg => cfg.name -> MobCfgFactory(cfg))
-  val factoryMap = IMap("circle" -> new CircleMobFactory)
+  val factoryMap = IMap("circle" -> new CircleMobFactory) ++
+    cfgs.map(cfg => cfg.name -> MobCfgFactory(cfg))
 
   object Mobs {
     lazy val group = gm.game.add.physicsGroup(Physics.ARCADE)

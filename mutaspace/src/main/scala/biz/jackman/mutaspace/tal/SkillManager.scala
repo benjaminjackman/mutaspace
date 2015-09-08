@@ -34,4 +34,5 @@ class SkillManager(implicit gm: GameManager) extends IManager {
     skill.currentSkillUpdate()
   }
 
+
 }

@@ -2,9 +2,12 @@ package biz.jackman.mutaspace
 package tal.mob
 
 import biz.jackman.facades.phaser
+import biz.jackman.facades.phaser.Game
 import biz.jackman.facades.phaser.Sprite
 import biz.jackman.mutaspace.tal.GameManager
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
+
+import scala.scalajs.js
 
 
 //////////////////////////////////////////////////////////////
@@ -15,8 +18,48 @@ import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 // Created by bjackman @ 8/25/15 1:16 PM
 //////////////////////////////////////////////////////////////
 
+object CircleMobFactory {
+  lazy val MonsterParticle = {
+    def make(self : js.Any, game : Game, x : Double, y : Double) = {
+      console.log("XXXX")
+      global.Phaser.Particle.call(self, game, x, y, game.cache.getBitmapData("particleShade"))
+    }
+    val ctor : js.ThisFunction = make _
+    ctor.asJsDyn.prototype = js.Object.create(global.Phaser.Particle.prototype.asInstanceOf[js.Object])
+    ctor.asJsDyn.prototype.constructor = ctor
+    ctor
+  }
+}
+
 class CircleMobFactory(implicit gm: GameManager) extends MobFactory {
-  override def preload(): Unit = {}
+  override def preload(): Unit = {
+    val bmd = gm.game.add.bitmapData(64, 64)
+    val radgrad = bmd.ctx.createRadialGradient(32, 32, 4, 32, 32, 32)
+
+    radgrad.addColorStop(0, "rgba(1, 159, 98, 1)")
+    radgrad.addColorStop(1, "rgba(1, 159, 98, 0)")
+
+    bmd.context.fillStyle = radgrad
+    bmd.context.fillRect(0, 0, 64, 64)
+    gm.game.cache.addBitmapData("particleShade", bmd)
+
+    gm.game.add.sprite(0,0,bmd)
+
+
+
+
+    val graphics = gm.game.make.graphics(0, 0)
+    def draw(color : Int) {
+      graphics.clear()
+      graphics.beginFill(color, 1)
+      graphics.drawCircle(0, 0, 20)
+    }
+    draw(0xFF0000)
+    val texture= graphics.generateTexture()
+    val i = gm.game.make.image(0,0, texture)
+    i.key = "circle"
+    i.update
+  }
   override def create(mobId: Double): Mob = {
     val sprite = gm.game.add.sprite(0, 0)
     gm.game.physics.arcade.enable(sprite)
