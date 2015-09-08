@@ -49,27 +49,22 @@ class MagicMissileSkill(implicit gm : GameManager) extends Skill {
 
 
 
-    val texture= locally {
+    def texture= {
       val particle = gm.game.make.graphics(0, 0)
-
-      val tint = locally {
-        val c = phaser.Color.HSLtoRGB(gm.randy.getDblIE(0, 1), gm.randy.getDblIE(.4, .9), gm.randy.getDblIE(.4, .9))
-        phaser.Color.getColor(c.r.asInstanceOf[Double], c.g.asInstanceOf[Double], c.b.asInstanceOf[Double])
-      }
-
       def draw(color : Double) {
         particle.clear()
         particle.beginFill(color, .5)
         particle.drawCircle(0, 0, gm.randy.getDblIE(1,8))
       }
-      draw(tint)
+      draw(gm.randy.getRandomColor)
       particle.generateTexture()
     }
 
+    
     //Add a particle emitter
     //See also http://www.html5gamedevs.com/topic/5683-add-bitmapdata-to-cache-as-image/
     //http://www.html5gamedevs.com/topic/5549-anchor-emitter-to-sprite/
-    val emitter = gm.game.add.emitter(-10,0,10)
+    val emitter = gm.game.add.emitter(-10,0,50)
     emitter.particleSendToBack = true
     emitter.particleClass = (game : Game, x : Double, y : Double) => {
       val p = new Particle(game, x, y)
@@ -79,7 +74,7 @@ class MagicMissileSkill(implicit gm : GameManager) extends Skill {
     emitter.makeParticles()
 
     sprite.addChild(emitter)
-    emitter.start(explode = false, 500, 50)
+    emitter.start(explode = false, 1500, 20)
 
     sprite.outOfBoundsKill = true
     sprite.checkWorldBounds = true
@@ -89,8 +84,8 @@ class MagicMissileSkill(implicit gm : GameManager) extends Skill {
     val rot = phaser.Math.degToRad(gm.randy.getDblIE(-30,30)) + gm.playerManager.angleToPointer
     sprite.rotation = rot
     gm.game.physics.arcade.velocityFromRotation(rot, 400, sprite.body.velocity)
-    emitter.minParticleSpeed.set(-100, 50)
-    emitter.maxParticleSpeed.set(-200, -50)
+    emitter.minParticleSpeed.set(-50, 50)
+    emitter.maxParticleSpeed.set(-150, -50)
 
 
     sprite.events.onKilled.addOnce(() => {graphics.destroy(); emitter.destroy()})

@@ -4,6 +4,10 @@ package tal
 import biz.jackman.mutaspace.tal.mechanics.DamageAmounts
 import biz.jackman.mutaspace.tal.mechanics.DamageRanges
 
+import biz.jackman.facades.phaser
+
+
+
 import scala.scalajs.js
 
 
@@ -55,6 +59,11 @@ class RandomManager extends IManager {
 
   def roll(damageRanges: DamageRanges) : DamageAmounts = {
     DamageAmounts(physical = getIntII(damageRanges.physical.min, damageRanges.physical.max))
+  }
+
+  def getRandomColor : Double = {
+    val c = phaser.Color.HSLtoRGB(getDblIE(0, 1), getDblIE(.4, .9), getDblIE(.4, .9))
+    phaser.Color.getColor(c.r.asInstanceOf[Double], c.g.asInstanceOf[Double], c.b.asInstanceOf[Double])
   }
 
 }
