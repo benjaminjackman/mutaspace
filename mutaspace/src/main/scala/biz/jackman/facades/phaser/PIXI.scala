@@ -1115,7 +1115,3 @@ object PolyK extends js.Object {
 }
 
 }
-
-package object phaser extends js.GlobalScope {
-  def requestAnimFrame(callback: js.Function): Unit = js.native
-}
